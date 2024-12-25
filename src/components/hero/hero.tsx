@@ -124,11 +124,11 @@ const Hero: React.FC = () => {
         </div>
         <Button
           onClick={() => router.push('/about')}
-          buttonStyles="font-inter text-lg font-normal"
+          buttonStyles="font-inter text-lg font-normal desktop-screen:my-4"
         >
           More about me
         </Button>
-        <Socials />
+        <Socials socialStyles="gap-6" />
       </div>
       <div>
         {error ? (

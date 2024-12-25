@@ -3,7 +3,13 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Github, Twitter, Linkedin, Instagram } from 'lucide-react';
 
-const socialLinks = [
+type SocialProps = {
+  icon?: any;
+  href?: string;
+  label?: string;
+};
+
+const socialLinks: SocialProps[] = [
   { icon: Github, href: 'https://github.com/yourusername', label: 'GitHub' },
   {
     icon: Twitter,
@@ -22,13 +28,13 @@ const socialLinks = [
   },
 ];
 
-const Socials = () => {
+const Socials = ({ socialStyles }: { socialStyles?: string }) => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay: 1 }}
-      className="flex items-center justify-center gap-3"
+      className={`flex items-center justify-center gap-3 ${socialStyles}`}
     >
       {socialLinks.map(({ icon: Icon, href, label }) => (
         <a

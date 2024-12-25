@@ -17,7 +17,7 @@ const Button: React.FC<ButtonProps> = ({
   isLink,
 }) => {
   const baseStyles = `
-    group relative inline-flex h-12 items-center justify-center 
+    group relative inline-flex py-4 items-center justify-center 
     overflow-hidden rounded-md border-2 border-[rgb(76_100_255)] 
     bg-transparent px-6 py-2 font-medium transition-all duration-100 
     hover:translate-x-1 hover:translate-y-1 dark:border-lightTheme-primary
