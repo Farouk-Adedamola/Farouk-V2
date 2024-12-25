@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import React, { use, useEffect, useState } from 'react';
 
 import axios from 'axios';
 import { motion } from 'framer-motion';
@@ -32,6 +33,8 @@ const Hero: React.FC = () => {
   >(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const router = useRouter();
 
   const fetchWakatimeData = async () => {
     try {
@@ -119,7 +122,10 @@ const Hero: React.FC = () => {
             thoughtful design meets clean code for the web.
           </Text>
         </div>
-        <Button buttonStyles="font-inter text-lg font-normal rounded-[8px] px-4 py-2">
+        <Button
+          onClick={() => router.push('/about')}
+          buttonStyles="font-inter text-lg font-normal"
+        >
           More about me
         </Button>
         <Socials />
