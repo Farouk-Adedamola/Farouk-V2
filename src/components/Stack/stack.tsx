@@ -29,7 +29,7 @@ const Stack: React.FC<StackProps> = ({ data, code_hours }) => {
   return (
     <div className="relative rounded-lg border border-gray-800/50 bg-gray-900/30 p-8 backdrop-blur-sm">
       <div className="mb-8 flex items-center justify-between">
-        <Text className="text-sm font-medium text-emerald-400/80">
+        <Text className="text-sm font-medium text-emerald-light/80">
           Coding Activity
         </Text>
         <Text className="text-xs text-gray-500">via wakatime</Text>
@@ -43,7 +43,7 @@ const Stack: React.FC<StackProps> = ({ data, code_hours }) => {
             transition={{ duration: 0.5 }}
             className="flex flex-col gap-2 rounded-lg border border-gray-800/50 bg-gray-900/50 p-4"
           >
-            <div className="flex items-center gap-2 text-emerald-400">
+            <div className="flex items-center gap-2 text-emerald-light">
               <Clock size={16} />
               <Text className="text-xs uppercase">Total Time</Text>
             </div>
@@ -58,7 +58,7 @@ const Stack: React.FC<StackProps> = ({ data, code_hours }) => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="flex flex-col gap-2 rounded-lg border border-gray-800/50 bg-gray-900/50 p-4"
           >
-            <div className="flex items-center gap-2 text-emerald-400">
+            <div className="flex items-center gap-2 text-emerald-light">
               <Activity size={16} />
               <Text className="text-xs uppercase">Daily Average</Text>
             </div>
@@ -73,7 +73,7 @@ const Stack: React.FC<StackProps> = ({ data, code_hours }) => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="flex flex-col gap-2 rounded-lg border border-gray-800/50 bg-gray-900/50 p-4"
           >
-            <div className="flex items-center gap-2 text-emerald-400">
+            <div className="flex items-center gap-2 text-emerald-light">
               <Calendar size={16} />
               <Text className="text-xs uppercase">Best Day</Text>
             </div>
@@ -88,7 +88,7 @@ const Stack: React.FC<StackProps> = ({ data, code_hours }) => {
       )}
 
       <div className="space-y-3">
-        <div className="flex items-center gap-2 text-emerald-400">
+        <div className="flex items-center gap-2 text-emerald-light">
           <Code size={16} />
           <Text className="text-xs uppercase">Languages</Text>
         </div>
@@ -106,7 +106,7 @@ const Stack: React.FC<StackProps> = ({ data, code_hours }) => {
                 style={{ backgroundColor: tech.color }}
               />
               <div className="flex flex-col gap-1">
-                <Text className="text-sm font-medium text-gray-300 transition-colors group-hover:text-emerald-400">
+                <Text className="text-sm font-medium text-gray-300 transition-colors group-hover:text-emerald-light">
                   {tech.name}
                 </Text>
                 <Text className="text-xs text-gray-500">

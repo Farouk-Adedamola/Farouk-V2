@@ -4,11 +4,11 @@
 
 @layer components {
   .bg-primary {
-    @apply bg-[#f7f7f7] dark:bg-customGray-dark;
+    /* @apply bg-[#f7f7f7] dark:bg-customGray-dark; */
   }
 
   .bg-secondary {
-    @apply bg-customGray-base dark:bg-customGray-light;
+    /* @apply bg-customGray-base dark:bg-customGray-light; */
   }
 
   .text-primary {

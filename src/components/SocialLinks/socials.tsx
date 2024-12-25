@@ -38,7 +38,7 @@ const Socials = () => {
           rel="noopener noreferrer"
           className="group relative rounded-full transition-colors hover:bg-gray-800"
         >
-          <Icon className=" h-6 w-6 text-gray-400 transition-colors group-hover:text-emerald-400" />
+          <Icon className=" h-6 w-6 text-gray-400 transition-colors group-hover:text-emerald-light" />
         </a>
       ))}
     </motion.div>

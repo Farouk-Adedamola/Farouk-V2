@@ -51,7 +51,7 @@ export default function Header() {
       } transition-transform duration-300 ease-in-out`}
     >
       <nav
-        className="group relative mx-auto flex max-w-2xl items-center justify-center rounded-full bg-gray-950 px-6 py-3 transition-all duration-300 hover:shadow-[0_0_2rem_-0.5rem] hover:shadow-emerald-500/30"
+        className="group relative mx-auto flex max-w-2xl items-center justify-center rounded-[16px] bg-darkTheme-primary px-6 py-3 shadow-[0_0_2rem_-0.5rem] shadow-emerald-500/30 transition-all duration-300"
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
@@ -75,7 +75,7 @@ export default function Header() {
         />
 
         <div className="absolute inset-0 rounded-full transition-all duration-300 group-hover:bg-gradient-to-r group-hover:from-emerald-500/0 group-hover:via-emerald-500/10 group-hover:to-emerald-500/0">
-          <div className="absolute inset-[1px] rounded-full bg-gray-950" />
+          <div className="absolute inset-[1px] rounded-full bg-darkTheme-primary" />
         </div>
 
         <ul className="relative flex items-center space-x-6">
@@ -86,7 +86,7 @@ export default function Header() {
                 className={`relative px-2 py-1 font-figtree text-xl font-medium transition-all duration-200
                   ${
                     pathname === item.path
-                      ? 'text-emerald-400'
+                      ? 'text-emerald-light'
                       : 'text-gray-300 hover:text-white'
                   }`}
               >

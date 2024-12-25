@@ -7,7 +7,7 @@
 }
 
 .paginate .selected {
-  @apply rounded-full bg-red-500 text-white;
+  @apply rounded-full bg-error text-white;
 }
 
 .paginate .disabled {

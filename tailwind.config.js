@@ -13,6 +13,19 @@ module.exports = {
       },
 
       colors: {
+        error: '#ef4444',
+        'emerald-light': '#34d399',
+        'emerald-deep': '#10b981',
+
+        lightTheme: {
+          primary: '#ebebeb',
+          secondary: '#dadada',
+          text: '#f3f4f6',
+        },
+        darkTheme: {
+          primary: '#030712',
+          secondary: '#1f2937',
+        },
         customGray: {
           light: '#2e3039',
           base: '#eeeeee',

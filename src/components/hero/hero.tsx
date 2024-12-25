@@ -103,7 +103,7 @@ const Hero: React.FC = () => {
             weight="bold"
             size="lg"
             font="figtree"
-            className=" bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-2xl font-semibold text-transparent"
+            className=" bg-gradient-to-r from-emerald-light to-emerald-deep bg-clip-text text-2xl font-semibold text-transparent"
           >
             Frontend Engineer
           </Text>
@@ -126,7 +126,7 @@ const Hero: React.FC = () => {
       </div>
       <div>
         {error ? (
-          <Text className="text-red-500">{error}</Text>
+          <Text className="text-error">{error}</Text>
         ) : isLoading ? (
           <div className="flex items-center justify-center">
             <Text>Loading...</Text>

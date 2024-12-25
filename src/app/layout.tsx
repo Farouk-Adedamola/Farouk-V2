@@ -35,9 +35,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${figtree.variable}`}>
-      <body className="max-w-screen-xl relative mx-auto mb-20 flex min-h-screen w-full flex-col px-[4vw] font-semibold text-black desktop-screen:px-[6vw] ">
+      <body className="max-w-screen-xl relative mx-auto flex min-h-full w-full flex-col px-[4vw] desktop-screen:px-[6vw] ">
         <div className="fixed inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-t from-[#ebebeb] to-[#dadada] dark:from-gray-950 dark:to-gray-800" />
+          <div className="absolute inset-0 bg-gradient-to-t from-lightTheme-primary to-lightTheme-secondary dark:from-darkTheme-primary dark:to-darkTheme-secondary" />
 
           <div className="absolute inset-0 bg-[url(../../public/noise.png)] opacity-90 mix-blend-soft-light" />
 
@@ -47,7 +47,7 @@ export default function RootLayout({
         <Provider>
           <Header />
           <main className="mt-36">
-            <section className="sm:h-full dark:text-white">{children}</section>
+            <section className="sm:h-full">{children}</section>
           </main>
         </Provider>
       </body>

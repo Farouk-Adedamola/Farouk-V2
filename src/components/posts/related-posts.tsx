@@ -22,7 +22,7 @@ export default function RelatedPosts({ posts }: { posts: Post[] }) {
   return (
     <section className="mt-10 flex flex-col">
       <h1 className="text-3xl font-bold">Related Posts</h1>
-      <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+      <ul className="md:grid-cols-2 xl:grid-cols-3 grid grid-cols-1">
         {posts.slice(0, numPosts).map((post) => (
           <div
             key={post.slug}
@@ -37,7 +37,7 @@ export default function RelatedPosts({ posts }: { posts: Post[] }) {
       {numPosts < posts.length && (
         <button
           onClick={handleLoadMore}
-          className="mt-10 self-center rounded-3xl bg-red-500 px-8 py-2 text-white opacity-70 transition-all duration-300 hover:scale-110 hover:opacity-100"
+          className="mt-10 self-center rounded-3xl bg-error px-8 py-2 text-white opacity-70 transition-all duration-300 hover:scale-110 hover:opacity-100"
         >
           Load More
         </button>
