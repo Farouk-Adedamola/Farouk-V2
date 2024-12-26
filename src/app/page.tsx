@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import React from 'react';
 
+import Experiment from '@/components/Experiment/experiment';
 import Hero from '@/components/hero/hero';
 
 export const metadata = {
@@ -23,6 +24,7 @@ export default function HomePage() {
   return (
     <h1 className="mx-auto mt-12 max-w-[1440px]">
       <Hero />
+      <Experiment />
     </h1>
   );
 }

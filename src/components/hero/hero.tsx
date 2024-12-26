@@ -6,7 +6,7 @@ import React, { use, useEffect, useState } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 
-import Button from '../Button/Button';
+import Button from '../Button/button';
 import Socials from '../SocialLinks/socials';
 import Stack from '../Stack/stack';
 import Text from '../Text/text';
@@ -89,10 +89,10 @@ const Hero: React.FC = () => {
 
   return (
     <section
-      className="flex w-full flex-col desktop-screen:flex-row desktop-screen:items-center desktop-screen:justify-center "
+      className="flex w-full flex-col desktop-screen:flex-row desktop-screen:items-center desktop-screen:justify-between "
       onMouseMove={handleMouseMove}
     >
-      <div className="flex flex-col justify-start gap-4 desktop-screen:items-start">
+      <div className="flex flex-col justify-start gap-4 desktop-screen:max-w-[600px] desktop-screen:items-start">
         <div className="flex flex-col items-center justify-start gap-4 desktop-screen:items-start">
           <Text
             weight="bold"
@@ -116,7 +116,7 @@ const Hero: React.FC = () => {
             weight="bold"
             font="inter"
             size="md"
-            className="max-w-[600px] desktop-screen:text-left"
+            className="desktop-screen:text-left"
           >
             I specialize in building elegant, accessible interfaces where
             thoughtful design meets clean code for the web.
