@@ -89,7 +89,7 @@ const Hero: React.FC = () => {
 
   return (
     <section
-      className="flex w-full flex-col desktop-screen:flex-row desktop-screen:items-center desktop-screen:justify-between "
+      className="section_layout flex w-full flex-col desktop-screen:flex-row desktop-screen:items-center desktop-screen:justify-between "
       onMouseMove={handleMouseMove}
     >
       <div className="flex flex-col justify-start gap-4 desktop-screen:max-w-[600px] desktop-screen:items-start">

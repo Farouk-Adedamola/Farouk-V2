@@ -3,8 +3,9 @@
 import { useEffect } from 'react';
 import React from 'react';
 
-import Experiment from '@/components/Experiment/experiment';
+import { ExperienceSection } from '@/components/Experience/experience';
 import Hero from '@/components/hero/hero';
+import { AllJobExperience } from '@/utils/data';
 
 export const metadata = {
   title: 'Portfolio Site | Farouk Adedamola',
@@ -22,9 +23,9 @@ export default function HomePage() {
     );
   }, []);
   return (
-    <h1 className="mx-auto mt-12 max-w-[1440px]">
+    <h1 className="mx-auto mt-8 flex max-w-[1440px] flex-col justify-center">
       <Hero />
-      <Experiment />
+      <ExperienceSection data={AllJobExperience} />
     </h1>
   );
 }

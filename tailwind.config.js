@@ -24,6 +24,7 @@ module.exports = {
         },
         darkTheme: {
           primary: '#030712',
+          "primary-dark": '#0f1729',
           secondary: '#1f2937',
         },
         customGray: {

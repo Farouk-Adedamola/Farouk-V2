@@ -42,7 +42,7 @@ const Text = ({
       xl: 'text-[36px] max-desktop:text-[30px] font-semibold ',
       lg: 'text-[30px] max-desktop:text-[24px] font-normal',
       md: 'text-[22px] max-desktop:text-[18px] font-normal ',
-      sm: 'text-[14px] max-desktop:text-[12px] font-normal ',
+      sm: 'text-[18px] max-desktop:text-[14px] font-normal ',
     },
     weight: {
       normal: 'font-normal',
