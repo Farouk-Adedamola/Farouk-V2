@@ -61,7 +61,7 @@ const ProjectCard = ({
           className="h-full w-[300px] object-cover"
         />
       </div>
-      <div className="rounded-lg border border-lightTheme-text p-4">
+      <div className="rounded-lg border border-dashed border-lightTheme-text p-4">
         <Text font="figtree" weight="bold" size="lg" className="mb-2" header>
           {project.name}
         </Text>
