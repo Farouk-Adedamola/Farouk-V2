@@ -78,7 +78,7 @@ const ProjectCard = ({
           {project.tools.map((tool, index) => (
             <span
               key={index}
-              className="text-primary rounded-full bg-emerald-deep px-3 py-1 text-sm"
+              className="cursor-pointer rounded-full bg-darkTheme-primary px-3 py-1 font-figtree text-sm text-lightTheme-text transition-all duration-300 hover:bg-transparent "
             >
               {tool}
             </span>
