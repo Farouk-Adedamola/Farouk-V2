@@ -77,3 +77,51 @@ export const AllJobExperience: ExperienceTypeProps = {
     },
   ],
 };
+
+export type ProjectProps = {
+  id: string;
+  name: string;
+  description: string;
+  tools: string[];
+  liveUrl: string;
+  imageUrl?: string | any;
+};
+
+export const Projectdata: ProjectProps[] = [
+  {
+    id: '1',
+    name: 'E-Commerce Dashboard',
+    description:
+      'A comprehensive dashboard for managing online store operations, featuring real-time analytics, inventory management, and sales tracking.',
+    tools: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Firebase'],
+    liveUrl: 'https://ecommerce-dashboard.demo',
+    imageUrl: '/api/placeholder/600/400',
+  },
+  {
+    id: '2',
+    name: 'AI Content Generator',
+    description:
+      'An AI-powered platform that helps create high-quality content using advanced language models and intelligent formatting.',
+    tools: ['React', 'Node.js', 'OpenAI API', 'MongoDB'],
+    liveUrl: 'https://ai-content-gen.demo',
+    imageUrl: '/api/placeholder/600/400',
+  },
+  {
+    id: '1',
+    name: 'E-Commerce Dashboard',
+    description:
+      'A comprehensive dashboard for managing online store operations, featuring real-time analytics, inventory management, and sales tracking.',
+    tools: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Firebase'],
+    liveUrl: 'https://ecommerce-dashboard.demo',
+    imageUrl: '/api/placeholder/600/400',
+  },
+  {
+    id: '2',
+    name: 'AI Content Generator',
+    description:
+      'An AI-powered platform that helps create high-quality content using advanced language models and intelligent formatting.',
+    tools: ['React', 'Node.js', 'OpenAI API', 'MongoDB'],
+    liveUrl: 'https://ai-content-gen.demo',
+    imageUrl: '/api/placeholder/600/400',
+  },
+];
