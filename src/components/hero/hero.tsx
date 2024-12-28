@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import React, { use, useEffect, useState } from 'react';
 
 import axios from 'axios';
-import { motion } from 'framer-motion';
 
 import Button from '../Button/button';
 import Socials from '../SocialLinks/socials';
@@ -102,12 +101,12 @@ const Hero: React.FC = () => {
           >
             Farouk Adedamola
           </Text>
-          <div className=' relative mt-3 inline-block w-fit  rounded-md border bg-white px-1.5 py-0.5  before:pointer-events-none before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-full before:bg-[url("/noise.gif")] before:opacity-[0.09] before:content-[""]'>
+          <div className=' relative mt-3 inline-block w-fit  rounded-md bg-[#090D26] px-1.5 py-0.5  before:pointer-events-none before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-full before:bg-[url("/noise.gif")] before:opacity-[0.09] before:content-[""]'>
             <Text
               weight="bold"
               size="lg"
               font="figtree"
-              className=" bg-gradient-to-r from-emerald-light to-emerald-deep bg-clip-text text-transparent"
+              className=" bg-gradient-to-t     from-[#a2b6fa] to-[#334cec] bg-clip-text text-transparent  "
             >
               Frontend Engineer
             </Text>

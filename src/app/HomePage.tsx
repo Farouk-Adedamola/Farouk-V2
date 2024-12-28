@@ -1,4 +1,3 @@
-// HomePage.tsx
 import { useEffect, useState } from 'react';
 import React from 'react';
 
@@ -8,11 +7,6 @@ import PostsGrid from '@/components/posts/posts-grid';
 import ProjectsSection from '@/components/projects/projects';
 import { Post } from '@/types/post';
 import { AllJobExperience, Projectdata } from '@/utils/data';
-
-// Remove the metadata export since this is a client component
-// export const metadata = {
-//   title: 'Portfolio Site | Farouk Adedamola',
-// };
 
 interface HomePageProps {
   initialPosts: Post[];
@@ -24,8 +18,7 @@ export default function HomePage({ initialPosts }: HomePageProps) {
       <Hero />
       <ExperienceSection data={AllJobExperience} />
       <ProjectsSection data={Projectdata} />
-      <PostsGrid allPosts={initialPosts.slice(0, 2)} />
-      {/* <Footer /> */}
+      <PostsGrid moreBtn allPosts={initialPosts.slice(0, 3)} />
     </h1>
   );
 }

@@ -6,6 +6,7 @@ module.exports = {
       // 'xl': '1280px',
       'max-desktop': { max: '1279px' },
       sm: '640px',
+      'max-sm': { max: '639px' },
       md: '768px',
       lg: '1024px',
       xl: '1280px',
