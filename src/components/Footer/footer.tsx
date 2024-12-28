@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 
 import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
 
+import Socials from '../SocialLinks/socials';
 import Text from '../Text/text';
 
 interface TooltipPosition {
@@ -68,23 +69,16 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="border- mx-auto w-full border-t py-6">
+    <footer className="border- mx-auto w-full border-t py-6 pt-8">
       <div className="flex flex-col items-center space-y-6">
-        <div className="flex items-center space-x-6">
-          {socialLinks.map((link, index) => (
-            <a
-              key={index}
-              href={link.href}
-              className="transition-colors duration-300 hover:text-blue-400"
-              onMouseEnter={(e) => handleMouseEnter(link.tooltip, e)}
-              onMouseLeave={handleMouseLeave}
-            >
-              {link.icon}
-            </a>
-          ))}
-        </div>
-
-        <Text font="figtree" size="xs" weight="bold" className="mb-2" header>
+        <Socials />
+        <Text
+          font="figtree"
+          size="xs"
+          weight="bold"
+          className="text-secondary mb-2"
+          header
+        >
           Farouk Adedamola
         </Text>
         <Text font="figtree" size="lg" weight="bold" className="" subheader>

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-type Color = 'primary' | 'secondary' | 'white' | 'red' | string;
+type Color = 'primary' | 'secondary' | 'white' | 'red';
 type Size = 'xl' | 'lg' | 'md' | 'sm' | 'xs';
 type Weight = 'normal' | 'bold' | 'semibold' | 'medium';
 type Font = 'inter' | 'figtree';
@@ -57,14 +57,8 @@ const Text = ({
     },
   };
 
-  const isHexColor = (color: string) =>
-    /^#([0-9A-F]{3}|[0-9A-F]{6})$/i.test(color);
-
   const textColor = useMemo(() => {
-    return (
-      variant?.color?.[color as keyof typeof variant.color] ??
-      (isHexColor(color) ? `text-[${color}]` : '')
-    );
+    return variant?.color?.[color as keyof typeof variant.color];
   }, [color]);
 
   return (

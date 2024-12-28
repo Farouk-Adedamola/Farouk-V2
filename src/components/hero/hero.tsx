@@ -89,16 +89,16 @@ const Hero: React.FC = () => {
 
   return (
     <section
-      className="section_layout flex w-full flex-col desktop-screen:flex-row desktop-screen:items-center desktop-screen:justify-between "
+      className="section_layout flex w-full flex-col xl:flex-row xl:items-center xl:justify-between "
       onMouseMove={handleMouseMove}
     >
-      <div className="flex flex-col justify-start gap-4 desktop-screen:max-w-[600px] desktop-screen:items-start">
-        <div className="flex flex-col items-center justify-start gap-4 desktop-screen:items-start">
+      <div className="flex flex-col justify-start gap-4 xl:max-w-[600px] xl:items-start">
+        <div className="flex flex-col items-center justify-start gap-4 xl:items-start">
           <Text
             weight="bold"
             size="xs"
             font="figtree"
-            className="sm:text-5xl md:text-6xl font-figtree text-4xl font-bold text-gray-100"
+            className=" font-figtree font-bold"
           >
             Farouk Adedamola
           </Text>
@@ -106,25 +106,20 @@ const Hero: React.FC = () => {
             weight="bold"
             size="lg"
             font="figtree"
-            className=" bg-gradient-to-r from-emerald-light to-emerald-deep bg-clip-text text-2xl font-semibold text-transparent"
+            className=" bg-gradient-to-r from-emerald-light to-emerald-deep bg-clip-text text-transparent"
           >
             Frontend Engineer
           </Text>
         </div>
         <div>
-          <Text
-            weight="bold"
-            font="inter"
-            size="md"
-            className="desktop-screen:text-left"
-          >
+          <Text weight="bold" font="inter" size="md" className="xl:text-left">
             I specialize in building elegant, accessible interfaces where
             thoughtful design meets clean code for the web.
           </Text>
         </div>
         <Button
           onClick={() => router.push('/about')}
-          buttonStyles="font-inter text-lg font-normal desktop-screen:my-4"
+          buttonStyles="font-inter text-lg font-normal xl:my-4"
         >
           More about me
         </Button>

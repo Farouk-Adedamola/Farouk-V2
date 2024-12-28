@@ -11,6 +11,7 @@ export const metadata = {
 
 export default async function BlogPage() {
   const allPosts = await getAllPostsFromNotion();
+  console.log(allPosts);
 
   const allCategories = toUniqueArray(
     allPosts

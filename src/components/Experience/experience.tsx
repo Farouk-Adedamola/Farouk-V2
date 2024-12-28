@@ -10,16 +10,11 @@ type ExperienceSectionProps = {
 export const ExperienceSection = ({ data }: ExperienceSectionProps) => {
   return (
     <section className="section_layout">
-      <Text
-        font="figtree"
-        weight="bold"
-        size="xs"
-        className="mb-8 text-2xl font-bold text-white"
-      >
+      <Text font="figtree" weight="bold" size="xs" className="mb-8 font-bold">
         Experiences{' '}
         <span className="inline-block h-4 w-4 rounded-full bg-emerald-light"></span>
       </Text>
-      <div className="grid grid-cols-1 pt-4 desktop-screen:grid-cols-2 desktop-screen:gap-12 desktop-screen:pt-5">
+      <div className="grid grid-cols-1 pt-4 xl:grid-cols-2 xl:gap-12 xl:pt-5">
         <div>
           {data.jobs.map((job, index) => (
             <ExperienceCard key={`job-${index}`} experience={job} />

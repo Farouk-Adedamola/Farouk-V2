@@ -49,11 +49,11 @@ const ProjectCard = ({
 
   return (
     <div
-      className={` flex flex-col desktop-screen:flex-row desktop-screen:gap-4 ${
-        isReverse ? 'desktop-screen:flex desktop-screen:flex-row-reverse' : ''
+      className={` flex flex-col xl:flex-row xl:gap-4 ${
+        isReverse ? 'xl:flex xl:flex-row-reverse' : ''
       }`}
     >
-      <div className="relative h-full w-full rounded-lg border border-lightTheme-text desktop-screen:max-w-[300px]">
+      <div className="relative h-full w-full rounded-lg border border-lightTheme-text xl:max-w-[300px]">
         <Image
           src={project.imageUrl}
           alt={project.name}

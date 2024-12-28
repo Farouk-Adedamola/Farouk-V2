@@ -36,7 +36,7 @@ const Stack: React.FC<StackProps> = ({ data, code_hours }) => {
       </div>
 
       {code_hours && (
-        <div className="mb-8 grid grid-cols-1 gap-6 desktop-screen:grid-cols-3">
+        <div className="mb-8 grid grid-cols-1 gap-6 xl:grid-cols-3">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -92,7 +92,7 @@ const Stack: React.FC<StackProps> = ({ data, code_hours }) => {
           <Code size={16} />
           <Text className="text-xs uppercase">Languages</Text>
         </div>
-        <div className="sm:grid-cols-4 grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           {data.map((tech, index) => (
             <motion.div
               key={index}
