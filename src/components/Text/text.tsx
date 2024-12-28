@@ -59,7 +59,7 @@ const Text = ({
 
   const textColor = useMemo(() => {
     return variant?.color?.[color as keyof typeof variant.color];
-  }, [color]);
+  }, [color, variant]);
 
   return (
     <>

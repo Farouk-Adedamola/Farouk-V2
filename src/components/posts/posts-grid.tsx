@@ -7,7 +7,13 @@ import PostCard from '@/components/posts/post-card';
 import usePosts from '@/hooks/use-posts';
 import { Post } from '@/types/post';
 
-export default function PostsGrid({ allPosts }: { allPosts: Post[] }) {
+export default function PostsGrid({
+  allPosts,
+  paginate,
+}: {
+  allPosts: Post[];
+  paginate?: boolean;
+}) {
   const { posts, totalPages } = usePosts(allPosts);
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -30,7 +36,9 @@ export default function PostsGrid({ allPosts }: { allPosts: Post[] }) {
       ) : (
         <p className="mt-10 text-center text-lg">No matching posts found</p>
       )}
-      <Paginate totalPages={totalPages} elementToScroll={rootRef.current} />
+      {paginate && (
+        <Paginate totalPages={totalPages} elementToScroll={rootRef.current} />
+      )}
     </section>
   );
 }

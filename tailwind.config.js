@@ -20,6 +20,7 @@ module.exports = {
         error: '#ef4444',
         'emerald-light': '#34d399',
         'emerald-deep': '#10b981',
+        'light-primary': '#64748B',
 
         lightTheme: {
           primary: '#ebebeb',

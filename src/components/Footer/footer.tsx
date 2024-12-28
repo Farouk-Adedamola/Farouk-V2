@@ -69,7 +69,7 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="border- mx-auto w-full border-t py-6 pt-8">
+    <footer className="mx-auto w-full border-t border-light-primary py-6 pt-8 xl:pt-11">
       <div className="flex flex-col items-center space-y-6">
         <Socials />
         <Text
@@ -85,31 +85,17 @@ const Footer: React.FC = () => {
           Frontend Developer
         </Text>
 
-        <Text weight="medium" size="md" className=" text-gray-400">
-          © {currentYear} Farouk Adedamola. All rights reserved.
-        </Text>
-      </div>
-
-      {/* Custom Tooltip */}
-      {/* <div
-        className={`absolute -translate-x-1/2 transform rounded-lg bg-gray-800 px-4 py-2 text-sm text-white transition-all duration-300 ease-in-out ${
-          tooltipVisible
-            ? '-translate-y-full opacity-100'
-            : 'pointer-events-none -translate-y-3/4 opacity-0'
-        }`}
-        style={{
-          left: `${tooltipPosition.x}px`,
-          top: `${tooltipPosition.y - 10}px`,
-          zIndex: 50,
-        }}
-      >
-        <div className="relative">
-          {tooltipContent}
-          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 translate-y-full transform">
-            <div className="border-8 border-transparent border-t-gray-800" />
-          </div>
+        <div className=" w-full  border-t border-light-primary pt-4">
+          <Text
+            font="figtree"
+            weight="medium"
+            size="sm"
+            className="text-center"
+          >
+            © {currentYear} Farouk Adedamola. All rights reserved.
+          </Text>
         </div>
-      </div> */}
+      </div>
     </footer>
   );
 };
