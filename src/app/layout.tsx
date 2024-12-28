@@ -4,6 +4,7 @@ import 'katex/dist/katex.min.css';
 import 'prismjs/themes/prism-tomorrow.css';
 import 'react-notion-x/src/styles.css';
 
+import Footer from '@/components/Footer/footer';
 import Header from '@/components/header/header';
 import Provider from '@/components/provider';
 import '@/styles/globals.css';
@@ -37,7 +38,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${figtree.variable}`}>
       <body className="max-w-screen-xl relative mx-auto flex min-h-full w-full flex-col px-[4vw] desktop-screen:px-[6vw] ">
         <div className="fixed inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-t from-lightTheme-primary to-lightTheme-secondary dark:from-darkTheme-primary dark:to-darkTheme-secondary" />
+          <div className="absolute inset-0 bg-gradient-to-t from-darkTheme-primary to-darkTheme-secondary" />
 
           <div className="absolute inset-0 bg-[url(../../public/noise.png)] opacity-90 mix-blend-soft-light" />
 
@@ -49,6 +50,7 @@ export default function RootLayout({
           <main className="mt-36">
             <section className="sm:h-full">{children}</section>
           </main>
+          <Footer />
         </Provider>
       </body>
     </html>

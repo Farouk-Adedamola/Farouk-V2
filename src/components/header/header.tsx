@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
-import ThemeToggle from '@/components/theme-toggle';
+// import ThemeToggle from '@/components/theme-toggle';
 
 const NAV_ITEMS = [
   { path: '/', name: 'Home' },
@@ -95,10 +95,6 @@ export default function Header() {
             </li>
           ))}
         </ul>
-
-        <div className="relative ml-6">
-          <ThemeToggle />
-        </div>
       </nav>
     </header>
   );

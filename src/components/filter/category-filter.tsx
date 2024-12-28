@@ -28,7 +28,7 @@ export default function CategoryFilter({
           onClick={handleClearAll}
           className={`relative -right-10 text-xs ${
             !clearAllActive &&
-            'pointer-events-none text-gray-300 dark:text-gray-600'
+            'pointer-events-none text-gray-600'
           }`}
         >
           Clear All

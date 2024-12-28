@@ -17,7 +17,7 @@ export default function NavLink({
     <Link href={`/${path}`} className={`group ${isActive && 'text-primary'}`}>
       {children}
       <span
-        className={`block h-0.5 max-w-0 bg-black transition-all duration-300 group-hover:max-w-full dark:bg-white ${
+        className={`block h-0.5 max-w-0 bg-white transition-all duration-300 group-hover:max-w-full ${
           isActive && 'max-w-full'
         }`}
       ></span>

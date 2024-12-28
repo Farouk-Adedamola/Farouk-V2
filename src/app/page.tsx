@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import React from 'react';
 
 import { ExperienceSection } from '@/components/Experience/experience';
+// import Footer from '@/components/Footer/footer';
 import Hero from '@/components/hero/hero';
 import ProjectsSection from '@/components/projects/projects';
 import { AllJobExperience, Projectdata } from '@/utils/data';
@@ -28,6 +29,7 @@ export default function HomePage() {
       <Hero />
       <ExperienceSection data={AllJobExperience} />
       <ProjectsSection data={Projectdata} />
+      {/* <Footer /> */}
     </h1>
   );
 }
