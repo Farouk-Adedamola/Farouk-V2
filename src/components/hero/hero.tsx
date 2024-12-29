@@ -88,7 +88,7 @@ const Hero: React.FC = () => {
 
   return (
     <section
-      className="section_layout flex w-full flex-col xl:flex-row xl:items-center xl:justify-between "
+      className=" flex w-full flex-col xl:flex-row xl:items-center xl:justify-between "
       onMouseMove={handleMouseMove}
     >
       <div className="flex flex-col justify-start gap-4 xl:max-w-[600px] xl:items-start">

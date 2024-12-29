@@ -120,7 +120,7 @@ export default function Header() {
       } transition-transform duration-300 ease-in-out`}
     >
       <nav
-        className="group relative mx-auto flex max-w-xl items-center justify-between rounded-[8px] px-4 py-3 shadow-[0_0_2rem_-0.5rem] shadow-emerald-500/30 transition-all duration-300 sm:max-w-2xl sm:justify-center sm:bg-darkTheme-primary"
+        className="group relative mx-auto flex max-w-xl items-center justify-between rounded-[8px] px-4 py-3 shadow-[0_0_2rem_-0.5rem] shadow-emerald-500/30 transition-all duration-300 sm:max-w-2xl sm:justify-center sm:bg-darkTheme-primary max-sm:bg-transparent"
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
@@ -179,7 +179,7 @@ export default function Header() {
         </button>
 
         {/* Mobile Menu Overlay */}
-        <div
+        {/* <div
           className={`fixed inset-0 z-[51] bg-black/50 backdrop-blur-sm transition-opacity duration-300 sm:hidden
             ${
               mobileMenuOpen
@@ -187,7 +187,7 @@ export default function Header() {
                 : 'pointer-events-none opacity-0'
             }`}
           onClick={() => setMobileMenuOpen(false)}
-        />
+        /> */}
 
         {/* Mobile Menu */}
         <div

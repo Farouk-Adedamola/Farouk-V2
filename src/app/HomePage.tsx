@@ -14,7 +14,7 @@ interface HomePageProps {
 
 export default function HomePage({ initialPosts }: HomePageProps) {
   return (
-    <h1 className="mx-auto mt-8 flex max-w-[1440px] flex-col justify-center">
+    <h1 className=" flex max-w-[1280px] flex-col items-center justify-center">
       <Hero />
       <ExperienceSection data={AllJobExperience} />
       <ProjectsSection data={Projectdata} />
