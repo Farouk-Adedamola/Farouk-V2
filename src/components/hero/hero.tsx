@@ -88,23 +88,23 @@ const Hero: React.FC = () => {
 
   return (
     <section
-      className=" flex w-full flex-col xl:flex-row xl:items-center xl:justify-between "
+      className=" flex w-full flex-col max-sm:gap-6 xl:flex-row xl:items-center xl:justify-between "
       onMouseMove={handleMouseMove}
     >
-      <div className="flex flex-col justify-start gap-4 xl:max-w-[600px] xl:items-start">
-        <div className="flex flex-col items-center justify-start gap-4 xl:items-start">
+      <div className="flex flex-col justify-start gap-2 xl:max-w-[600px] xl:items-start">
+        <div className="flex flex-col items-center justify-start xl:items-start">
           <Text
             weight="bold"
             size="xs"
             font="figtree"
-            className=" font-figtree font-bold"
+            className=" m-0 font-figtree font-bold"
           >
             Farouk Adedamola
           </Text>
-          <div className=' relative mt-3 inline-block w-fit  rounded-md bg-[#090D26] px-1.5 py-0.5  before:pointer-events-none before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-full before:bg-[url("/noise.gif")] before:opacity-[0.09] before:content-[""]'>
+          <div className=' relative  inline-block w-fit  rounded-md bg-[#090D26] px-1.5 py-0.5  before:pointer-events-none before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-full before:bg-[url("/noise.gif")] before:opacity-[0.09] before:content-[""]'>
             <Text
               weight="bold"
-              size="lg"
+              size="xl"
               font="figtree"
               className=" bg-gradient-to-t     from-[#a2b6fa] to-[#334cec] bg-clip-text text-transparent  "
             >
@@ -113,7 +113,12 @@ const Hero: React.FC = () => {
           </div>
         </div>
         <div>
-          <Text weight="bold" font="inter" size="md" className="xl:text-left">
+          <Text
+            weight="bold"
+            font="inter"
+            size="md"
+            className="text-center xl:text-left"
+          >
             I specialize in building elegant, accessible interfaces where
             thoughtful design meets clean code for the web.
           </Text>
@@ -124,7 +129,9 @@ const Hero: React.FC = () => {
         >
           More about me
         </Button>
-        <Socials socialStyles="gap-6" />
+        <div className="mt-4 flex items-center justify-center xl:justify-start">
+          <Socials socialStyles="gap-6" />
+        </div>
       </div>
       <div>
         {error ? (

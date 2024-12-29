@@ -15,7 +15,10 @@ import {
   Laptop2,
   List,
   MenuIcon,
+  ArrowBigDown,
 } from 'lucide-react';
+
+import Text from '../Text/text';
 
 const NAV_ITEMS = [
   {
@@ -37,28 +40,10 @@ const NAV_ITEMS = [
     icon: FolderGit2,
   },
   {
-    path: '/shorts',
-    name: 'Shorts',
-    description: 'Personal notes of snippets',
-    icon: FileText,
-  },
-  {
     path: '/about',
     name: 'About',
     description: 'Learn more about me!',
     icon: User,
-  },
-  {
-    path: '/uses',
-    name: 'Uses',
-    description: 'A peek into my digital workspace',
-    icon: Laptop2,
-  },
-  {
-    path: '/bucket-list',
-    name: 'Bucket List',
-    description: 'Things to do at least once in my life',
-    icon: List,
   },
 ];
 
@@ -115,12 +100,12 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed left-0 right-0 top-0 z-50 w-full px-4 py-6 ${
+      className={`fixed left-0 right-0 top-0 z-50 mx-auto w-full max-w-[1280px] px-4 py-6 ${
         visible ? 'translate-y-0' : '-translate-y-full'
       } transition-transform duration-300 ease-in-out`}
     >
       <nav
-        className="group relative mx-auto flex max-w-xl items-center justify-between rounded-[8px] px-4 py-3 shadow-[0_0_2rem_-0.5rem] shadow-emerald-500/30 transition-all duration-300 sm:max-w-2xl sm:justify-center sm:bg-darkTheme-primary max-sm:bg-transparent"
+        className="group relative mx-auto flex max-w-fit items-center justify-between rounded-[8px] px-6 py-3 shadow-[0_0_2rem_-0.5rem] shadow-emerald-500/30 transition-all  duration-300 sm:justify-center sm:bg-darkTheme-primary"
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
@@ -147,12 +132,12 @@ export default function Header() {
         </div>
 
         {/* Desktop Navigation */}
-        <ul className="relative hidden items-center sm:flex sm:space-x-6">
+        <ul className="border- relative hidden items-center border-b border-t border-gray-300 py-2 sm:flex ">
           {NAV_ITEMS.slice(0, 4).map((item) => (
             <li key={item.path}>
               <Link
                 href={item.path}
-                className={`relative px-2 py-1 font-figtree text-xl font-medium transition-all duration-200
+                className={`relative px-6 py-1 font-figtree text-xl font-medium transition-all duration-200  
                   ${
                     pathname === item.path
                       ? 'text-emerald-light'
@@ -168,30 +153,23 @@ export default function Header() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="relative z-[60] block sm:hidden"
+          className="relative z-[60] block self-end sm:hidden"
           aria-label="Toggle menu"
         >
           {mobileMenuOpen ? (
             <X className="h-6 w-6 text-gray-300" />
           ) : (
-            <Menu className="h-6 w-6 text-gray-300" />
+            <div className="flex gap-1">
+              <Text font="figtree" size="md">
+                Menu
+              </Text>
+              <ArrowBigDown className="h-6 w-6 text-gray-300" />
+            </div>
           )}
         </button>
 
-        {/* Mobile Menu Overlay */}
-        {/* <div
-          className={`fixed inset-0 z-[51] bg-black/50 backdrop-blur-sm transition-opacity duration-300 sm:hidden
-            ${
-              mobileMenuOpen
-                ? 'z-50 opacity-100'
-                : 'pointer-events-none opacity-0'
-            }`}
-          onClick={() => setMobileMenuOpen(false)}
-        /> */}
-
-        {/* Mobile Menu */}
         <div
-          className={`fixed bottom-0 left-0 right-0 top-0 z-[52] w-64 bg-darkTheme-primary p-6 shadow-lg transition-transform duration-300 ease-in-out sm:hidden
+          className={`fixed bottom-0 left-0 right-0 top-0 z-[52] w-64 bg-light-primary p-2 shadow-lg transition-transform duration-300 ease-in-out sm:hidden
             ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
         >
           <div className="mt-16 space-y-6">
