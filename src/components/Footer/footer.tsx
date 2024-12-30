@@ -2,20 +2,15 @@
 
 import React, { useState } from 'react';
 
-
-
 import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
 import { FaReact } from 'react-icons/fa';
 import { SiNotion, SiTypescript, SiRecoil } from 'react-icons/si';
 // import { RiNextjsLine } from 'react-icons/ri';
 // import { RiNextjsFill } from 'react-icons/ri';
-import { TbBrandNextjs } from "react-icons/tb";
-
-
+import { TbBrandNextjs } from 'react-icons/tb';
 
 import Socials from '../SocialLinks/socials';
 import Text from '../Text/text';
-
 
 interface TooltipPosition {
   x: number;
