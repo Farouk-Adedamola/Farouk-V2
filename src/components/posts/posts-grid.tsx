@@ -27,7 +27,7 @@ export default function PostsGrid({
   return (
     <section
       ref={rootRef}
-      className={`flex scroll-mt-12 flex-col items-center ${
+      className={`flex w-full scroll-mt-12 flex-col items-center ${
         moreBtn && 'section_layout'
       } `}
     >
@@ -48,7 +48,9 @@ export default function PostsGrid({
       {posts.length ? (
         <ul
           id="posts-grid"
-          className="mb-[64px] grid w-full grid-cols-1 gap-x-8 gap-y-32 md:grid-cols-2 xl:grid-cols-3"
+          className={`mb-[64px] grid w-full grid-cols-1 gap-x-8  gap-y-32 md:grid-cols-2 xl:grid-cols-3 ${
+            moreBtn ? '!gap-y-8' : 'gap-y-32'
+          }`}
         >
           {posts.map((post) => (
             <li key={post.slug}>

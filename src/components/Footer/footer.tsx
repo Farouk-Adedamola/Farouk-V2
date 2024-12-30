@@ -69,7 +69,7 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="mt-12">
+    <footer className="mt-12 w-full">
       <section className="mx-auto w-full border-t border-light-primary py-6 pt-8 xl:pt-11">
         <div className="flex flex-col items-center space-y-6">
           <Socials />
