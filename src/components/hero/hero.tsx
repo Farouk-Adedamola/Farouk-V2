@@ -123,12 +123,9 @@ const Hero: React.FC = () => {
             thoughtful design meets clean code for the web.
           </Text>
         </div>
-        <Button
-          onClick={() => router.push('/about')}
-          buttonStyles="font-inter text-lg font-normal xl:my-4"
-        >
-          More about me
-        </Button>
+        <div className="max-md:flex max-md:justify-center">
+          <Button onClick={() => router.push('/about')}>More about me</Button>
+        </div>
         <div className="mt-4 flex items-center justify-center xl:justify-start">
           <Socials socialStyles="gap-6" />
         </div>
