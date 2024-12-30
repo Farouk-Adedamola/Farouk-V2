@@ -136,7 +136,7 @@ export default function Header() {
 
           {/* Mobile Menu Panel */}
           <div
-            className={`fixed left-0 right-0 mt-4 bg-darkTheme-primary shadow-lg transition-opacity duration-300 ease-in-out
+            className={`fixed left-0 right-0 mt-4 flex max-w-[70%]  justify-self-end bg-darkTheme-primary shadow-lg transition-opacity duration-300 ease-in-out
               ${
                 mobileMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
               }`}
@@ -160,9 +160,12 @@ export default function Header() {
                       <item.icon className="h-5 w-5" />
                       <span>{item.name}</span>
                     </Link>
-                    <p className="mt-2 pl-8 text-sm text-gray-500">
+                    <Text
+                      font="figtree"
+                      className="mt-2 pl-8 text-sm text-gray-500"
+                    >
                       {item.description}
-                    </p>
+                    </Text>
                   </div>
                 ))}
               </div>
