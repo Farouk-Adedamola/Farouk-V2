@@ -88,7 +88,7 @@ const Hero: React.FC = () => {
 
   return (
     <section
-      className=" flex w-full flex-col sm:pb-10 max-sm:gap-6 md:flex-row xl:items-center xl:justify-between"
+      className=" flex w-full flex-col sm:pb-10 max-md:gap-6 md:flex-row xl:items-center xl:justify-between"
       onMouseMove={handleMouseMove}
     >
       <div className="flex flex-col justify-start gap-2 xl:max-w-[600px] xl:items-start">
@@ -133,7 +133,7 @@ const Hero: React.FC = () => {
           <Socials socialStyles="gap-6" />
         </div>
       </div>
-      <div>
+      {/* <div>
         {error ? (
           <Text className="text-error">{error}</Text>
         ) : isLoading ? (
@@ -149,7 +149,7 @@ const Hero: React.FC = () => {
             />
           )
         )}
-      </div>
+      </div> */}
     </section>
   );
 };

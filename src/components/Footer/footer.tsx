@@ -2,10 +2,20 @@
 
 import React, { useState } from 'react';
 
+
+
 import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
+import { FaReact } from 'react-icons/fa';
+import { SiNotion, SiTypescript, SiRecoil } from 'react-icons/si';
+// import { RiNextjsLine } from 'react-icons/ri';
+// import { RiNextjsFill } from 'react-icons/ri';
+import { TbBrandNextjs } from "react-icons/tb";
+
+
 
 import Socials from '../SocialLinks/socials';
 import Text from '../Text/text';
+
 
 interface TooltipPosition {
   x: number;
@@ -88,7 +98,28 @@ const Footer: React.FC = () => {
             Frontend Developer
           </Text>
 
-          <div className=" w-full  border-t border-light-primary pt-4">
+          <div className=" flex  w-full flex-col items-center space-y-1 border-t border-light-primary pt-4">
+            <div className="flex items-center justify-center gap-2">
+              <Text
+                font="figtree"
+                className="
+              flex items-center justify-center gap-2
+              "
+                size="md"
+                weight="medium"
+              >
+                Built with :{' '}
+                <span className="flex items-center justify-center gap-2">
+                  {/* <RiNextjsFill size={24} /> */}
+                  <TbBrandNextjs size={24} />
+                  <FaReact size={24} />
+                  <SiTypescript size={24} />
+                  <SiRecoil size={24} />
+                  {/* <SiShadcnui size={24} /> */}
+                  <SiNotion size={24} />
+                </span>
+              </Text>
+            </div>
             <Text
               font="figtree"
               weight="medium"

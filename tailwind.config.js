@@ -3,11 +3,11 @@ module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     screens: {
-      // 'xl': '1280px',
       'max-desktop': { max: '1279px' },
       sm: '640px',
-      'max-sm': { max: '639px' },
+      'max-md': { max: '767px' },
       md: '768px',
+
       lg: '1024px',
       xl: '1280px',
       '2xl': '1536px',

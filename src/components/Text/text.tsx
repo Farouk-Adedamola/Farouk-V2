@@ -38,7 +38,7 @@ const Text = ({
       red: 'text-red',
     },
     size: {
-      xs: 'text-[58px] max-desktop:text-[48px] max-sm:text-[40px] font-semibold ',
+      xs: 'text-[58px] max-desktop:text-[48px] max-md:text-[40px] font-semibold ',
       xl: 'text-[36px] max-desktop:text-[30px] font-semibold ',
       lg: 'text-[30px] max-desktop:text-[24px] font-normal',
       md: 'text-[22px] max-desktop:text-[18px] font-normal ',
