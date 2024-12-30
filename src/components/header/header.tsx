@@ -36,27 +36,46 @@ const NAV_ITEMS = [
   },
 ];
 
+const SCROLL_THRESHOLD = 50;
+const SCROLL_DELAY = 10;
+
 export default function Header() {
-  const [isScrolledDown, setIsScrolledDown] = useState(false);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
   const handleScroll = useCallback(() => {
     const currentScrollPos = window.scrollY;
-    setIsScrolledDown(currentScrollPos > 10);
-  }, []);
+    const scrollDifference = Math.abs(currentScrollPos - prevScrollPos);
+
+    if (scrollDifference > SCROLL_THRESHOLD) {
+      // Hide when scrolling down, show when scrolling up (reversed from previous version)
+      setVisible(currentScrollPos < prevScrollPos || currentScrollPos < 5);
+      setPrevScrollPos(currentScrollPos);
+      setMobileMenuOpen(false);
+    }
+  }, [prevScrollPos]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    let timeoutId: NodeJS.Timeout;
+
+    const debouncedScroll = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(handleScroll, SCROLL_DELAY);
+    };
+
+    window.addEventListener('scroll', debouncedScroll);
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('scroll', debouncedScroll);
+    };
   }, [handleScroll]);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [pathname]);
 
-  // Toggle body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? 'hidden' : 'unset';
     return () => {
@@ -66,65 +85,68 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed left-0 right-0 top-0 z-50 w-full transition-transform duration-300
-        ${isScrolledDown ? '-translate-y-full' : 'translate-y-0'}`}
+      className={`fixed left-0 right-0 top-0 z-50 w-full transition-opacity duration-500 ease-in-out
+        ${visible ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
     >
       <div className="mx-auto max-w-[1280px] px-4 py-6">
-        <nav className="mx-auto max-w-fit rounded-lg bg-darkTheme-primary shadow-lg">
-          {/* Desktop Navigation */}
-          <div className="hidden sm:block">
-            <ul className="flex items-center border-y border-gray-300 p-4">
-              {NAV_ITEMS.map((item) => (
-                <li key={item.path} className="px-2">
-                  <Link
-                    href={item.path}
-                    className={`group relative inline-flex items-center gap-2 px-4 py-2 font-figtree text-lg font-medium transition-colors duration-200
-                      ${
-                        pathname === item.path
-                          ? 'text-emerald-light'
-                          : 'text-gray-300 hover:text-white'
-                      }`}
-                  >
-                    <item.icon className="h-5 w-5" />
-                    <span>{item.name}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        {/* Desktop Navigation */}
+        <nav className="mx-auto hidden max-w-fit rounded-lg bg-darkTheme-primary shadow-lg sm:block">
+          <ul className="flex items-center border-y border-gray-300 p-4">
+            {NAV_ITEMS.map((item) => (
+              <li key={item.path} className="px-2">
+                <Link
+                  href={item.path}
+                  className={`group relative inline-flex items-center gap-2 px-4 py-2 font-figtree text-lg font-medium transition-colors duration-200
+                    ${
+                      pathname === item.path
+                        ? 'text-emerald-light'
+                        : 'text-gray-300 hover:text-white'
+                    }`}
+                >
+                  <item.icon className="h-5 w-5" />
+                  <span>{item.name}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-          {/* Mobile Navigation */}
-          <div className="sm:hidden">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex w-full items-center justify-between p-4"
-              aria-label="Toggle menu"
+        {/* Mobile Navigation */}
+        <div className="sm:hidden">
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="ml-auto flex items-center rounded-lg bg-darkTheme-primary px-4 py-2 shadow-lg"
+            aria-label="Toggle menu"
+          >
+            <Text
+              font="figtree"
+              size="md"
+              weight="bold"
+              className="flex items-center gap-2"
             >
-              <Text
-                font="figtree"
-                size="md"
-                weight="bold"
-                className="flex items-center gap-2"
-              >
-                Menu
-                {mobileMenuOpen ? (
-                  <MdKeyboardArrowUp size={24} />
-                ) : (
-                  <MdKeyboardArrowDown size={24} />
-                )}
-              </Text>
-            </button>
+              Menu
+              {mobileMenuOpen ? (
+                <MdKeyboardArrowUp size={24} />
+              ) : (
+                <MdKeyboardArrowDown size={24} />
+              )}
+            </Text>
+          </button>
 
-            {/* Mobile Menu Panel */}
-            <div
-              className={`transform-gpu overflow-hidden transition-all duration-300 ease-in-out
-                ${mobileMenuOpen ? 'max-h-screen' : 'max-h-0'}`}
-            >
-              <div className="space-y-4 p-4">
+          {/* Mobile Menu Panel */}
+          <div
+            className={`fixed left-0 right-0 mt-4 bg-darkTheme-primary shadow-lg transition-opacity duration-300 ease-in-out
+              ${
+                mobileMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
+              }`}
+          >
+            <div className="max-h-[70vh] overflow-y-auto">
+              <div className="space-y-4 p-6">
                 {NAV_ITEMS.map((item) => (
                   <div
                     key={item.path}
-                    className="border-b border-gray-800 pb-4"
+                    className="border-b border-gray-800 pb-4 last:border-none"
                   >
                     <Link
                       href={item.path}
@@ -146,7 +168,7 @@ export default function Header() {
               </div>
             </div>
           </div>
-        </nav>
+        </div>
       </div>
     </header>
   );
