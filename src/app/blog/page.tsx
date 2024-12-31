@@ -26,7 +26,7 @@ export default async function BlogPage() {
         <SearchBar />
         <CategoryFilter allCategories={allCategories} />
       </section>
-      <PostsGrid allPosts={allPosts} />
+      <PostsGrid paginate allPosts={allPosts} />
     </>
   );
 }
