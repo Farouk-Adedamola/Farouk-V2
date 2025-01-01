@@ -48,7 +48,7 @@ export default function PostsGrid({
       {posts.length ? (
         <ul
           id="posts-grid"
-          className={`mb-[64px] grid w-full grid-cols-1 gap-x-8  gap-y-32 md:grid-cols-2 xl:grid-cols-3 ${
+          className={`mb-[64px] grid w-full grid-cols-1 items-start justify-start gap-x-8  gap-y-32 md:grid-cols-2 xl:grid-cols-3 ${
             moreBtn ? '!gap-y-8' : 'gap-y-32'
           }`}
         >

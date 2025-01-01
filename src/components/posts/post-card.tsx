@@ -15,9 +15,8 @@ export default function PostCard({
   post: Post;
 }) {
   return (
-    <Link href={`/blog/${slug}`} className="group block">
+    <Link href={`/blog/${slug}`} className="group block w-full">
       <article className="relative mx-auto max-w-[25rem] overflow-hidden rounded-xl bg-white/5 backdrop-blur-sm transition-all duration-300 hover:bg-white/10 dark:hover:shadow-lg dark:hover:shadow-white/5">
-        {/* Image Container */}
         <div className="relative h-[280px] overflow-hidden">
           <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent to-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
           <Image
@@ -39,9 +38,7 @@ export default function PostCard({
           </div>
         </div>
 
-        {/* Content Container */}
         <div className="relative space-y-4 p-6">
-          {/* Meta Information */}
           <div className="flex items-center gap-4">
             <time className="font-figtree text-sm font-medium text-gray-400 transition-colors duration-300 group-hover:text-gray-300">
               {date}
@@ -49,7 +46,6 @@ export default function PostCard({
             <CategoryList categories={categories} />
           </div>
 
-          {/* Title */}
           <Text
             font="figtree"
             size="md"
@@ -58,7 +54,6 @@ export default function PostCard({
             {title}
           </Text>
 
-          {/* Hover Indicator */}
           <div className="absolute bottom-0 left-0 h-[2px] w-full">
             <div className="h-full w-full scale-x-0 transform bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transition-transform duration-300 ease-out group-hover:scale-x-100" />
           </div>
