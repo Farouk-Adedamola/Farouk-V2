@@ -86,14 +86,20 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => (
             </Text>
           </div>
 
-          <Text
-            size="sm"
-            font="figtree"
-            weight="normal"
-            className="mb-4 text-gray-400"
-          >
-            {experience.description}
-          </Text>
+          <ul className="leading-6">
+            {experience.description.map((desc, index) => (
+              <li key={`desc-${index}`}>
+                <Text
+                  size="sm"
+                  font="figtree"
+                  weight="normal"
+                  className="mb-4 text-gray-400"
+                >
+                  {desc}
+                </Text>
+              </li>
+            ))}
+          </ul>
 
           <div className="flex flex-wrap gap-2">
             {experience.tools.map((tool) => (
