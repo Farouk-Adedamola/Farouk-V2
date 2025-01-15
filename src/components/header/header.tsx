@@ -141,7 +141,7 @@ export default function Header() {
                 mobileMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
               }`}
           >
-            <div className="max-h-[70vh] overflow-y-auto">
+            <div className="h-full overflow-y-auto">
               <div className="space-y-4 p-6">
                 {NAV_ITEMS.map((item) => (
                   <div

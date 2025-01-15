@@ -130,12 +130,12 @@ const Hero: React.FC = () => {
           <Socials socialStyles="gap-6" />
         </div>
       </div>
-      {/* <div>
+      <div>
         {error ? (
           <Text className="text-error">{error}</Text>
         ) : isLoading ? (
-          <div className="flex items-center justify-center">
-            <Text>Loading...</Text>
+          <div className="flex items-center justify-start">
+            <Text className="text-left">Loading...</Text>
           </div>
         ) : (
           wakatimeData &&
@@ -146,7 +146,7 @@ const Hero: React.FC = () => {
             />
           )
         )}
-      </div> */}
+      </div>
     </section>
   );
 };

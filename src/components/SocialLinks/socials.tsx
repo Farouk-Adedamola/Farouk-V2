@@ -10,15 +10,19 @@ type SocialProps = {
 };
 
 const socialLinks: SocialProps[] = [
-  { icon: Github, href: 'https://github.com/yourusername', label: 'GitHub' },
+  {
+    icon: Github,
+    href: 'https://github.com/Farouk-Adedamola',
+    label: 'GitHub',
+  },
   {
     icon: Twitter,
-    href: 'https://twitter.com/yourusername',
+    href: 'https://x.com/Farouk_fish',
     label: 'Twitter',
   },
   {
     icon: Linkedin,
-    href: 'https://linkedin.com/in/yourusername',
+    href: 'https://www.linkedin.com/in/farouk-adedamola/',
     label: 'LinkedIn',
   },
   {
@@ -42,9 +46,9 @@ const Socials = ({ socialStyles }: { socialStyles?: string }) => {
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative rounded-full transition-colors hover:bg-gray-800"
+          className=""
         >
-          <Icon className=" h-6 w-6 text-gray-400 transition-colors group-hover:text-emerald-light" />
+          <Icon className=" h-6 w-6 text-gray-400 transition-colors" />
         </a>
       ))}
     </motion.div>

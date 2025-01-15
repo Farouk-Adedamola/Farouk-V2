@@ -1,49 +1,48 @@
 'use client';
 
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { motion } from 'framer-motion';
+import { useRecoilState } from 'recoil';
 
 import { categoriesState } from '@/states/categories';
-import { pageState } from '@/states/page';
-import { isTouchDevice } from '@/utils/is-touch-device';
 
 export default function Category({ category }: { category: string }) {
   const [categories, setCategories] = useRecoilState(categoriesState);
-  const setPage = useSetRecoilState(pageState);
-  const checked = categories.selected.includes(category);
-  const active = categories.active.includes(category);
+  const isSelected = categories.selected.includes(category);
+  const isActive = categories.active.includes(category);
 
-  const handleCategoryClick = (category: string) => () => {
-    setCategories((prevCategories) => {
-      if (prevCategories.selected.includes(category)) {
-        return {
-          ...prevCategories,
-          selected: prevCategories.selected.filter(
-            (value) => value !== category
-          ),
-        };
-      } else {
-        return {
-          ...prevCategories,
-          selected: [...prevCategories.selected, category],
-        };
-      }
-    });
-
-    setPage(1);
+  const handleClick = () => {
+    setCategories((prev) => ({
+      ...prev,
+      selected: isSelected
+        ? prev.selected.filter((c) => c !== category)
+        : [...prev.selected, category],
+    }));
   };
 
   return (
-    <button
-      onClick={handleCategoryClick(category)}
-      className={`my-2 mr-6 cursor-pointer rounded-full px-6 py-2 ring-error ring-offset-customGray-dark transition-all duration-300 hover:ring-offset-4 ${
-        checked
-          ? ' bg-white text-black ring-[3px] ring-offset-4'
-          : 'bg-secondary'
-      } ${!active && 'pointer-events-none opacity-25'} ${
-        active && !isTouchDevice() && 'hover:ring-[3px]'
-      }`}
+    <motion.button
+      whileTap={{ scale: 0.95 }}
+      onClick={handleClick}
+      className={`
+        relative rounded-full px-4 py-2 text-sm font-medium
+        transition-all duration-200
+        ${
+          isSelected
+            ? 'bg-emerald-500/20 text-emerald-300 ring-1 ring-emerald-500/50'
+            : 'bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white'
+        }
+        ${!isActive && !isSelected && 'opacity-60'}
+      `}
     >
       {category}
-    </button>
+
+      {/* Optional: Active indicator dot */}
+      {isActive && !isSelected && (
+        <span
+          className="absolute right-2 top-1/2 h-1.5 w-1.5 -translate-y-1/2 
+          rounded-full bg-emerald-400"
+        />
+      )}
+    </motion.button>
   );
 }

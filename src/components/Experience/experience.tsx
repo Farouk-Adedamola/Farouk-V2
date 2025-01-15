@@ -61,7 +61,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => (
           <span className="text-sm text-gray-400">{experience.location}</span>
         </div>
 
-        <div className="group rounded-lg p-6 transition-all duration-500 hover:bg-darkTheme-primary-dark">
+        <div className="group rounded-lg bg-darkTheme-primary-dark p-6 transition-all duration-500">
           <div className="mb-4 flex items-baseline justify-between">
             <Text
               font="figtree"

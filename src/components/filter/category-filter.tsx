@@ -1,5 +1,7 @@
 'use client';
 
+import { motion, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
 import { useRecoilState } from 'recoil';
 
 import Category from '@/components/filter/category';
@@ -21,23 +23,53 @@ export default function CategoryFilter({
   };
 
   return (
-    <div className="flex flex-col items-center space-y-4 md:items-start">
-      <div className="flex items-center">
-        <h2 className="text-xl font-bold">Search by topics</h2>
-        <button
-          onClick={handleClearAll}
-          className={`relative -right-10 text-xs ${
-            !clearAllActive &&
-            'pointer-events-none text-gray-600'
-          }`}
-        >
-          Clear All
-        </button>
+    <div className="w-full max-w-2xl space-y-4">
+      <div className="flex items-center justify-between">
+        <h2 className="text-lg font-semibold text-gray-200">
+          Filter by Topics
+        </h2>
+        <AnimatePresence>
+          {clearAllActive && (
+            <motion.button
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              onClick={handleClearAll}
+              className="group flex items-center gap-2 rounded-full bg-white/5 px-3 py-1.5 
+                text-sm text-gray-400 backdrop-blur-sm transition-all duration-200 
+                hover:bg-white/10 hover:text-white"
+            >
+              Clear All
+              <X className="h-3.5 w-3.5 opacity-70 transition-opacity group-hover:opacity-100" />
+            </motion.button>
+          )}
+        </AnimatePresence>
       </div>
-      <div className="flex min-h-[56px] w-[90vw] max-w-[36rem] flex-wrap justify-start gap-y-[0.3rem]">
-        {allCategories.map((category) => (
-          <Category key={category} category={category} />
-        ))}
+
+      <div
+        className="relative rounded-xl bg-white/5 p-4 ring-1 
+        ring-white/10 backdrop-blur-sm transition-all duration-200 hover:ring-white/20"
+      >
+        <div className="flex flex-wrap gap-2">
+          {allCategories.map((category) => (
+            <Category key={category} category={category} />
+          ))}
+        </div>
+
+        {/* Optional: Empty state */}
+        {allCategories.length === 0 && (
+          <p className="py-2 text-center text-sm text-gray-400">
+            No categories available
+          </p>
+        )}
+
+        {/* Gradient border effect */}
+        <div className="absolute inset-x-0 -bottom-px h-[2px] overflow-hidden rounded-full">
+          <div
+            className="h-full w-full bg-gradient-to-r from-emerald-500/0 via-emerald-500/50 to-emerald-500/0 
+            transition-transform duration-300"
+          />
+        </div>
       </div>
     </div>
   );
