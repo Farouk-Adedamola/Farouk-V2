@@ -5,7 +5,7 @@ import React, { use, useEffect, useState } from 'react';
 
 import axios from 'axios';
 
-import Button from '../Button/button';
+import { Button } from '../Button/button';
 import Socials from '../SocialLinks/socials';
 import Stack from '../Stack/stack';
 import Text from '../Text/text';

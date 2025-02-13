@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 
 import { motion } from 'framer-motion';
 
-import Button from '../Button/button';
+import { Button } from '../Button/button';
 import Text from '../Text/text';
 import { ProjectProps } from '@/utils/data';
 

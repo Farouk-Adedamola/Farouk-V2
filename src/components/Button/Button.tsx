@@ -9,7 +9,7 @@ type ButtonProps = {
   isLink?: boolean;
 };
 
-const Button: React.FC<ButtonProps> = ({
+export const Button: React.FC<ButtonProps> = ({
   children,
   buttonStyles,
   onClick,
@@ -70,5 +70,3 @@ const Button: React.FC<ButtonProps> = ({
     </section>
   );
 };
-
-export default Button;

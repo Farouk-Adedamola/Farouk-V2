@@ -30,32 +30,34 @@ const Text = ({
   description?: boolean;
   font?: Font;
 }) => {
-  const variant = {
-    color: {
-      primary: 'text-primary',
-      secondary: 'text-secondary',
-      white: 'text-white',
-      red: 'text-red',
-    },
-    size: {
-      xs: 'text-[58px] max-desktop:text-[48px] max-md:text-[40px] font-semibold ',
-      xl: 'text-[36px] max-desktop:text-[30px] font-semibold ',
-      lg: 'text-[30px] max-desktop:text-[24px] font-normal',
-      md: 'text-[22px] max-desktop:text-[18px] font-normal ',
-      sm: 'text-[18px] max-desktop:text-[14px] font-normal ',
-    },
-    weight: {
-      normal: 'font-normal',
-      bold: 'font-bold',
-      semibold: 'font-semibold',
-      medium: 'font-medium',
-    },
-
-    font: {
-      inter: 'font-inter',
-      figtree: 'font-figtree',
-    },
-  };
+  const variant = useMemo(
+    () => ({
+      color: {
+        primary: 'text-primary',
+        secondary: 'text-secondary',
+        white: 'text-white',
+        red: 'text-red',
+      },
+      size: {
+        xs: 'text-[58px] max-desktop:text-[48px] max-md:text-[40px] font-semibold',
+        xl: 'text-[36px] max-desktop:text-[30px] font-semibold',
+        lg: 'text-[30px] max-desktop:text-[24px] font-normal',
+        md: 'text-[22px] max-desktop:text-[18px] font-normal',
+        sm: 'text-[18px] max-desktop:text-[14px] font-normal',
+      },
+      weight: {
+        normal: 'font-normal',
+        bold: 'font-bold',
+        semibold: 'font-semibold',
+        medium: 'font-medium',
+      },
+      font: {
+        inter: 'font-inter',
+        figtree: 'font-figtree',
+      },
+    }),
+    []
+  );
 
   const textColor = useMemo(() => {
     return variant?.color?.[color as keyof typeof variant.color];
