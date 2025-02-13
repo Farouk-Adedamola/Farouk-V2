@@ -5,10 +5,10 @@ import React, { use, useEffect, useState } from 'react';
 
 import axios from 'axios';
 
-import { Button } from '../Button/button';
-import Socials from '../SocialLinks/socials';
-import Stack from '../Stack/stack';
-import Text from '../Text/text';
+import { Button } from '@/components/Button/button';
+import Socials from '@/components/SocialLinks/socials';
+import Stack from '@/components/Stack/stack';
+import Text from '@/components/Text/text';
 
 export type WakatimeData = {
   name?: string;

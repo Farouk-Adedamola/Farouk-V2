@@ -3,8 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
-import { Button } from '../Button/button';
 import Text from '../Text/text';
+import { Button } from '@/components/Button/button';
 import Paginate from '@/components/paginate';
 import PostCard from '@/components/posts/post-card';
 import usePosts from '@/hooks/use-posts';
