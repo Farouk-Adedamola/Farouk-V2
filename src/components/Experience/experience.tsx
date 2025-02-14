@@ -12,7 +12,10 @@ type ExperienceSectionProps = {
 export const ExperienceSection = ({ data }: ExperienceSectionProps) => {
   return (
     <section className="section_layout">
-      <Text font="figtree" weight="bold" size="xs" className="mb-8 font-bold">
+      <Text
+        font="figtree"
+        className="mb-8 !text-[30px] !font-medium lg:!text-[48px] "
+      >
         Experiences{' '}
         <span className="inline-block h-4 w-4 rounded-full bg-emerald-light"></span>
       </Text>
@@ -52,7 +55,6 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => (
         <div className="mb-2 flex items-baseline justify-between">
           <Text
             font="figtree"
-            weight="bold"
             className=" text-[16px] font-medium text-gray-200 lg:text-[30px]"
           >
             {experience.duration}
@@ -67,7 +69,6 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => (
             <Text
               font="figtree"
               size="md"
-              weight="bold"
               className="flex items-center gap-2 font-semibold text-white"
             >
               {experience.title} · {experience.company}
@@ -93,8 +94,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => (
                 <Text
                   size="sm"
                   font="figtree"
-                  weight="normal"
-                  className="mb-4 text-gray-400"
+                  className="mb-4 font-normal text-gray-400"
                 >
                   {desc}
                 </Text>

@@ -35,9 +35,7 @@ export default function PostsGrid({
         <div className="self-start">
           <Text
             font="figtree"
-            weight="bold"
-            size="xs"
-            className="mb-8 font-bold "
+            className="mb-8 !text-[30px] font-medium lg:!text-[48px]"
           >
             Selected Posts{' '}
             <span className="inline-block h-4 w-4 rounded-full bg-emerald-light"></span>

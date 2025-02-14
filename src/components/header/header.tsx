@@ -122,8 +122,7 @@ export default function Header() {
             <Text
               font="figtree"
               size="md"
-              weight="bold"
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 font-bold"
             >
               Menu
               {mobileMenuOpen ? (

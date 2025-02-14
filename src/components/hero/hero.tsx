@@ -95,18 +95,16 @@ const Hero: React.FC = () => {
       <div className="flex w-full flex-col justify-between gap-2 lg:max-w-[50%] xl:items-start">
         <div className="flex flex-col items-center justify-start lg:items-start">
           <Text
-            weight="bold"
             font="figtree"
-            className=" m-0 font-figtree !text-[36px] font-bold lg:!text-[48px]"
+            className=" m-0 font-figtree !text-[36px] font-bold font-bold lg:!text-[48px]"
           >
             Farouk Adedamola
           </Text>
           <div className=' relative  inline-block w-fit  rounded-md bg-[#090D26] px-1.5 py-0.5  before:pointer-events-none before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-full before:bg-[url("/noise.gif")] before:opacity-[0.09] before:content-[""]'>
             <Text
-              weight="bold"
               size="xl"
               font="figtree"
-              className=" bg-gradient-to-t     from-[#a2b6fa] to-[#334cec] bg-clip-text text-transparent  "
+              className=" bg-gradient-to-t     from-[#a2b6fa] to-[#334cec] bg-clip-text text-transparent  font-bold"
             >
               Frontend Engineer
             </Text>
@@ -114,10 +112,9 @@ const Hero: React.FC = () => {
         </div>
         <div>
           <Text
-            weight="bold"
             font="inter"
             size="md"
-            className="text-center lg:!text-left"
+            className="text-center lg:!text-left font-bold"
           >
             Hi i&apos;m a creative coder and Frontend Engineer with over 4 years
             of experience crafting digital experiences where I bring designs to

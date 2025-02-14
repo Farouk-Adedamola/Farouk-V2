@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 
 type Color = 'primary' | 'secondary' | 'white' | 'red';
 type Size = 'xl' | 'lg' | 'md' | 'sm' | 'xs';
-type Weight = 'normal' | 'bold' | 'semibold' | 'medium';
 type Font = 'inter' | 'figtree';
 
 const Text = ({
@@ -10,7 +9,6 @@ const Text = ({
   color = 'secondary',
   className = '',
   size = 'md',
-  weight = 'normal',
   onClick,
   style,
   header = false,
@@ -22,7 +20,6 @@ const Text = ({
   color?: Color;
   className?: string;
   size?: Size;
-  weight?: Weight;
   onClick?: () => void;
   style?: React.CSSProperties;
   header?: boolean;
@@ -45,12 +42,6 @@ const Text = ({
         md: 'text-[22px] max-desktop:text-[18px] font-normal',
         sm: 'text-[18px] max-desktop:text-[14px] font-normal',
       },
-      weight: {
-        normal: 'font-normal',
-        bold: 'font-bold',
-        semibold: 'font-semibold',
-        medium: 'font-medium',
-      },
       font: {
         inter: 'font-inter',
         figtree: 'font-figtree',
@@ -69,8 +60,8 @@ const Text = ({
       {header ? (
         <h1
           className={`${textColor} ${variant.font[font]} ${
-            variant.weight[weight] ?? ''
-          } ${variant.size[size] ?? ''} ${className}`}
+            variant.size[size] ?? ''
+          } ${className}`}
           {...(onClick && { onClick })}
           style={style}
         >
@@ -78,9 +69,9 @@ const Text = ({
         </h1>
       ) : subheader ? (
         <h2
-          className={`${textColor} ${variant.font[font]} ${
-            variant.weight[weight] ?? ''
-          } ${variant.size[size] ?? ''} ${className}`}
+          className={`${textColor} ${variant.font[font]}  ${
+            variant.size[size] ?? ''
+          } ${className}`}
           {...(onClick && { onClick })}
           style={style}
         >
@@ -88,9 +79,9 @@ const Text = ({
         </h2>
       ) : description ? (
         <p
-          className={`${textColor} ${variant.font[font]} ${
-            variant.weight[weight] ?? ''
-          } ${variant.size[size] ?? ''} ${className}`}
+          className={`${textColor} ${variant.font[font]}  ${
+            variant.size[size] ?? ''
+          } ${className}`}
           {...(onClick && { onClick })}
           style={style}
         >
@@ -98,9 +89,9 @@ const Text = ({
         </p>
       ) : (
         <p
-          className={`${textColor} ${variant.font[font]} ${
-            variant.weight[weight] ?? ''
-          } ${variant.size[size] ?? ''} ${className}`}
+          className={`${textColor} ${variant.font[font]}  ${
+            variant.size[size] ?? ''
+          } ${className}`}
           {...(onClick && { onClick })}
           style={style}
         >

@@ -20,7 +20,10 @@ const ProjectsSection = ({ data }: ProjectSectionProps) => {
 
   return (
     <section className="section_layout">
-      <Text font="figtree" weight="bold" size="xs" className="mb-8">
+      <Text
+        font="figtree"
+        className="mb-8 !text-[30px] !font-medium lg:!text-[48px]"
+      >
         Featured Projects{' '}
         <span className="inline-block h-4 w-4 rounded-full bg-emerald-light"></span>
       </Text>
@@ -64,15 +67,14 @@ const ProjectCard = ({
         />
       </div>
       <div className="rounded-lg border border-dashed border-lightTheme-text p-4">
-        <Text font="figtree" weight="bold" size="lg" className="mb-2" header>
+        <Text font="figtree" size="lg" className="mb-2 font-bold" header>
           {project.name}
         </Text>
         <Text
           description
-          weight="normal"
           font="figtree"
           size="md"
-          className="mb-4 text-customGray-base"
+          className="mb-4 font-normal text-customGray-base"
         >
           {project.description}
         </Text>

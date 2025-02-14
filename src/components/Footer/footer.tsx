@@ -27,14 +27,13 @@ const Footer: React.FC = () => {
           <div className=' relative mt-3 inline-block w-fit  rounded-md bg-[#090D26] px-1.5 py-0.5  before:pointer-events-none before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-full before:bg-[url("/noise.gif")] before:opacity-[0.09] before:content-[""]'>
             <Text
               font="figtree"
-              weight="bold"
               header
-              className=" bg-gradient-to-t from-[#a2b6fa] to-[#334cec] bg-clip-text text-[24px]  text-transparent lg:text-[36px]"
+              className=" bg-gradient-to-t from-[#a2b6fa] to-[#334cec] bg-clip-text text-[24px] font-bold  text-transparent lg:text-[36px]"
             >
               Farouk Adedamola
             </Text>
           </div>
-          <Text font="figtree" size="lg" weight="bold" className="" subheader>
+          <Text font="figtree" size="lg" className="font-bold" subheader>
             Frontend Developer
           </Text>
 
@@ -43,10 +42,9 @@ const Footer: React.FC = () => {
               <Text
                 font="figtree"
                 className="
-              flex items-center justify-center gap-2
+              flex items-center justify-center gap-2 font-medium
               "
                 size="md"
-                weight="medium"
               >
                 Built with :{' '}
                 <span className="flex items-center justify-center gap-2">
@@ -109,9 +107,8 @@ const Footer: React.FC = () => {
             </div>
             <Text
               font="figtree"
-              weight="medium"
               size="sm"
-              className="m-0 text-center"
+              className="m-0 text-center font-medium"
             >
               © {currentYear} Farouk Adedamola. All rights reserved.
             </Text>
