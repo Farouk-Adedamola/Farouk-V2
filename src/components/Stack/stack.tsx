@@ -36,7 +36,7 @@ const Stack: React.FC<StackProps> = ({ data, code_hours }) => {
       </div>
 
       {code_hours && (
-        <div className="mb-8 grid grid-cols-1 gap-6 xl:grid-cols-3">
+        <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

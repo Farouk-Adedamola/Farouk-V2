@@ -77,7 +77,7 @@ export async function generateMetadata({
   return post
     ? {
         title: post.title,
-        openGraph: {},
+        // openGraph: {},
       }
     : {};
 }
