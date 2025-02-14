@@ -92,8 +92,8 @@ const Hero: React.FC = () => {
       className=" flex w-full flex-col sm:pb-10 max-md:gap-6 lg:flex-row xl:items-center xl:justify-between"
       onMouseMove={handleMouseMove}
     >
-      <div className="flex w-full flex-col justify-start gap-2 lg:max-w-[50%] xl:items-start">
-        <div className="flex flex-col items-center justify-start xl:items-start">
+      <div className="flex w-full flex-col justify-between gap-2 lg:max-w-[50%] xl:items-start">
+        <div className="flex flex-col items-center justify-start lg:items-start">
           <Text
             weight="bold"
             font="figtree"
@@ -119,14 +119,15 @@ const Hero: React.FC = () => {
             size="md"
             className="text-center lg:!text-left"
           >
-            I specialize in building elegant, accessible interfaces where
-            thoughtful design meets clean code for the web.
+            Hi i&apos;m a creative coder and Frontend Engineer with over 4 years
+            of experience crafting digital experiences where I bring designs to
+            life with clean and efficient code for the web.
           </Text>
         </div>
         <div className="max-md:flex max-md:justify-center">
           {/* <Button onClick={() => router.push('/about')}>More about me</Button> */}
         </div>
-        <div className="mt-4 flex items-center justify-center xl:justify-start">
+        <div className="mt-4 flex items-center justify-center lg:justify-start">
           <Socials socialStyles="gap-6" />
         </div>
       </div>
