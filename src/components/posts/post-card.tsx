@@ -10,24 +10,15 @@ import CategoryList from '@/components/category-list';
 import { Post } from '@/types/post';
 
 export default function PostCard({
-  post: { slug, title, date, categories, cover, blurUrl },
+  post: { slug, title, date, categories },
 }: {
   post: Post;
 }) {
   return (
     <Link href={`/blog/${slug}`} className="group block w-full">
       <article className="relative mx-auto max-w-[25rem] overflow-hidden rounded-xl bg-white/5 backdrop-blur-sm transition-all duration-300 hover:bg-white/10 dark:hover:shadow-lg dark:hover:shadow-white/5">
-        <div className="relative h-[280px] overflow-hidden">
+        <div className="relative max-h-[280px] w-full overflow-hidden">
           <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent to-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-          <Image
-            src={cover}
-            alt={`Cover image for ${title}`}
-            fill
-            className="transition-all duration-500 group-hover:scale-105"
-            style={{ objectFit: 'cover' }}
-            placeholder="blur"
-            blurDataURL={blurUrl}
-          />
           <div className="absolute right-4 top-4 z-20">
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 backdrop-blur-md transition-all duration-300 group-hover:bg-white/20">
               <ArrowUpRight

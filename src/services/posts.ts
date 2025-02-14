@@ -1,6 +1,7 @@
 import { getRecordMap, mapImageUrl } from '@/libs/notion';
 import { Post } from '@/types/post';
-import { getBlurImage } from '@/utils/get-blur-image';
+
+// import { getBlurImage } from '@/utils/get-blur-image';
 
 export async function getAllPostsFromNotion() {
   const allPosts: Post[] = [];
@@ -32,7 +33,7 @@ export async function getAllPostsFromNotion() {
       const slug = properties[propertyMap['Slug']][0][0];
       const title = properties[propertyMap['Page']][0][0];
       const categories = properties[propertyMap['Category']][0][0].split(',');
-      const cover = properties[propertyMap['Cover']][0][1][0][1];
+      // const cover = properties[propertyMap['Cover']][0][1][0][1];
       const date = properties[propertyMap['Date']][0][1][0][1]['start_date'];
       const published = properties[propertyMap['Published']][0][0] === 'Yes';
 
@@ -41,19 +42,12 @@ export async function getAllPostsFromNotion() {
         title,
         slug,
         categories,
-        // Fix 403 error for images.
-        // https://github.com/NotionX/react-notion-x/issues/211
-        cover: mapImageUrl(cover, block[pageId].value) || '',
         date,
         published,
         lastEditedAt,
       });
     }
   });
-
-  const blurImagesPromises = allPosts.map((post) => getBlurImage(post.cover));
-  const blurImages = await Promise.all(blurImagesPromises);
-  allPosts.forEach((post, i) => (post.blurUrl = blurImages[i].base64));
 
   return allPosts;
 }

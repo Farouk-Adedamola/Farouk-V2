@@ -51,16 +51,6 @@ export default async function PostPage({
         data-revalidated-at={new Date().getTime()}
         className="mt-4 flex flex-col items-center md:mt-20"
       >
-        <div className="relative aspect-[3/2] w-[90vw] max-w-[900px]">
-          <Image
-            src={post.cover}
-            alt="cover"
-            fill
-            style={{ objectFit: 'contain' }}
-            placeholder="blur"
-            blurDataURL={post.blurUrl}
-          />
-        </div>
         <NotionPage post={post} recordMap={recordMap} />
       </article>
       <RelatedPosts posts={relatedPosts} />
@@ -87,15 +77,7 @@ export async function generateMetadata({
   return post
     ? {
         title: post.title,
-        openGraph: {
-          images: [
-            {
-              url: post.cover,
-              width: 400,
-              height: 300,
-            },
-          ],
-        },
+        openGraph: {},
       }
     : {};
 }
