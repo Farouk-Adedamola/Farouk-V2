@@ -29,7 +29,7 @@ const Footer: React.FC = () => {
               font="figtree"
               weight="bold"
               header
-              className=" bg-gradient-to-t from-[#a2b6fa] to-[#334cec] bg-clip-text text-transparent   max-md:text-[24px] "
+              className=" bg-gradient-to-t from-[#a2b6fa] to-[#334cec] bg-clip-text text-[24px]  text-transparent lg:text-[36px]"
             >
               Farouk Adedamola
             </Text>
