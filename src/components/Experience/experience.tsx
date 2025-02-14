@@ -52,13 +52,14 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => (
         <div className="mb-2 flex items-baseline justify-between">
           <Text
             font="figtree"
-            size="lg"
             weight="bold"
-            className="text-lg font-medium text-gray-200"
+            className=" text-[16px] font-medium text-gray-200 lg:text-[30px]"
           >
             {experience.duration}
           </Text>
-          <span className="text-sm text-gray-400">{experience.location}</span>
+          <span className="text-xs text-gray-400 lg:text-sm">
+            {experience.location}
+          </span>
         </div>
 
         <div className="group rounded-lg bg-darkTheme-primary-dark p-6 transition-all duration-500">

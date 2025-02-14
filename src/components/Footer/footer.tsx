@@ -27,10 +27,9 @@ const Footer: React.FC = () => {
           <div className=' relative mt-3 inline-block w-fit  rounded-md bg-[#090D26] px-1.5 py-0.5  before:pointer-events-none before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-full before:bg-[url("/noise.gif")] before:opacity-[0.09] before:content-[""]'>
             <Text
               font="figtree"
-              size="xs"
               weight="bold"
               header
-              className=" bg-gradient-to-t     from-[#a2b6fa] to-[#334cec] bg-clip-text text-transparent  "
+              className=" bg-gradient-to-t from-[#a2b6fa] to-[#334cec] bg-clip-text text-transparent   max-md:text-[24px] "
             >
               Farouk Adedamola
             </Text>

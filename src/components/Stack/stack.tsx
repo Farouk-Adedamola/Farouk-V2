@@ -47,7 +47,7 @@ const Stack: React.FC<StackProps> = ({ data, code_hours }) => {
               <Clock size={16} />
               <Text className="text-xs uppercase">Total Time</Text>
             </div>
-            <Text className="text-lg font-semibold text-gray-200">
+            <Text className="text-[14px] font-semibold text-gray-200 lg:text-lg">
               {code_hours.grand_total?.human_readable_total}
             </Text>
           </motion.div>
@@ -62,7 +62,7 @@ const Stack: React.FC<StackProps> = ({ data, code_hours }) => {
               <Activity size={16} />
               <Text className="text-xs uppercase">Daily Average</Text>
             </div>
-            <Text className="text-lg font-semibold text-gray-200">
+            <Text className="text-[14px] font-semibold text-gray-200 lg:text-lg">
               {code_hours.grand_total?.human_readable_daily_average}
             </Text>
           </motion.div>
@@ -77,7 +77,7 @@ const Stack: React.FC<StackProps> = ({ data, code_hours }) => {
               <Calendar size={16} />
               <Text className="text-xs uppercase">Best Day</Text>
             </div>
-            <Text className="text-lg font-semibold text-gray-200">
+            <Text className="text-[14px] font-semibold text-gray-200 lg:text-lg">
               {code_hours.best_day?.text}
             </Text>
             <Text className="text-xs text-gray-500">

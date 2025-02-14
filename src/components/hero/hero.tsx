@@ -8,6 +8,7 @@ import axios from 'axios';
 // import { Button } from '@/components/Button/button';
 import Socials from '@/components/SocialLinks/socials';
 import Stack from '@/components/Stack/stack';
+import ShimmerLoadingState from '@/components/Stack/stackshimmer';
 import Text from '@/components/Text/text';
 
 export type WakatimeData = {
@@ -88,16 +89,15 @@ const Hero: React.FC = () => {
 
   return (
     <section
-      className=" flex w-full flex-col sm:pb-10 max-md:gap-6 md:flex-row xl:items-center xl:justify-between"
+      className=" flex w-full flex-col sm:pb-10 max-md:gap-6 lg:flex-row xl:items-center xl:justify-between"
       onMouseMove={handleMouseMove}
     >
-      <div className="flex flex-col justify-start gap-2 xl:max-w-[600px] xl:items-start">
+      <div className="flex w-full flex-col justify-start gap-2 lg:max-w-[50%] xl:items-start">
         <div className="flex flex-col items-center justify-start xl:items-start">
           <Text
             weight="bold"
-            size="xs"
             font="figtree"
-            className=" m-0 font-figtree font-bold"
+            className=" m-0 font-figtree !text-[36px] font-bold lg:!text-[48px]"
           >
             Farouk Adedamola
           </Text>
@@ -117,7 +117,7 @@ const Hero: React.FC = () => {
             weight="bold"
             font="inter"
             size="md"
-            className="text-center xl:text-left"
+            className="text-center lg:!text-left"
           >
             I specialize in building elegant, accessible interfaces where
             thoughtful design meets clean code for the web.
@@ -130,13 +130,11 @@ const Hero: React.FC = () => {
           <Socials socialStyles="gap-6" />
         </div>
       </div>
-      <div>
+      <div className="w-full lg:max-w-[50%]">
         {error ? (
           <Text className="text-error">{error}</Text>
         ) : isLoading ? (
-          <div className="flex items-center justify-start">
-            <Text className="text-left">Loading...</Text>
-          </div>
+          <ShimmerLoadingState />
         ) : (
           wakatimeData &&
           wakatimeData.length > 0 && (
