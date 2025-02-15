@@ -64,7 +64,7 @@ const ProjectCard = ({
           src={project.imageUrl}
           alt={project.name}
           layout="fill"
-          className="h-full w-[300px] object-cover"
+          className="h-full w-full object-cover xl:max-w-[300px]"
         />
       </div>
       <div className="w-full rounded-lg border border-dashed border-lightTheme-text p-4">
