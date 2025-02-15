@@ -11,6 +11,8 @@ import Stack from '@/components/Stack/stack';
 import ShimmerLoadingState from '@/components/Stack/stackshimmer';
 import Text from '@/components/Text/text';
 
+// import Button from '@/components/button/button';
+
 export type WakatimeData = {
   name?: string;
   percent?: number;

@@ -28,12 +28,12 @@ const NAV_ITEMS = [
     description: 'Showcase of my projects',
     icon: FolderGit2,
   },
-  {
-    path: '/about',
-    name: 'About',
-    description: 'Learn more about me!',
-    icon: User,
-  },
+  // {
+  //   path: '/about',
+  //   name: 'About',
+  //   description: 'Learn more about me!',
+  //   icon: User,
+  // },
 ];
 
 const SCROLL_THRESHOLD = 50;

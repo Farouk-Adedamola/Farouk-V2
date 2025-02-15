@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
 import Text from '../Text/text';
+import Button from '@/components/button/button';
 // import { Button } from '@/components/Button/button';
 import Paginate from '@/components/paginate';
 import PostCard from '@/components/posts/post-card';
@@ -59,9 +60,9 @@ export default function PostsGrid({
       ) : (
         <p className="mt-10 text-center text-lg">No matching posts found</p>
       )}
-      {/* {moreBtn && (
+      {moreBtn && (
         <Button onClick={() => router.push('/blog')}>More Posts</Button>
-      )} */}
+      )}
       {paginate && (
         <Paginate totalPages={totalPages} elementToScroll={rootRef.current} />
       )}
