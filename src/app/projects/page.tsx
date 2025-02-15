@@ -12,7 +12,7 @@ export const metadata = {
 
 export default function ProjectsPage() {
   return (
-    <div className="section_layout mx-auto w-full max-w-[1280px] py-12">
+    <div className="section_layout mx-auto w-full max-w-[1280px] py-6">
       <div className="mb-12 text-center">
         <Text font="figtree" className="mb-4 text-4xl font-bold">
           Featured Projects
