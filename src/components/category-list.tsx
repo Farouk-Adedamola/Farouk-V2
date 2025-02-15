@@ -2,7 +2,7 @@ import Text from './Text/text';
 
 export default function CategoryList({ categories }: { categories: string[] }) {
   return (
-    <div className="flex space-x-2">
+    <div className="flex flex-wrap space-x-2">
       {categories.map((category) => (
         <Text
           font="inter"

@@ -30,8 +30,8 @@ export default function PostCard({
         </div>
 
         <div className="relative space-y-4 p-6">
-          <div className="flex items-center gap-4">
-            <time className="font-figtree text-sm font-medium text-gray-400 transition-colors duration-300 group-hover:text-gray-300">
+          <div className="flex flex-wrap items-center gap-4">
+            <time className="w-full whitespace-nowrap font-figtree text-sm font-medium text-gray-400 transition-colors duration-300 group-hover:text-gray-300">
               {date}
             </time>
             <CategoryList categories={categories} />
