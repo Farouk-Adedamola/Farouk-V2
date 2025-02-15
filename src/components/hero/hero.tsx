@@ -89,14 +89,14 @@ const Hero: React.FC = () => {
 
   return (
     <section
-      className=" flex w-full flex-col sm:pb-10 max-md:gap-6 lg:flex-row xl:items-center xl:justify-between"
+      className=" flex w-full flex-col gap-2 sm:pb-10 max-md:gap-6 lg:flex-row xl:items-center xl:justify-between"
       onMouseMove={handleMouseMove}
     >
       <div className="flex w-full flex-col justify-between gap-2 lg:max-w-[50%] xl:items-start">
         <div className="flex flex-col items-center justify-start lg:items-start">
           <Text
             font="figtree"
-            className=" m-0 font-figtree !text-[36px] font-bold font-bold lg:!text-[48px]"
+            className=" m-0 font-figtree !text-[36px] font-bold lg:!text-[48px]"
           >
             Farouk Adedamola
           </Text>
@@ -104,7 +104,7 @@ const Hero: React.FC = () => {
             <Text
               size="xl"
               font="figtree"
-              className=" bg-gradient-to-t     from-[#a2b6fa] to-[#334cec] bg-clip-text text-transparent  font-bold"
+              className=" bg-gradient-to-t     from-[#a2b6fa] to-[#334cec] bg-clip-text font-bold  text-transparent"
             >
               Frontend Engineer
             </Text>
@@ -114,7 +114,7 @@ const Hero: React.FC = () => {
           <Text
             font="inter"
             size="md"
-            className="text-center lg:!text-left font-bold"
+            className="text-center font-bold lg:!text-left"
           >
             Hi i&apos;m a creative coder and Frontend Engineer with over 4 years
             of experience crafting digital experiences where I bring designs to

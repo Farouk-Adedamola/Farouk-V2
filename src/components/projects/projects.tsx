@@ -19,7 +19,7 @@ const ProjectsSection = ({ data }: ProjectSectionProps) => {
   const router = useRouter();
 
   return (
-    <section className="section_layout">
+    <section className="section_layout w-full">
       <Text
         font="figtree"
         className="mb-8 !text-[30px] !font-medium lg:!text-[48px]"
@@ -66,7 +66,7 @@ const ProjectCard = ({
           className="h-full w-[300px] object-cover"
         />
       </div>
-      <div className="rounded-lg border border-dashed border-lightTheme-text p-4">
+      <div className="w-full rounded-lg border border-dashed border-lightTheme-text p-4">
         <Text font="figtree" size="lg" className="mb-2 font-bold" header>
           {project.name}
         </Text>

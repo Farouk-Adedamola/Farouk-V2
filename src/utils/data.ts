@@ -112,38 +112,38 @@ export type ProjectProps = {
 export const Projectdata: ProjectProps[] = [
   {
     id: '1',
-    name: 'E-Commerce Dashboard',
+    name: 'Genemod',
     description:
-      'A comprehensive dashboard for managing online store operations, featuring real-time analytics, inventory management, and sales tracking.',
-    tools: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Firebase'],
-    liveUrl: 'https://ecommerce-dashboard.demo',
-    imageUrl: '/api/placeholder/600/400',
+      'Laboratory management system for tracking samples and research results with real-time collaboration features.',
+    tools: ['Gatsby', 'TypeScript', 'Tailwind CSS', 'GraphQL'],
+    liveUrl: 'https://genemod.net',
+    imageUrl: '/images/genemod.jpg',
   },
   {
     id: '2',
-    name: 'AI Content Generator',
+    name: 'Orisuun',
     description:
-      'An AI-powered platform that helps create high-quality content using advanced language models and intelligent formatting.',
-    tools: ['React', 'Node.js', 'OpenAI API', 'MongoDB'],
-    liveUrl: 'https://ai-content-gen.demo',
-    imageUrl: '/api/placeholder/600/400',
-  },
-  {
-    id: '1',
-    name: 'E-Commerce Dashboard',
-    description:
-      'A comprehensive dashboard for managing online store operations, featuring real-time analytics, inventory management, and sales tracking.',
+      'Platform connecting Black-owned businesses with investors, mentors, and professionals for growth and networking.',
     tools: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Firebase'],
-    liveUrl: 'https://ecommerce-dashboard.demo',
-    imageUrl: '/api/placeholder/600/400',
+    liveUrl: 'https://orisuun.com/',
+    imageUrl: '/images/orisuun.jpg',
   },
   {
-    id: '2',
-    name: 'AI Content Generator',
+    id: '3',
+    name: 'The Allies Maternity',
     description:
-      'An AI-powered platform that helps create high-quality content using advanced language models and intelligent formatting.',
-    tools: ['React', 'Node.js', 'OpenAI API', 'MongoDB'],
-    liveUrl: 'https://ai-content-gen.demo',
-    imageUrl: '/api/placeholder/600/400',
+      'Comprehensive pregnancy tracking and maternity care management platform with personalized health insights.',
+    tools: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Firebase'],
+    liveUrl: 'https://theallies.co',
+    imageUrl: '/images/allies.jpg',
+  },
+  {
+    id: '4',
+    name: 'Wakasub',
+    description:
+      'Streamlined bill payment and virtual top-up platform with instant transaction processing.',
+    tools: ['React', 'Laravel', 'Bootstrap', 'MySQL'],
+    liveUrl: 'https://wakasub.com',
+    imageUrl: '/images/wakasub.jpg',
   },
 ];
