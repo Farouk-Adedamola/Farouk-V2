@@ -12,7 +12,7 @@ export const metadata = {
 
 export default function ProjectsPage() {
   return (
-    <div className="section_layout mx-auto w-full max-w-[1280px] px-4 py-12">
+    <div className="section_layout mx-auto w-full max-w-[1280px] py-12">
       <div className="mb-12 text-center">
         <Text font="figtree" className="mb-4 text-4xl font-bold">
           Featured Projects
@@ -26,7 +26,7 @@ export default function ProjectsPage() {
         {Projectdata.map((project) => (
           <div
             key={project.id}
-            className="group relative overflow-hidden rounded-xl bg-gray-900/50 p-4 transition-all hover:bg-gray-900/70"
+            className="group relative overflow-hidden rounded-xl bg-gray-900/50 py-4 transition-all hover:bg-gray-900/70"
           >
             <div className="relative aspect-video w-full overflow-hidden rounded-lg">
               <Image
