@@ -59,7 +59,7 @@ const ProjectCard = ({
         isReverse ? 'xl:flex xl:flex-row-reverse' : ''
       }`}
     >
-      <div className="relative aspect-[16/9] h-[200px] w-full rounded-lg border border-lightTheme-text xl:h-full xl:max-w-[300px]">
+      <div className="relative aspect-[16/9] h-[200px] w-full rounded-tl-lg rounded-tr-lg border border-lightTheme-text xl:h-full xl:max-w-[300px] xl:rounded-lg">
         <Image
           src={project.imageUrl}
           alt={project.name}
