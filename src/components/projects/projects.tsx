@@ -8,8 +8,8 @@ import { motion } from 'framer-motion';
 
 // import { Button } from '@/components/Button/button';
 import Text from '@/components/Text/text';
+import Action from '@/components/button/action';
 import { ProjectProps } from '@/utils/data';
-import Button from '@/components/button/button';
 
 type ProjectSectionProps = {
   data: ProjectProps[];
@@ -34,9 +34,9 @@ const ProjectsSection = ({ data }: ProjectSectionProps) => {
         ))}
       </div>
       <div className="flex justify-center">
-        <Button onClick={() => router.push('/projects')}>
+        <Action onClick={() => router.push('/projects')}>
           View More Projects
-        </Button>
+        </Action>
       </div>
     </section>
   );
