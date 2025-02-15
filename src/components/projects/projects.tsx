@@ -59,16 +59,16 @@ const ProjectCard = ({
         isReverse ? 'lg:flex lg:flex-row-reverse' : ''
       }`}
     >
-      <div className="relative aspect-[16/9] h-[200px] w-full rounded-tl-lg rounded-tr-lg border border-lightTheme-text xl:h-full xl:max-w-[300px] xl:rounded-lg">
+      <div className="relative aspect-[16/9] h-[200px] w-full rounded-tl-lg rounded-tr-lg border border-lightTheme-text lg:h-full lg:max-w-[300px] lg:rounded-lg">
         <Image
           src={project.imageUrl}
           alt={project.name}
           fill
-          className="rounded-tl-lg rounded-tr-lg object-cover xl:rounded-lg"
+          className="rounded-tl-lg rounded-tr-lg object-cover lg:rounded-lg"
           priority
         />
       </div>
-      <div className="w-full rounded-bl-lg rounded-br-lg border border-dashed border-lightTheme-text p-4 xl:rounded-lg">
+      <div className="w-full rounded-bl-lg rounded-br-lg border border-dashed border-lightTheme-text p-4 lg:rounded-lg">
         <Text font="figtree" size="lg" className="mb-2 font-bold" header>
           {project.name}
         </Text>
