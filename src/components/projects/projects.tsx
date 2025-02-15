@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation';
 
 import { motion } from 'framer-motion';
 
+// import Action from '@/components/Button/action';
 // import { Button } from '@/components/Button/button';
 import Text from '@/components/Text/text';
-import Action from '@/components/button/action';
 import { ProjectProps } from '@/utils/data';
 
 type ProjectSectionProps = {
@@ -34,9 +34,9 @@ const ProjectsSection = ({ data }: ProjectSectionProps) => {
         ))}
       </div>
       <div className="flex justify-center">
-        <Action onClick={() => router.push('/projects')}>
+        {/* <Action onClick={() => router.push('/projects')}>
           View More Projects
-        </Action>
+        </Action> */}
       </div>
     </section>
   );
