@@ -5,10 +5,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import { motion } from 'framer-motion';
+import { ArrowRightIcon } from 'lucide-react';
 
 // import Action from '@/components/Button/action';
 // import { Button } from '@/components/Button/button';
 import Text from '@/components/Text/text';
+// import { Button } from '@/components/ui/Button/button';
+import { Button } from '@/components/ui/button';
 import { ProjectProps } from '@/utils/data';
 
 type ProjectSectionProps = {
@@ -34,9 +37,17 @@ const ProjectsSection = ({ data }: ProjectSectionProps) => {
         ))}
       </div>
       <div className="flex justify-center">
-        {/* <Action onClick={() => router.push('/projects')}>
-          View More Projects
-        </Action> */}
+        <Button
+          variant="default"
+          size="lg"
+          className="min-w-fit bg-white font-bold text-black hover:bg-white hover:text-black"
+          onClick={() => router.push('/projects')}
+        >
+          <Text font="figtree" size="sm" className="font-bold text-black">
+            View More Projects
+          </Text>
+          <ArrowRightIcon className="ml-2 h-4 w-4" />
+        </Button>
       </div>
     </section>
   );

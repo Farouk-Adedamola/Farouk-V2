@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@plaiceholder/next": "^3.0.0",
+    "@radix-ui/react-slot": "^1.2.2",
     "@radix-ui/react-tooltip": "^1.1.6",
     "@studio-freight/react-lenis": "^0.0.47",
     "@vercel/analytics": "^1.5.0",

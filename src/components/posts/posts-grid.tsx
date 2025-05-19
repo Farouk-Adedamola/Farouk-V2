@@ -3,7 +3,10 @@
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
+import { ArrowRightIcon } from 'lucide-react';
+
 import Text from '../Text/text';
+import { Button } from '../ui/button';
 // import Action from '@/components/button/action';
 // import { Button } from '@/components/Button/button';
 import Paginate from '@/components/paginate';
@@ -60,9 +63,19 @@ export default function PostsGrid({
       ) : (
         <p className="mt-10 text-center text-lg">No matching posts found</p>
       )}
-      {/* {moreBtn && (
-        <Action onClick={() => router.push('/blog')}>More Posts</Action>
-      )} */}
+      {moreBtn && (
+        <Button
+          variant="default"
+          size="lg"
+          className="min-w-fit bg-white font-bold text-black hover:bg-white hover:text-black"
+          onClick={() => router.push('/blog')}
+        >
+          <Text font="figtree" size="sm" className="font-bold text-black">
+            View More Posts
+          </Text>
+          <ArrowRightIcon className="ml-2 h-4 w-4" />
+        </Button>
+      )}
       {paginate && (
         <Paginate totalPages={totalPages} elementToScroll={rootRef.current} />
       )}

@@ -1,8 +1,6 @@
 import { getRecordMap, mapImageUrl } from '@/libs/notion';
 import { Post } from '@/types/post';
 
-// import { getBlurImage } from '@/utils/get-blur-image';
-
 export async function getAllPostsFromNotion() {
   const allPosts: Post[] = [];
   const recordMap = await getRecordMap(process.env.NOTION_DATABASE_ID!);
