@@ -67,12 +67,12 @@ export default function PostsGrid({
         <Button
           variant="default"
           size="lg"
-          className="min-w-fit bg-white font-bold text-black hover:bg-white hover:text-black"
+          className="flex min-w-fit gap-2 bg-white font-bold text-black hover:bg-white hover:text-black"
           onClick={() => router.push('/blog')}
         >
-          <Text font="figtree" size="sm" className="font-bold text-black">
+          <span className="font-figtree text-[18px] font-bold">
             View More Posts
-          </Text>
+          </span>
           <ArrowRightIcon className="ml-2 h-4 w-4" />
         </Button>
       )}
