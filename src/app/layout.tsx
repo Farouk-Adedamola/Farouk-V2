@@ -6,8 +6,10 @@ import 'prismjs/themes/prism-tomorrow.css';
 import 'react-notion-x/src/styles.css';
 
 import Footer from '@/components/Footer/footer';
+import CustomCursor from '@/components/custom-cursor';
 import Header from '@/components/header/header';
 import Provider from '@/components/provider';
+import SplashScreen from '@/components/splash-screen';
 import '@/styles/globals.css';
 import '@/styles/paginate.css';
 
@@ -47,11 +49,13 @@ export default function RootLayout({
         </div>
 
         <Provider>
+          {/* <SplashScreen /> */}
           <Header />
           <main className="mt-20 sm:mt-24">
             <section className="pt-8 sm:h-full ">{children}</section>
           </main>
           <Footer />
+          {/* <CustomCursor /> */}
         </Provider>
         <Analytics />
       </body>

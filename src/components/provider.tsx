@@ -7,8 +7,8 @@ import UseLenisSmoothScroll from '@/hooks/useLenisSmoothScroll';
 
 export default function Provider({ children }: { children: React.ReactNode }) {
   return (
-      <UseLenisSmoothScroll>
-        <RecoilRoot>{children}</RecoilRoot>
-      </UseLenisSmoothScroll>
+    <UseLenisSmoothScroll>
+      <RecoilRoot>{children}</RecoilRoot>
+    </UseLenisSmoothScroll>
   );
 }

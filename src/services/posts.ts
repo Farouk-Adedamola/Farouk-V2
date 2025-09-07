@@ -4,6 +4,7 @@ import { Post } from '@/types/post';
 export async function getAllPostsFromNotion() {
   const allPosts: Post[] = [];
   const recordMap = await getRecordMap(process.env.NOTION_DATABASE_ID!);
+  console.log(recordMap);
   const { block, collection } = recordMap;
   const schema = Object.values(collection)[0].value.schema;
   const propertyMap: Record<string, string> = {};

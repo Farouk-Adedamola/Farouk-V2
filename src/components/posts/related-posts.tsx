@@ -22,7 +22,7 @@ export default function RelatedPosts({ posts }: { posts: Post[] }) {
   return (
     <section className="mt-10 flex flex-col">
       <h1 className="text-3xl font-bold">Related Posts</h1>
-      <ul className="md:grid-cols-2 xl:grid-cols-3 grid grid-cols-1">
+      <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {posts.slice(0, numPosts).map((post) => (
           <div
             key={post.slug}
