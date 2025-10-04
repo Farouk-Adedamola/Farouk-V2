@@ -6,6 +6,12 @@ import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 
 import Text from '../Text/text';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '../ui/tooltip';
 import CategoryList from '@/components/category-list';
 import { Post } from '@/types/post';
 
@@ -40,7 +46,7 @@ export default function PostCard({
           <Text
             font="figtree"
             size="md"
-            className="line-clamp-2  font-bold leading-tight tracking-tight text-gray-100 transition-colors duration-300 group-hover:text-white"
+            className="truncate  font-bold leading-tight tracking-tight text-gray-100 transition-colors duration-300 group-hover:text-white"
           >
             {title}
           </Text>

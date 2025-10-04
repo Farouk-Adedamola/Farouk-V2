@@ -27,8 +27,8 @@ const socialLinks: SocialProps[] = [
   },
   {
     icon: Instagram,
-    href: 'https://linkedin.com/in/yourusername',
-    label: 'Instagram',
+    href: 'https://peerlist.io/ejatech/articles',
+    label: 'Peerlist',
   },
 ];
 

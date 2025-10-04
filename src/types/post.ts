@@ -9,3 +9,7 @@ export type Post = {
   lastEditedAt: number;
   blurUrl?: string;
 };
+
+
+
+

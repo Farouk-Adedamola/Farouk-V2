@@ -61,7 +61,9 @@ export default function PostsGrid({
           ))}
         </ul>
       ) : (
-        <p className="mt-10 text-center text-lg">No matching posts found</p>
+        <Text font="figtree" size="lg" className="mt-10 text-center">
+          No matching posts found
+        </Text>
       )}
       {moreBtn && (
         <Button

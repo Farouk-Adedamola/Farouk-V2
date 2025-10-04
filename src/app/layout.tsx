@@ -39,7 +39,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${figtree.variable}`}>
-      <body className="relative flex min-h-full w-full flex-col items-center justify-center px-[4vw] xl:px-[6vw] ">
+      <body className="relative flex min-h-screen w-full flex-col items-center  ">
         <div className="fixed inset-0 -z-10">
           <div className="absolute inset-0 bg-gradient-to-t from-darkTheme-primary to-darkTheme-secondary" />
 
@@ -51,8 +51,8 @@ export default function RootLayout({
         <Provider>
           {/* <SplashScreen /> */}
           <Header />
-          <main className="mt-20 sm:mt-24">
-            <section className="pt-8 sm:h-full ">{children}</section>
+          <main className="mt-20 w-full max-w-[1280px] flex-1 sm:mt-24">
+            <section className="w-full pt-8">{children}</section>
           </main>
           <Footer />
           {/* <CustomCursor /> */}

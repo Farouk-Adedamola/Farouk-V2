@@ -28,7 +28,7 @@ export default function Paginate({
 
   return (
     <ReactPaginate
-      className="paginate"
+      className="flex items-center justify-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium transition-all duration-200"
       pageCount={totalPages}
       previousLabel={<AiOutlineLeft />}
       nextLabel={<AiOutlineRight />}

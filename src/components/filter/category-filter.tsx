@@ -23,7 +23,7 @@ export default function CategoryFilter({
   };
 
   return (
-    <div className="w-full max-w-2xl space-y-4">
+    <div className="w-full space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-200">
           Filter by Topics
