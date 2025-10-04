@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import Text from '../Text/text';
+import { Button } from '../ui/button';
 import PostCard from '@/components/posts/post-card';
 import { Post } from '@/types/post';
 
@@ -20,27 +22,32 @@ export default function RelatedPosts({ posts }: { posts: Post[] }) {
   }
 
   return (
-    <section className="mt-10 flex flex-col">
-      <h1 className="text-3xl font-bold">Related Posts</h1>
-      <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+    <section className=" flex flex-col">
+      <Text font="figtree" className="mb-4 text-3xl font-bold text-white">
+        Related Posts
+      </Text>
+      <ul className="flex flex-wrap items-center justify-center gap-4">
         {posts.slice(0, numPosts).map((post) => (
           <div
             key={post.slug}
-            className="scale-[0.8] transition-all duration-300 hover:scale-[0.85]"
+            className="w-full scale-[0.8] transition-all duration-300 hover:scale-[0.85] lg:w-[300px]"
           >
-            <li key={post.slug}>
-              <PostCard post={post} />
-            </li>
+            {/* <li> */}
+            <PostCard post={post} />
+            {/* </li> */}
           </div>
         ))}
       </ul>
       {numPosts < posts.length && (
-        <button
+        <Button
+          variant="default"
+          size="lg"
           onClick={handleLoadMore}
           className="mt-10 self-center rounded-3xl bg-error px-8 py-2 text-white opacity-70 transition-all duration-300 hover:scale-110 hover:opacity-100"
+          type="button"
         >
           Load More
-        </button>
+        </Button>
       )}
     </section>
   );
