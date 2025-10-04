@@ -22,28 +22,23 @@ export default function RelatedPosts({ posts }: { posts: Post[] }) {
   }
 
   return (
-    <section className=" flex flex-col">
+    <section className=" flex !w-full flex-col">
       <Text font="figtree" className="mb-4 text-3xl font-bold text-white">
         Related Posts
       </Text>
-      <ul className="flex flex-wrap items-center justify-center gap-4">
+      <div className=" grid !w-full grid-cols-1 items-center justify-center gap-4 md:grid-cols-2 xl:grid-cols-3">
         {posts.slice(0, numPosts).map((post) => (
-          <div
-            key={post.slug}
-            className="w-full scale-[0.8] transition-all duration-300 hover:scale-[0.85] lg:w-[300px]"
-          >
-            {/* <li> */}
+          <div key={post.slug} className="w-full transition-all duration-300  ">
             <PostCard post={post} />
-            {/* </li> */}
           </div>
         ))}
-      </ul>
+      </div>
       {numPosts < posts.length && (
         <Button
           variant="default"
           size="lg"
           onClick={handleLoadMore}
-          className="bg-white mt-10 self-center rounded-3xl border border-lightTheme-text px-8 py-2 text-black opacity-70 transition-all duration-300 hover:scale-110 hover:opacity-100"
+          className="mt-10 self-center rounded-3xl border border-lightTheme-text bg-white px-8 py-2 text-black opacity-70 transition-all duration-300 hover:scale-110 hover:opacity-100"
           type="button"
         >
           Load More

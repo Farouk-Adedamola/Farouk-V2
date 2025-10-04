@@ -49,7 +49,7 @@ export default async function PostPage({
     <>
       <article
         data-revalidated-at={new Date().getTime()}
-        className="mt-4 flex w-full flex-col items-center md:mt-20"
+        className="mt-4 flex !w-full flex-col items-center md:mt-20"
       >
         <NotionPage post={post} recordMap={recordMap} />
       </article>

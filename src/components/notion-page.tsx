@@ -30,6 +30,7 @@ export default function NotionPage({
       forceCustomImages
       showTableOfContents
       disableHeader
+      // className="mx-auto !w-full max-w-[1280px] overflow-hidden"
       pageHeader={
         <div className="mb-4">
           <CategoryList categories={post.categories} />
