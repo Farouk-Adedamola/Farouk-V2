@@ -1,7 +1,6 @@
 import { Figtree, Inter } from 'next/font/google';
 
 import { Analytics } from '@vercel/analytics/react';
-
 import 'katex/dist/katex.min.css';
 import 'prismjs/themes/prism-tomorrow.css';
 import 'react-notion-x/src/styles.css';
@@ -40,7 +39,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${figtree.variable}`}>
-      <body className="relative flex min-h-screen w-full flex-col items-center  ">
+      <body className="relative flex min-h-screen w-full flex-col items-center max-md:px-[4vw] ">
         <div className="fixed inset-0 -z-10">
           <div className="absolute inset-0 bg-gradient-to-t from-darkTheme-primary to-darkTheme-secondary" />
 
