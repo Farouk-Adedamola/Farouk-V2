@@ -67,12 +67,12 @@ const ProjectCard = ({
     viewport={{ once: true }}
     className="group"
   >
-    <div className="group rounded-lg bg-darkTheme-primary-dark p-6 transition-all duration-500 hover:bg-darkTheme-primary">
-      <div className="mb-4 flex items-baseline justify-between">
+    <div className="group flex flex-col justify-between rounded-lg bg-darkTheme-primary-dark p-6 transition-all duration-500 hover:bg-darkTheme-primary lg:h-[222px]">
+      <div className=" flex items-baseline justify-between">
         <Text
           font="figtree"
           size="md"
-          className="flex items-center gap-2 font-semibold text-white"
+          className="flex items-center gap-2 font-semibold text-white "
         >
           {project.name}
           <Link
@@ -84,11 +84,16 @@ const ProjectCard = ({
         </Text>
       </div>
 
-      <Text size="sm" font="figtree" className="mb-4 font-normal text-gray-400">
-        {project.description}
-      </Text>
-
-      <div className="flex flex-wrap gap-2">
+      <div className="min-h-[100px] overflow-hidden">
+        <Text
+          size="sm"
+          font="figtree"
+          className="line-clamp-3 font-normal text-gray-400"
+        >
+          {project.description}
+        </Text>
+      </div>
+      <div className="flex flex-wrap gap-2 self-end">
         {project.tools.map((tool) => (
           <span
             key={tool}
