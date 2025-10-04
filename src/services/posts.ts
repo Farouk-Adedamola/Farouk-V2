@@ -48,5 +48,7 @@ export async function getAllPostsFromNotion() {
     }
   });
 
+  console.log(allPosts);
+
   return allPosts;
 }

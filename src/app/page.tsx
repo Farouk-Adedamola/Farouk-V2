@@ -6,7 +6,9 @@ export const metadata = {
 };
 
 export default async function Page() {
-  const posts = await getAllPostsFromNotion();
+  const allPosts = await getAllPostsFromNotion();
+
+  const posts = allPosts.filter((post) => post.published);
 
   return <HomePage initialPosts={posts} />;
 }

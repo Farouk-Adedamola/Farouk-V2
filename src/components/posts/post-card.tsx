@@ -21,9 +21,12 @@ export default function PostCard({
   post: Post;
 }) {
   return (
-    <Link href={`/blog/${slug}`} className="group block w-full">
-      <article className="relative mx-auto max-w-[25rem] overflow-hidden rounded-xl bg-white/5 backdrop-blur-sm transition-all duration-300 hover:bg-white/10 dark:hover:shadow-lg dark:hover:shadow-white/5">
-        <div className="relative max-h-[280px] w-full overflow-hidden">
+    <Link
+      href={`/blog/${slug}`}
+      className="group relative mx-auto block w-full"
+    >
+      <article className="  overflow-hidden rounded-xl bg-white/5 backdrop-blur-sm transition-all duration-300 hover:bg-white/10 dark:hover:shadow-lg dark:hover:shadow-white/5">
+        {/* <div className="relative max-h-[280px] w-full overflow-hidden">
           <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent to-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
           <div className="absolute right-4 top-4 z-20">
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 backdrop-blur-md transition-all duration-300 group-hover:bg-white/20">
@@ -33,7 +36,7 @@ export default function PostCard({
               />
             </span>
           </div>
-        </div>
+        </div> */}
 
         <div className="relative space-y-4 p-6">
           <div className="flex flex-wrap items-center gap-4">
@@ -50,10 +53,6 @@ export default function PostCard({
           >
             {title}
           </Text>
-
-          <div className="absolute bottom-0 left-0 h-[2px] w-full">
-            <div className="h-full w-full scale-x-0 transform bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transition-transform duration-300 ease-out group-hover:scale-x-100" />
-          </div>
         </div>
       </article>
     </Link>

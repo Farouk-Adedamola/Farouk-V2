@@ -43,7 +43,7 @@ export default function RelatedPosts({ posts }: { posts: Post[] }) {
           variant="default"
           size="lg"
           onClick={handleLoadMore}
-          className="mt-10 self-center rounded-3xl bg-error px-8 py-2 text-white opacity-70 transition-all duration-300 hover:scale-110 hover:opacity-100"
+          className="bg-white mt-10 self-center rounded-3xl border border-lightTheme-text px-8 py-2 text-black opacity-70 transition-all duration-300 hover:scale-110 hover:opacity-100"
           type="button"
         >
           Load More
