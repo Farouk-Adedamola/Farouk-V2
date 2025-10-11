@@ -1,4 +1,5 @@
 import HomePage from './HomePage';
+import { Farouk } from '@/components/faroukPixel/farouk';
 import { getAllPostsFromNotion } from '@/services/posts';
 
 export const metadata = {
@@ -12,5 +13,10 @@ export default async function Page() {
     .filter((post) => post.published)
     .sort((postA, postB) => (postA.date > postB.date ? -1 : 1));
 
-  return <HomePage initialPosts={posts} />;
+  return (
+    <>
+      {/* <Farouk /> */}
+      <HomePage initialPosts={posts} />
+    </>
+  );
 }
