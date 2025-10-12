@@ -5,8 +5,16 @@ const notion = new NotionAPI({
   authToken: process.env.NOTION_AUTH_TOKEN,
 });
 
-export function getRecordMap(id: string) {
-  return notion.getPage(id);
+export async function getRecordMap(id: string) {
+  try {
+    console.log('🔄 Fetching page from Notion with ID:', id);
+    const result = await notion.getPage(id);
+    console.log('✅ Successfully fetched page from Notion');
+    return result;
+  } catch (error) {
+    console.error('❌ Error in getRecordMap:', error);
+    throw error;
+  }
 }
 
 export function mapImageUrl(url: string, block: Block): string | null {
