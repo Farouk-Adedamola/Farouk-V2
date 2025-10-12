@@ -36,7 +36,7 @@ export default function NotionPage({
           <CategoryList categories={post.categories} />
         </div>
       }
-      mapImageUrl={(url, block) => mapImageUrl(url, block) || ''}
+      mapImageUrl={(url, block) => mapImageUrl(url as string, block as Block) || ''}
       components={{
         Code,
         Collection,
