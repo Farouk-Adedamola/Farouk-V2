@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 
 import { motion } from 'framer-motion';
 
+import { isTouchDevice } from '@/utils/is-touch-device';
+
 const PIXEL_SIZE = 8;
 const LETTER_SPACING = 1;
 const BORDER_THICKNESS = 4;
@@ -210,7 +212,9 @@ export function Farouk({
     }
   }, [isSplashScreen, onComplete, text.length]);
 
-  const scale = fadeOut ? 2.5 : 1;
+  const isDesktop = window.innerWidth > 768;
+
+  const scale = fadeOut && isDesktop ? 2.5 : 1;
   const pixelOpacity = fadeOut ? 0.1 : 1;
 
   return (
@@ -227,7 +231,7 @@ export function Farouk({
             {letter.pixels.map((pixel, pixelIndex) => (
               <motion.div
                 key={`${letterIndex}-${pixelIndex}`}
-                className={`absolute bg-white max-md:hidden ${
+                className={`absolute bg-white ${
                   fadeOut
                     ? 'left-0 rotate-90 opacity-100 '
                     : 'rotate-180 opacity-100'
