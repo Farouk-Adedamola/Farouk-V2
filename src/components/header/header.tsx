@@ -109,7 +109,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed left-0 right-0 top-0 z-50 w-full transition-opacity duration-500 ease-in-out
+      className={`fixed left-0 right-0 top-0 z-[10000] w-full transition-opacity duration-500 ease-in-out
         ${visible ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
     >
       <div className="mx-auto max-w-[1280px] px-4 py-6">
@@ -136,7 +136,7 @@ export default function Header() {
         </nav>
 
         {/* Mobile Navigation */}
-        <div className="sm:hidden">
+        <div className="z-[10000] sm:hidden">
           {/* Mobile Menu Button */}
           <button
             ref={menuButtonRef}
@@ -161,7 +161,7 @@ export default function Header() {
           {/* Mobile Menu Panel */}
           <div
             ref={mobileMenuRef}
-            className={`fixed left-0 right-0 mt-4 flex max-w-[80%] justify-self-end  rounded-lg bg-darkTheme-primary shadow-lg transition-opacity duration-300 ease-in-out
+            className={`fixed left-0 right-0 z-[10000] mt-4 flex max-w-[80%]  justify-self-end rounded-lg bg-darkTheme-primary shadow-lg transition-opacity duration-300 ease-in-out
               ${
                 mobileMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
               }`}
