@@ -173,6 +173,13 @@ export function Farouk({
 }: FaroukProps) {
   const text = 'FAROUK.DEV';
 
+  const [deviceWidth, setDeviceWidth] = useState(0);
+
+  if (typeof window !== 'undefined') {
+    const deviceWidth = window.innerWidth;
+    setDeviceWidth(deviceWidth);
+  }
+
   const letters: LetterData[] = [];
   let currentOffsetX = 0;
 
@@ -212,7 +219,7 @@ export function Farouk({
     }
   }, [isSplashScreen, onComplete, text.length]);
 
-  const isDesktop = window.innerWidth > 768;
+  const isDesktop = deviceWidth > 768;
 
   const scale = fadeOut && isDesktop ? 2.5 : 1;
   const pixelOpacity = fadeOut ? 0.1 : 1;
