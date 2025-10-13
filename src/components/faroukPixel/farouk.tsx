@@ -201,7 +201,7 @@ export function Farouk({
 
   useEffect(() => {
     if (isSplashScreen && onComplete) {
-      const totalAnimationTime = text.length * 150 + 2000;
+      const totalAnimationTime = text.length * 150 + 3000;
       const timer = setTimeout(() => {
         onComplete();
       }, totalAnimationTime);
@@ -227,7 +227,11 @@ export function Farouk({
             {letter.pixels.map((pixel, pixelIndex) => (
               <motion.div
                 key={`${letterIndex}-${pixelIndex}`}
-                className="absolute bg-white"
+                className={`absolute bg-white max-md:hidden ${
+                  fadeOut
+                    ? 'left-0 rotate-90 opacity-100 '
+                    : 'rotate-180 opacity-100'
+                }`}
                 style={{
                   width: `${PIXEL_SIZE * scale}px`,
                   height: `${PIXEL_SIZE * scale}px`,
@@ -244,7 +248,7 @@ export function Farouk({
                     ? undefined
                     : {
                         delay: letterIndex * 0.15,
-                        duration: 0.3,
+                        duration: 0.8,
                         ease: 'easeOut',
                       }
                 }
@@ -255,7 +259,7 @@ export function Farouk({
       </div>
 
       <motion.div
-        className="fixed left-0 top-0 bg-white"
+        className="fixed left-0 top-0 z-[9999] bg-white"
         style={{
           height: `${BORDER_THICKNESS}px`,
         }}
@@ -269,7 +273,7 @@ export function Farouk({
       />
 
       <motion.div
-        className="fixed right-0 top-0 bg-white"
+        className="fixed right-0 top-0 z-[9999] bg-white"
         style={{
           width: `${BORDER_THICKNESS}px`,
         }}
@@ -283,7 +287,7 @@ export function Farouk({
       />
 
       <motion.div
-        className="fixed bottom-0 right-0 bg-white"
+        className="fixed bottom-0 right-0 z-[9999] bg-white"
         style={{
           height: `${BORDER_THICKNESS}px`,
         }}
@@ -297,7 +301,7 @@ export function Farouk({
       />
 
       <motion.div
-        className="fixed bottom-0 left-0 bg-white"
+        className="fixed bottom-0 left-0 z-[9999] bg-white"
         style={{
           width: `${BORDER_THICKNESS}px`,
         }}
