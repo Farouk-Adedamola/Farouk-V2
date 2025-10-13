@@ -175,11 +175,6 @@ export function Farouk({
 
   const [deviceWidth, setDeviceWidth] = useState(0);
 
-  if (typeof window !== 'undefined') {
-    const deviceWidth = window.innerWidth;
-    setDeviceWidth(deviceWidth);
-  }
-
   const letters: LetterData[] = [];
   let currentOffsetX = 0;
 
@@ -204,6 +199,13 @@ export function Farouk({
 
     currentOffsetX += pixelMap[0].length + LETTER_SPACING;
   });
+
+  useEffect(() => {
+    if (window.innerWidth) {
+      const width = window.innerWidth;
+      setDeviceWidth(width);
+    }
+  }, [deviceWidth]);
 
   const totalWidth = currentOffsetX - LETTER_SPACING;
   const letterHeight = 5;
