@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 
 import { Home, BookOpen, FolderGit2, User, File } from 'lucide-react';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
@@ -44,6 +44,8 @@ export default function Header() {
   const [visible, setVisible] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleScroll = useCallback(() => {
     const currentScrollPos = window.scrollY;
@@ -83,6 +85,28 @@ export default function Header() {
     };
   }, [mobileMenuOpen]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        mobileMenuOpen &&
+        mobileMenuRef.current &&
+        menuButtonRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node) &&
+        !menuButtonRef.current.contains(event.target as Node)
+      ) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    if (mobileMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [mobileMenuOpen]);
+
   return (
     <header
       className={`fixed left-0 right-0 top-0 z-50 w-full transition-opacity duration-500 ease-in-out
@@ -115,6 +139,7 @@ export default function Header() {
         <div className="sm:hidden">
           {/* Mobile Menu Button */}
           <button
+            ref={menuButtonRef}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="ml-auto flex items-center rounded-lg bg-darkTheme-primary px-4 py-2 shadow-lg"
             aria-label="Toggle menu"
@@ -135,6 +160,7 @@ export default function Header() {
 
           {/* Mobile Menu Panel */}
           <div
+            ref={mobileMenuRef}
             className={`fixed left-0 right-0 mt-4 flex max-w-[80%] justify-self-end  rounded-lg bg-darkTheme-primary shadow-lg transition-opacity duration-300 ease-in-out
               ${
                 mobileMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
