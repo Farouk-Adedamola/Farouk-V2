@@ -38,7 +38,7 @@ const ProjectsSection = ({ data }: ProjectSectionProps) => {
         <Button
           variant="default"
           size="lg"
-          className="flex min-w-fit gap-2 bg-white font-bold text-black hover:bg-white hover:text-black"
+          className="flex min-w-fit gap-2 bg-white font-bold text-black hover:bg-white hover:text-black cursor-pointer"
           onClick={() => router.push('/projects')}
         >
           <span className="font-figtree text-[18px] font-bold">
@@ -65,7 +65,7 @@ const ProjectCard = ({
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.4 }}
     viewport={{ once: true }}
-    className="group"
+    className="group backdrop-blur-sm"
   >
     <div className="group flex flex-col justify-between rounded-lg bg-darkTheme-primary-dark p-6 transition-all duration-500 hover:bg-darkTheme-primary lg:h-[222px]">
       <div className=" flex items-baseline justify-between">

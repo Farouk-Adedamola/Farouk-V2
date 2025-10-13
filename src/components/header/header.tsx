@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useState, useEffect, useCallback } from 'react';
 
-import { Home, BookOpen, FolderGit2, User } from 'lucide-react';
+import { Home, BookOpen, FolderGit2, User, File } from 'lucide-react';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 
 import Text from '../Text/text';
@@ -28,12 +28,12 @@ const NAV_ITEMS = [
     description: 'Showcase of my projects',
     icon: FolderGit2,
   },
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   description: 'Learn more about me!',
-  //   icon: User,
-  // },
+  {
+    path: '/resume',
+    name: 'Resume',
+    description: 'My resume',
+    icon: File,
+  },
 ];
 
 const SCROLL_THRESHOLD = 50;
@@ -121,7 +121,7 @@ export default function Header() {
           >
             <Text
               font="figtree"
-              size="md"
+              size="sm"
               className="flex items-center gap-2 font-bold"
             >
               Menu
@@ -135,13 +135,13 @@ export default function Header() {
 
           {/* Mobile Menu Panel */}
           <div
-            className={`fixed left-0 right-0 mt-4 flex max-w-[70%]  justify-self-end bg-darkTheme-primary shadow-lg transition-opacity duration-300 ease-in-out
+            className={`fixed left-0 right-0 mt-4 flex max-w-[80%] justify-self-end  rounded-lg bg-darkTheme-primary shadow-lg transition-opacity duration-300 ease-in-out
               ${
                 mobileMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
               }`}
           >
             <div className="h-full overflow-y-auto">
-              <div className="space-y-4 p-6">
+              <div className="space-y-4 p-2">
                 {NAV_ITEMS.map((item) => (
                   <div
                     key={item.path}
@@ -157,11 +157,14 @@ export default function Header() {
                         }`}
                     >
                       <item.icon className="h-5 w-5" />
-                      <span>{item.name}</span>
+                      <Text font="figtree" size="sm">
+                        {item.name}
+                      </Text>
                     </Link>
                     <Text
                       font="figtree"
-                      className="mt-2 pl-8 text-sm text-gray-500"
+                      size="sm"
+                      className="mt-2 pl-8 text-xs text-gray-500"
                     >
                       {item.description}
                     </Text>

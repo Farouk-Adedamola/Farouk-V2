@@ -48,7 +48,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => (
     initial={{ opacity: 0, y: 10 }}
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.4 }}
-    className="mb-12"
+    className="mb-12 backdrop-blur-sm"
   >
     <div className="flex items-start gap-6">
       <div className="flex-1">
