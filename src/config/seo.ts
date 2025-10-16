@@ -1,14 +1,23 @@
 export const siteConfig = {
   name: 'Farouk Adedamola',
-  title: 'Farouk Adedamola - Senior Engineer & Software Developer',
+  title: 'Farouk Adedamola - Software Engineer & Software Developer',
   description:
-    'Senior Engineer with 4+ years of experience building scalable web applications using React, Next.js, TypeScript, and modern web technologies. Specialized in performance optimization, clean architecture, and delivering exceptional user experiences.',
+    'Software Engineer with 4+ years of experience building scalable web applications using React, Next.js, TypeScript, and modern web technologies. Specialized in performance optimization, clean architecture, and delivering exceptional user experiences.',
   url: process.env.SITE_URL || 'https://farouk.dev',
   ogImage: '/og-image.jpg',
   keywords: [
     'Farouk Adedamola',
     'Frontend Engineer',
     'Software Developer',
+    'senior software engineer',
+    'software engineer',
+    'software developer',
+    'software engineer with 4+ years of experience',
+    'software developer with 4+ years of experience',
+    'software engineer with 4+ years of experience building scalable web applications',
+    'software developer with 4+ years of experience building scalable web applications',
+    'software engineer with 4+ years of experience building scalable web applications using React, Next.js, TypeScript, and modern web technologies',
+    'software developer with 4+ years of experience building scalable web applications using React, Next.js, TypeScript, and modern web technologies',
     'React Developer',
     'Next.js Developer',
     'TypeScript Developer',
@@ -50,10 +59,10 @@ export const jsonLd = {
     siteConfig.links.github,
     siteConfig.links.linkedin,
   ],
-  jobTitle: 'Senior Engineer',
+  jobTitle: 'Software Engineer',
   worksFor: {
     '@type': 'Organization',
-    name: 'Local-Coders Westernwells',
+    name: 'Serve Consulting',
   },
   knowsAbout: [
     'React',
