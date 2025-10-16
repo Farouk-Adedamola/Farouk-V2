@@ -1,0 +1,72 @@
+export const siteConfig = {
+  name: 'Farouk Adedamola',
+  title: 'Farouk Adedamola - Senior Frontend Engineer & Software Developer',
+  description:
+    'Senior Frontend Engineer with 3+ years of experience building scalable web applications using React, Next.js, TypeScript, and modern web technologies. Specialized in performance optimization, clean architecture, and delivering exceptional user experiences.',
+  url: process.env.SITE_URL || 'https://faroukadedamola.com',
+  ogImage: '/og-image.jpg',
+  keywords: [
+    'Farouk Adedamola',
+    'Frontend Engineer',
+    'Software Developer',
+    'React Developer',
+    'Next.js Developer',
+    'TypeScript Developer',
+    'Web Developer',
+    'JavaScript Engineer',
+    'UI Engineer',
+    'Full Stack Developer',
+    'GraphQL Developer',
+    'Remote Software Engineer',
+    'Frontend Consultant',
+    'Web Application Developer',
+    'Performance Optimization',
+    'Clean Architecture',
+    'Software Engineering',
+    'Portfolio',
+  ],
+  author: {
+    name: 'Farouk Adedamola',
+    email: 'hello@faroukadedamola.com',
+    twitter: '@faroukadedamola',
+    github: 'faroukadedamola',
+    linkedin: 'faroukadedamola',
+  },
+  links: {
+    twitter: 'https://twitter.com/faroukadedamola',
+    github: 'https://github.com/faroukadedamola',
+    linkedin: 'https://linkedin.com/in/faroukadedamola',
+  },
+};
+
+export const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: siteConfig.name,
+  url: siteConfig.url,
+  image: `${siteConfig.url}${siteConfig.ogImage}`,
+  sameAs: [
+    siteConfig.links.twitter,
+    siteConfig.links.github,
+    siteConfig.links.linkedin,
+  ],
+  jobTitle: 'Senior Frontend Engineer',
+  worksFor: {
+    '@type': 'Organization',
+    name: 'Local-Coders Westernwells',
+  },
+  knowsAbout: [
+    'React',
+    'Next.js',
+    'TypeScript',
+    'JavaScript',
+    'GraphQL',
+    'Node.js',
+    'Web Development',
+    'Software Engineering',
+    'Frontend Development',
+    'UI Engineering',
+  ],
+  description: siteConfig.description,
+};
+

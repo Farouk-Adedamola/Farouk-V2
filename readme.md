@@ -2,6 +2,68 @@
 
 💠 Personal website and blog made using Next.js, TypeScript, Tailwind CSS, Notion as CMS.
 
+## Tech Stack
+
+- **Framework**: Next.js 13 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **CMS**: Notion API
+- **Animations**: Framer Motion
+- **Deployment**: Vercel
+
+## Features
+
+- ✅ Comprehensive SEO optimization with Open Graph and Twitter Cards
+- ✅ Dynamic sitemap generation
+- ✅ Robots.txt configuration
+- ✅ JSON-LD structured data for search engines
+- ✅ Blog powered by Notion CMS
+- ✅ Project portfolio showcase
+- ✅ Responsive design with smooth animations
+- ✅ Performance optimized
+
+## Environment Variables
+
+Create a `.env.local` file in the root directory with the following variables:
+
+```env
+NOTION_AUTH_TOKEN=your_notion_integration_token
+NOTION_DATABASE_ID=your_notion_database_id
+SITE_URL=https://yourdomain.com
+```
+
+## SEO Configuration
+
+The site includes comprehensive SEO features:
+
+1. **Meta Tags**: Dynamic meta tags on all pages with proper titles, descriptions, and keywords
+2. **Open Graph**: Full Open Graph protocol implementation for social media sharing
+3. **Twitter Cards**: Twitter-specific metadata for enhanced link previews
+4. **Structured Data**: JSON-LD schema markup for Person and Article types
+5. **Sitemap**: Automatically generated XML sitemap at `/sitemap.xml`
+6. **Robots.txt**: Dynamic robots.txt at `/robots.txt`
+7. **Canonical URLs**: Proper canonical tags to avoid duplicate content issues
+
+To update SEO settings, edit `/src/config/seo.ts` with your personal information.
+
+## Getting Started
+
+```bash
+pnpm install
+
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to view the site.
+
+## Build for Production
+
+```bash
+pnpm build
+
+pnpm start
+```
+
 WORK EXPERIENCE
 
 **Frontend Engineer** _June 2023 – Present_

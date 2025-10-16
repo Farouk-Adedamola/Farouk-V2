@@ -1,9 +1,23 @@
+import { Metadata } from 'next';
+
 import HomePage from './HomePage';
 import { Farouk } from '@/components/faroukPixel/farouk';
+import { siteConfig } from '@/config/seo';
 import { getAllPostsFromNotion } from '@/services/posts';
 
-export const metadata = {
-  title: 'Portfolio Site | Farouk Adedamola',
+export const metadata: Metadata = {
+  title: 'Home',
+  description: siteConfig.description,
+  openGraph: {
+    title: siteConfig.title,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    type: 'website',
+  },
+  alternates: {
+    canonical: siteConfig.url,
+  },
 };
 
 export default async function Page() {
