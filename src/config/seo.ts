@@ -1,9 +1,9 @@
 export const siteConfig = {
   name: 'Farouk Adedamola',
-  title: 'Farouk Adedamola - Senior Frontend Engineer & Software Developer',
+  title: 'Farouk Adedamola - Senior Engineer & Software Developer',
   description:
-    'Senior Frontend Engineer with 3+ years of experience building scalable web applications using React, Next.js, TypeScript, and modern web technologies. Specialized in performance optimization, clean architecture, and delivering exceptional user experiences.',
-  url: process.env.SITE_URL || 'https://faroukadedamola.com',
+    'Senior Engineer with 4+ years of experience building scalable web applications using React, Next.js, TypeScript, and modern web technologies. Specialized in performance optimization, clean architecture, and delivering exceptional user experiences.',
+  url: process.env.SITE_URL || 'https://farouk.dev',
   ogImage: '/og-image.jpg',
   keywords: [
     'Farouk Adedamola',
@@ -27,15 +27,15 @@ export const siteConfig = {
   ],
   author: {
     name: 'Farouk Adedamola',
-    email: 'hello@faroukadedamola.com',
-    twitter: '@faroukadedamola',
-    github: 'faroukadedamola',
-    linkedin: 'faroukadedamola',
+    email: 'eja.farouk.dev@gmail.com',
+    twitter: '@Farouk_fish',
+    github: 'https://github.com/Farouk-Adedamola',
+    linkedin: 'https://www.linkedin.com/in/farouk-adedamola/',
   },
   links: {
-    twitter: 'https://twitter.com/faroukadedamola',
-    github: 'https://github.com/faroukadedamola',
-    linkedin: 'https://linkedin.com/in/faroukadedamola',
+    twitter: 'https://x.com/Farouk_fish',
+    github: 'https://github.com/Farouk-Adedamola',
+    linkedin: 'https://www.linkedin.com/in/farouk-adedamola/',
   },
 };
 
@@ -50,7 +50,7 @@ export const jsonLd = {
     siteConfig.links.github,
     siteConfig.links.linkedin,
   ],
-  jobTitle: 'Senior Frontend Engineer',
+  jobTitle: 'Senior Engineer',
   worksFor: {
     '@type': 'Organization',
     name: 'Local-Coders Westernwells',
