@@ -15,6 +15,33 @@ export type ExperienceTypeProps = {
 export const AllJobExperience: ExperienceTypeProps = {
   jobs: [
     {
+      title: 'Senior Engineer',
+      company: 'Serve Consulting',
+      duration: 'January 2025 — Present',
+      location: 'Remote',
+      description: [
+        'Collaborated with the ERP development team of 8 software engineers to build a multi-tenant enterprise logistics platform for major oil companies including 11PLC and Ardova, managing operations from order processing to delivery.',
+        'Developed and maintained web applications using React, Next.js, TypeScript, and Tailwind CSS.',
+        'Built cross-platform mobile applications using React Native for real-time order tracking and fleet management.',
+        'Integrated Google Maps API for route optimization, vehicle tracking, and delivery scheduling.',
+        'Collaborated with cross-functional teams to implement new features and improve user experience.',
+        'Enhanced application performance, achieving 40% faster load times across web and mobile platforms.',
+        'Delivered high-quality, reusable code adhering to modern JavaScript and accessibility best practices.',
+      ],
+      tools: [
+        'React.js',
+        'Next.js',
+        'TypeScript',
+        'React Native',
+        'Node.js',
+        'Tailwind CSS',
+        'GraphQL',
+        'Firebase',
+        'Google Maps API',
+        'Git',
+      ],
+    },
+    {
       title: 'Frontend Engineer',
       company: 'Local-Coders Westernwells',
       duration: 'June 2023 — Present',
