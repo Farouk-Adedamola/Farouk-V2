@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 
 import NotionPage from '@/components/notion-page';
 import RelatedPosts from '@/components/posts/related-posts';
+import { siteConfig } from '@/config/seo';
 import { getRecordMap } from '@/libs/notion';
 import { getAllPostsFromNotion } from '@/services/posts';
 import { Post } from '@/types/post';
@@ -74,10 +75,64 @@ export async function generateMetadata({
   const allPosts = await getAllPostsFromNotion();
   const post = allPosts.find((p) => p.slug === slug);
 
-  return post
-    ? {
-        title: post.title,
-        // openGraph: {},
-      }
-    : {};
+  if (!post) {
+    return {
+      title: 'Post Not Found',
+    };
+  }
+
+  const postUrl = `${siteConfig.url}/blog/${slug}`;
+  const publishedDate = new Date(post.date).toISOString();
+  const modifiedDate = new Date(post.lastEditedAt).toISOString();
+  const description = `Read ${post.title} by ${
+    siteConfig.author.name
+  }. Technical article about ${post.categories.join(', ')}.`;
+
+  return {
+    title: post.title,
+    description: description,
+    keywords: [
+      ...siteConfig.keywords,
+      ...post.categories,
+      post.title,
+      'blog post',
+      'technical article',
+    ],
+    authors: [
+      {
+        name: siteConfig.author.name,
+        url: siteConfig.url,
+      },
+    ],
+    openGraph: {
+      title: post.title,
+      description: description,
+      url: postUrl,
+      siteName: siteConfig.name,
+      locale: 'en_US',
+      type: 'article',
+      publishedTime: publishedDate,
+      modifiedTime: modifiedDate,
+      authors: [siteConfig.author.name],
+      tags: post.categories,
+      images: [
+        {
+          url: siteConfig.ogImage,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: description,
+      creator: siteConfig.author.twitter,
+      images: [siteConfig.ogImage],
+    },
+    alternates: {
+      canonical: postUrl,
+    },
+  };
 }
