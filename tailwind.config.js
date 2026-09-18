@@ -2,99 +2,43 @@
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-  	screens: {
-  		'max-desktop': {
-  			max: '1279px'
-  		},
-  		sm: '640px',
-  		'max-md': {
-  			max: '767px'
-  		},
-  		md: '768px',
-  		lg: '1024px',
-  		xl: '1280px',
-  		'2xl': '1536px'
-  	},
-  	extend: {
-  		fontFamily: {
-  			figtree: [
-  				'var(--figtree)',
-  				'sans-serif',
-  				'system-ui'
-  			],
-  			inter: [
-  				'var(--inter)',
-  				'ui-monospace'
-  			]
-  		},
-  		colors: {
-  			error: '#ef4444',
-  			'emerald-light': '#34d399',
-  			'emerald-deep': '#10b981',
-  			'light-primary': '#64748B',
-  			lightTheme: {
-  				primary: '#ebebeb',
-  				secondary: '#dadada',
-  				text: '#f3f4f6'
-  			},
-  			darkTheme: {
-  				primary: '#030712',
-  				'primary-dark': '#0f1729',
-  				secondary: '#1f2937'
-  			},
-  			customGray: {
-  				light: '#2e3039',
-  				base: '#eeeeee',
-  				dark: '#1f2028'
-  			},
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
-  			card: {
-  				DEFAULT: 'hsl(var(--card))',
-  				foreground: 'hsl(var(--card-foreground))'
-  			},
-  			popover: {
-  				DEFAULT: 'hsl(var(--popover))',
-  				foreground: 'hsl(var(--popover-foreground))'
-  			},
-  			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
-  			},
-  			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
-  				foreground: 'hsl(var(--secondary-foreground))'
-  			},
-  			muted: {
-  				DEFAULT: 'hsl(var(--muted))',
-  				foreground: 'hsl(var(--muted-foreground))'
-  			},
-  			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
-  			},
-  			destructive: {
-  				DEFAULT: 'hsl(var(--destructive))',
-  				foreground: 'hsl(var(--destructive-foreground))'
-  			},
-  			border: 'hsl(var(--border))',
-  			input: 'hsl(var(--input))',
-  			ring: 'hsl(var(--ring))',
-  			chart: {
-  				'1': 'hsl(var(--chart-1))',
-  				'2': 'hsl(var(--chart-2))',
-  				'3': 'hsl(var(--chart-3))',
-  				'4': 'hsl(var(--chart-4))',
-  				'5': 'hsl(var(--chart-5))'
-  			}
-  		},
-  		borderRadius: {
-  			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
-  		}
-  	}
+    screens: {
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px',
+      'max-md': { max: '767px' },
+      'max-desktop': { max: '1279px' },
+    },
+    extend: {
+      fontFamily: {
+        display: ['var(--font-display)', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+      },
+      // Mirrors the tokens in src/styles/globals.css so utilities and the
+      // stylesheet cannot drift apart.
+      colors: {
+        ink: {
+          DEFAULT: '#08080A',
+          raised: '#101014',
+          deep: '#050507',
+        },
+        paper: '#F2F2F5',
+        body: '#C0C0C8',
+        mute: {
+          DEFAULT: '#8C8C96',
+          dim: '#56565F',
+        },
+        accent: {
+          DEFAULT: '#FFA62B',
+          ink: '#14100A',
+        },
+      },
+      maxWidth: {
+        shell: '1180px',
+      },
+    },
   },
-  darkMode: ['class', 'class'],
-    plugins: [require("tailwindcss-animate")]
+  plugins: [],
 };

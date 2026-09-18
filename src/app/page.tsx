@@ -1,99 +1,32 @@
-import { Metadata } from 'next';
+import Capabilities from '@/components/site/Capabilities';
+import Contact from '@/components/site/Contact';
+import Deck from '@/components/site/Deck';
+import Hero from '@/components/site/Hero';
+import Nav from '@/components/site/Nav';
+import Readout from '@/components/site/Readout';
+import SiteFooter from '@/components/site/SiteFooter';
+import Work from '@/components/site/Work';
+import { getWakatime } from '@/lib/wakatime';
 
-import HomePage from './HomePage';
-import { Farouk } from '@/components/faroukPixel/farouk';
-import { siteConfig } from '@/config/seo';
-import { getAllPostsFromNotion } from '@/services/posts';
-
-export const metadata: Metadata = {
-  title: 'Home',
-  description: siteConfig.description,
-  openGraph: {
-    title: siteConfig.title,
-    description: siteConfig.description,
-    url: siteConfig.url,
-    siteName: siteConfig.name,
-    type: 'website',
-  },
-  alternates: {
-    canonical: siteConfig.url,
-  },
-};
+/* WakaTime is fetched on the server and cached for an hour, so the readout is
+   filled on first paint instead of flashing a loading state. */
+export const revalidate = 3600;
 
 export default async function Page() {
-  const allPosts = await getAllPostsFromNotion();
-
-  const posts = allPosts
-    .filter((post) => post.published)
-    .sort((postA, postB) => (postA.date > postB.date ? -1 : 1));
+  const wakatime = await getWakatime();
 
   return (
-    <>
-      <HomePage initialPosts={posts} />
-    </>
+    <div className="shell">
+      {/* <Nav /> */}
+      <main id="top">
+        <Hero />
+        <Readout data={wakatime} />
+        <Work />
+        <Deck />
+        <Capabilities />
+        <Contact />
+        <SiteFooter />
+      </main>
+    </div>
   );
 }
-
-// Simple test to verify token
-// async function testNotionToken() {
-//   const NOTION_TOKEN = process.env.NOTION_AUTH_TOKEN;
-
-//   try {
-//     const response = await fetch('https://api.notion.com/v1/users/me', {
-//       method: 'GET',
-//       headers: {
-//         Authorization: `Bearer ${NOTION_TOKEN}`,
-//         'Notion-Version': '2022-06-28',
-//       },
-//     });
-
-//     if (response.ok) {
-//       const data = await response.json();
-//       console.log('✅ Token is valid!', data);
-//       return true;
-//     } else {
-//       console.log(
-//         '❌ Token is invalid:',
-//         response.status,
-//         await response.text()
-//       );
-//       return false;
-//     }
-//   } catch (error) {
-//     console.error('Error testing token:', error);
-//     return false;
-//   }
-// }
-
-// async function testDatabaseAccess(databaseId: string) {
-//   const NOTION_TOKEN = process.env.NOTION_AUTH_TOKEN;
-
-//   try {
-//     const response = await fetch(
-//       `https://api.notion.com/v1/databases/${databaseId}`,
-//       {
-//         method: 'GET',
-//         headers: {
-//           Authorization: `Bearer ${NOTION_TOKEN}`,
-//           'Notion-Version': '2022-06-28',
-//         },
-//       }
-//     );
-
-//     if (response.ok) {
-//       const data = await response.json();
-//       console.log('✅ Database is accessible!', data.title);
-//       return true;
-//     } else {
-//       console.log(
-//         '❌ Database not accessible:',
-//         response.status,
-//         await response.text()
-//       );
-//       return false;
-//     }
-//   } catch (error) {
-//     console.error('Error accessing database:', error);
-//     return false;
-//   }
-// }

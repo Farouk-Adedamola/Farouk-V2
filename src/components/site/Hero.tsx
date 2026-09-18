@@ -1,0 +1,92 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
+
+import ActionButton from './ActionButton';
+import { createSpring, prefersReducedMotion } from '@/lib/spring';
+import { profile, proof } from '@/data/resume';
+
+/**
+ * The name opens on the two axes Bricolage Grotesque actually has — width
+ * 76→100 and weight 540→800 — so it thickens and widens as the page arrives.
+ * It is legible on the first frame; the motion refines it rather than reveals it.
+ */
+export default function Hero() {
+  const nameRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    const el = nameRef.current;
+    if (!el) return;
+
+    if (prefersReducedMotion()) {
+      el.style.setProperty('--w', '100');
+      el.style.setProperty('--g', '800');
+      return;
+    }
+
+    const spring = createSpring(0, (t) => {
+      el.style.setProperty('--w', (76 + 24 * t).toFixed(2));
+      el.style.setProperty('--g', (540 + 260 * t).toFixed(0));
+    });
+    const id = requestAnimationFrame(() =>
+      spring.to(1, { damping: 1, response: 0.85 })
+    );
+    return () => {
+      cancelAnimationFrame(id);
+      spring.stop();
+    };
+  }, []);
+
+  return (
+    <div className="wrap hero">
+      <div className="eyebrow">
+        <span className="m">{profile.locationLine}</span>
+        <span className="rule" />
+        <span className="m">{profile.since}</span>
+      </div>
+
+      <h1 className="display" ref={nameRef}>
+        <span className="ln">{profile.first}</span>
+        <span className="ln">{profile.last}</span>
+      </h1>
+
+      <div className="hero-rule" />
+
+      <div className="role">
+        <b>{profile.title}</b>
+        {profile.disciplines.map((d) => (
+          <i key={d}>{d}</i>
+        ))}
+      </div>
+
+      <p className="lede">
+        {profile.lede.before}
+        <em>{profile.lede.accent}</em>
+      </p>
+
+      <dl className="proof">
+        {proof.map((p) => (
+          <div key={p.label}>
+            <dt>{p.label}</dt>
+            <dd>{p.body}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <div className="cta">
+        <ActionButton href={`mailto:${profile.email}`} variant="primary">
+          Start a conversation
+        </ActionButton>
+        <ActionButton href={profile.resumePath} external>
+          Résumé
+        </ActionButton>
+        <ActionButton href={profile.github} external>
+          GitHub
+        </ActionButton>
+        <ActionButton href={profile.linkedin} external>
+          LinkedIn
+        </ActionButton>
+      </div>
+    </div>
+  );
+}

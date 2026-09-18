@@ -1,19 +1,36 @@
 import Link from 'next/link';
 
+import { profile } from '@/data/resume';
+
 export default function NotFound() {
   return (
-    <div className="flex min-h-[70vh] flex-col items-center justify-center text-center text-white">
-      <h1 className="mb-4 text-4xl font-bold">404</h1>
-      <h2 className="mb-6 text-2xl font-semibold">Page Not Found</h2>
-      <p className="mb-8 text-gray-600 dark:text-gray-400">
-        Sorry, we couldn&apos;t find the page you&apos;re looking for.
-      </p>
-      <Link
-        href="/"
-        className="rounded-md bg-black px-6 py-3 text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
-      >
-        Return Home
-      </Link>
+    <div className="shell">
+      <main className="wrap hero" id="top">
+        <div className="eyebrow">
+          <span className="m">404</span>
+          <span className="rule" />
+          <span className="m">{profile.locationLine}</span>
+        </div>
+
+        <h1 className="display" style={{ ['--w' as string]: 100, ['--g' as string]: 800 }}>
+          <span className="ln">Nothing</span>
+          <span className="ln">here</span>
+        </h1>
+
+        <div className="hero-rule" />
+
+        <p className="lede">
+          That page is gone — the site is one page now.{' '}
+          <em>Everything lives at the root.</em>
+        </p>
+
+        <div className="cta">
+          <Link className="btn primary" href="/">
+            <span className="ix" aria-hidden="true" />
+            <span>Back to the start</span>
+          </Link>
+        </div>
+      </main>
     </div>
   );
 }

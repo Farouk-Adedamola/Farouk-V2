@@ -1,42 +1,19 @@
 import { Metadata } from 'next';
-import { Figtree, Inter } from 'next/font/google';
 
-import 'katex/dist/katex.min.css';
-import 'prismjs/themes/prism-tomorrow.css';
-import 'react-notion-x/src/styles.css';
+import { Analytics } from '@vercel/analytics/react';
 
-import LayoutWrapper from '@/components/LayoutWrapper';
-import { siteConfig, jsonLd } from '@/config/seo';
+import { display, mono } from './fonts';
+import { jsonLd, siteConfig } from '@/config/seo';
 import '@/styles/globals.css';
-import '@/styles/paginate.css';
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--inter',
-});
-
-const figtree = Figtree({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--figtree',
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: {
-    default: siteConfig.title,
-    template: `%s | ${siteConfig.name}`,
-  },
+  title: siteConfig.title,
   description: siteConfig.description,
   keywords: siteConfig.keywords,
-  authors: [
-    {
-      name: siteConfig.author.name,
-      url: siteConfig.url,
-    },
-  ],
+  authors: [{ name: siteConfig.author.name, url: siteConfig.url }],
   creator: siteConfig.author.name,
+  alternates: { canonical: siteConfig.url },
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -66,20 +43,19 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,
+      'max-video-preview': -1,
     },
   },
-  icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-  },
+  icons: { icon: '/favicon.ico', shortcut: '/favicon.ico' },
   manifest: '/manifest.json',
-  verification: {
-    google: 'your-google-verification-code',
-    yandex: 'your-yandex-verification-code',
-  },
+  themeColor: '#08080a',
+  colorScheme: 'dark',
+  // viewport-fit=cover is what makes env(safe-area-inset-*) resolve on iOS,
+  // which the fixed command bar and the sheet both depend on.
+  viewport:
+    'width=device-width, initial-scale=1, viewport-fit=cover',
 };
 
 export default function RootLayout({
@@ -88,15 +64,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${figtree.variable}`}>
+    <html lang="en" className={`${display.variable} ${mono.variable}`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="relative flex min-h-screen w-full flex-col items-center  ">
-        <LayoutWrapper>{children}</LayoutWrapper>
+      <body>
+        {children}
+        <Analytics />
       </body>
     </html>
   );
