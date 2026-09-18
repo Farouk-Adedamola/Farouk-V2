@@ -12,7 +12,7 @@ import { profile, proof } from '@/data/resume';
  * 76→100 and weight 540→800 — so it thickens and widens as the page arrives.
  * It is legible on the first frame; the motion refines it rather than reveals it.
  */
-export default function Hero() {
+export default function Hero({ plane }: { plane?: React.ReactNode }) {
   const nameRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -53,7 +53,9 @@ export default function Hero() {
   }, []);
 
   return (
-    <div className="wrap hero">
+    <div className="hero">
+      {plane}
+      <div className="wrap hero-body">
       <div className="eyebrow">
         <span className="m">{profile.locationLine}</span>
         <span className="rule" />
@@ -101,6 +103,7 @@ export default function Hero() {
         <ActionButton href={profile.linkedin} external>
           LinkedIn
         </ActionButton>
+      </div>
       </div>
     </div>
   );

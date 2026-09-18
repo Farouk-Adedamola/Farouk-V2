@@ -13,6 +13,7 @@ import {
   velocityFrom,
 } from '@/lib/spring';
 import type { Sample } from '@/lib/spring';
+import { blurFor } from '@/data/blur';
 import { projects } from '@/data/resume';
 
 export default function Deck() {
@@ -256,6 +257,8 @@ export default function Deck() {
                       fill
                       sizes="(max-width: 560px) 82vw, 380px"
                       priority={i < 2}
+                      placeholder={blurFor(p.image) ? 'blur' : 'empty'}
+                      blurDataURL={blurFor(p.image)}
                       draggable={false}
                     />
                   </div>

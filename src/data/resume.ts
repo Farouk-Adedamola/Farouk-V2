@@ -276,6 +276,7 @@ export const sections = [
   { id: 'readout', label: 'Readout', note: 'WakaTime' },
   { id: 'work', label: 'Work', note: `${roles.length} roles` },
   { id: 'projects', label: 'Projects', note: `${projects.length}` },
+  { id: 'retro', label: 'Retro', note: 'Yearly' },
   { id: 'stack', label: 'Stack', note: 'Languages & tools' },
   { id: 'contact', label: 'Contact', note: 'Lagos, remote' },
 ] as const;

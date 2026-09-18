@@ -440,8 +440,14 @@ a {
 
 /* ── hero ───────────────────────────────────────────────────────────── */
 .hero {
+  position: relative;
+  overflow: hidden; /* clips the plane's bleed so the page never scrolls sideways */
   padding-top: 156px;
   padding-bottom: 78px;
+}
+.hero-body {
+  position: relative;
+  z-index: 1;
 }
 .eyebrow {
   display: flex;
@@ -1334,5 +1340,325 @@ a {
 @media (prefers-reduced-motion: reduce) {
   :root[data-intro='run'] .intro {
     display: none;
+  }
+}
+
+/* ── isometric hero plane ─────────────────────────────────────────────
+   A rotated plane bleeding off the right edge, faded with two intersecting
+   mask gradients so it dissolves rather than ending on a hard edge. It is
+   decorative and pointer-transparent; the hero text sits above it on z-index.
+   ──────────────────────────────────────────────────────────────────── */
+.plane {
+  position: absolute;
+  top: 30%;
+  right: -20vw;
+  width: 62vw;
+  max-width: 1040px;
+  aspect-ratio: 1120 / 700;
+  z-index: 0;
+  pointer-events: none;
+  perspective: 1400px;
+  color: var(--line);
+}
+
+.plane-inner {
+  position: absolute;
+  inset: 0;
+  transform: rotateX(46deg) rotateZ(42deg);
+  transform-style: preserve-3d;
+  /* Fades on the two edges that meet the type, solid where it runs off the
+     viewport — the plane should dissolve into the page, not into the bleed. */
+  -webkit-mask-image: linear-gradient(to top, #000 42%, transparent 106%),
+    linear-gradient(to left, #000 64%, transparent 100%);
+  mask-image: linear-gradient(to top, #000 42%, transparent 106%),
+    linear-gradient(to left, #000 64%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+.plane-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.plane-deck {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.pcard {
+  width: 210px;
+  flex: none;
+  display: grid;
+  gap: 11px;
+  align-content: start;
+  padding: 17px;
+  border-radius: 15px;
+  background: var(--ink-raised);
+  border: 1px solid rgba(242, 242, 245, 0.14);
+  box-shadow: 0 26px 46px rgba(0, 0, 0, 0.5);
+}
+.pcard:nth-child(1) {
+  transform: translateY(-46px);
+}
+.pcard:nth-child(3) {
+  transform: translateY(46px);
+}
+.pcard header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pcard-k {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.pcard-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.pcard-fig {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+  font-weight: 400;
+}
+.pcard-bars {
+  display: grid;
+  gap: 5px;
+}
+.pcard-bars i {
+  display: block;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--mute-dim);
+  transform-origin: left center;
+}
+.pcard-bars i:first-child {
+  background: var(--accent);
+}
+.pcard-art {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.pcard-sub {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  color: var(--mute-dim);
+}
+
+/* The plane is an accent, not a payload — it goes away before it can crowd. */
+@media (max-width: 1240px) {
+  .plane {
+    opacity: 0.5;
+    right: -26vw;
+  }
+}
+@media (max-width: 1024px) {
+  .plane {
+    display: none;
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .plane {
+    display: none;
+  }
+}
+
+/* ── retro ────────────────────────────────────────────────────────────
+   One entry per year. The rail marker rides the same two-spring treatment
+   as the nav lozenge, and the stage springs to each year's own height.
+   ──────────────────────────────────────────────────────────────────── */
+.retro-rail {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-bottom: 26px;
+}
+.retro-rail button {
+  position: relative;
+  z-index: 1;
+  padding: 10px 16px;
+  border: 0;
+  background: none;
+  color: var(--mute);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: color 160ms ease;
+}
+.retro-rail button:hover,
+.retro-rail button.on {
+  color: var(--paper);
+}
+.retro-rail .loz {
+  height: 36px;
+  margin-top: -18px;
+}
+.retro-rail .loz::after {
+  display: none;
+}
+
+.retro-theme {
+  margin: 0 0 30px;
+  max-width: 30ch;
+  font-size: clamp(1.4rem, 3.2vw, 2.1rem);
+  line-height: 1.16;
+  letter-spacing: -0.03em;
+  font-variation-settings: 'wdth' 100, 'wght' 700;
+  color: var(--paper);
+}
+
+.retro-stage {
+  position: relative;
+  overflow: hidden;
+}
+.retro-panel {
+  display: grid;
+  gap: 34px;
+  animation: retro-in 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes retro-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.retro-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line-soft);
+  border-block: 1px solid var(--line-soft);
+}
+.retro-col {
+  background: var(--ink);
+  padding: 24px 22px 26px 0;
+}
+.retro-col:not(:first-child) {
+  padding-left: 22px;
+}
+.retro-col h3 {
+  margin: 0 0 14px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+.retro-col ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+.retro-col li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--body);
+}
+.retro-col li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.66em;
+  width: 8px;
+  height: 1px;
+  background: var(--mute-dim);
+}
+
+.retro-shots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.retro-shots figure {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 16 / 10;
+  max-width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--ink-deep);
+}
+.retro-shots figure img {
+  object-fit: cover;
+}
+.retro-empty {
+  /* With nothing to show, one third-width box reads as a broken grid — span
+     the row instead, so it reads as a place photos will go. */
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 4.5;
+  display: grid;
+  place-items: center;
+  border-style: dashed !important;
+  color: var(--line);
+}
+@media (max-width: 860px) {
+  .retro-empty {
+    aspect-ratio: 16 / 7;
+  }
+}
+.retro-empty svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+.retro-empty span {
+  position: relative;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute-dim);
+}
+
+@media (max-width: 860px) {
+  .retro-grid {
+    grid-template-columns: 1fr;
+  }
+  .retro-col,
+  .retro-col:not(:first-child) {
+    padding: 20px 0;
+  }
+  .retro-shots {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .retro-panel {
+    animation: none;
   }
 }
