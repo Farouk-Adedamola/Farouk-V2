@@ -223,6 +223,46 @@ export const projects: Project[] = [
   },
 ];
 
+/**
+ * The three layers shown on the hero plane. Each is a real slice of the stack
+ * paired with the work that proves it — a chip list on its own says nothing a
+ * hundred other portfolios do not already say.
+ */
+export type StackLayer = {
+  id: string;
+  label: string;
+  items: string[];
+  proof: string;
+};
+
+export const stackLayers: StackLayer[] = [
+  {
+    id: 'frontend',
+    label: 'Frontend',
+    items: ['React', 'Next.js', 'TypeScript', 'React Native', 'Gatsby', 'Tailwind'],
+    proof: 'Multi-tenant ERP · 11 PLC, Ardova',
+  },
+  {
+    id: 'platform',
+    label: 'Platform',
+    items: ['Node.js', 'NestJS', 'PostgreSQL', 'Prisma', 'Redis', 'GraphQL'],
+    proof: 'WAKASUB · 5,000+ users, ₦10M+/qtr',
+  },
+  {
+    id: 'ai',
+    label: 'AI',
+    items: [
+      'RAG pipelines',
+      'Claude SDK',
+      'Vector retrieval',
+      'LLM inference',
+      'Prompt engineering',
+      'Doc ingestion',
+    ],
+    proof: 'NKIRU RAG call handling · −30% support load',
+  },
+];
+
 export type Capability = { label: string; items: string[] };
 
 export const capabilities: Capability[] = [

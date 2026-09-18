@@ -502,8 +502,9 @@ a {
   font-style: normal;
 }
 .lede {
-  margin: 34px 0 0;
-  max-width: 34ch;
+  margin: 0;
+  padding-top: 6px;
+  max-width: 34rem;
   font-size: clamp(1.25rem, 2.4vw, 1.65rem);
   line-height: 1.34;
   letter-spacing: -0.018em;
@@ -1348,14 +1349,29 @@ a {
    mask gradients so it dissolves rather than ending on a hard edge. It is
    decorative and pointer-transparent; the hero text sits above it on z-index.
    ──────────────────────────────────────────────────────────────────── */
+/* The plane occupies its own column beside the lede rather than floating over
+   the hero. Overlapping text is not alignment — given it as a real grid cell,
+   it lines up with the content column by construction and nothing collides. */
+.hero-mid {
+  display: grid;
+  grid-template-columns: minmax(280px, 34rem) minmax(0, 1fr);
+  align-items: start;
+  gap: 40px;
+  /* The rotated deck overflows its cell at the bottom, so the row reserves
+     room for it instead of letting it graze the proof strip. */
+  margin-block: 34px 104px;
+}
+
 .plane {
-  position: absolute;
-  top: 30%;
-  right: -20vw;
-  width: 62vw;
-  max-width: 1040px;
+  position: relative;
+  justify-self: end;
+  width: 100%;
+  min-width: 0;
   aspect-ratio: 1120 / 700;
-  z-index: 0;
+  max-width: 680px;
+  /* Percentage, not px: it scales with the cell so the deck stays flush with
+     the content column at every width. */
+  transform: translateX(5.5%);
   pointer-events: none;
   perspective: 1400px;
   color: var(--line);
@@ -1364,7 +1380,7 @@ a {
 .plane-inner {
   position: absolute;
   inset: 0;
-  transform: rotateX(46deg) rotateZ(42deg);
+  transform: rotateX(46deg) rotateZ(42deg) scale(1);
   transform-style: preserve-3d;
   /* Fades on the two edges that meet the type, solid where it runs off the
      viewport — the plane should dissolve into the page, not into the bleed. */
@@ -1390,87 +1406,174 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 30px;
+  gap: 16px;
 }
 
+/* ── stack cards ──────────────────────────────────────────────────────
+   One card per layer of the stack. They step down the plane on a constant
+   offset so the arrangement reads as deliberate rather than scattered.
+   ──────────────────────────────────────────────────────────────────── */
 .pcard {
-  width: 210px;
+  position: relative;
+  overflow: hidden;
+  width: 244px;
   flex: none;
   display: grid;
-  gap: 11px;
+  gap: 13px;
   align-content: start;
-  padding: 17px;
-  border-radius: 15px;
+  padding: 18px 17px 15px;
+  border-radius: 16px;
   background: var(--ink-raised);
   border: 1px solid rgba(242, 242, 245, 0.14);
   box-shadow: 0 26px 46px rgba(0, 0, 0, 0.5);
+  transition: transform 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 260ms ease, box-shadow 340ms ease;
 }
 .pcard:nth-child(1) {
-  transform: translateY(-46px);
+  transform: translate3d(0, -58px, 0);
 }
 .pcard:nth-child(3) {
-  transform: translateY(46px);
+  transform: translate3d(0, 58px, 0);
 }
+
+/* Lifting off the surface: on an isometric plane, up-and-left reads as height. */
+.pcard.is-live {
+  border-color: var(--accent);
+  box-shadow: 0 40px 66px rgba(0, 0, 0, 0.62), 0 0 0 1px rgba(255, 166, 43, 0.28);
+  transform: translate3d(-14px, -72px, 0);
+}
+.pcard.is-live:nth-child(2) {
+  transform: translate3d(-14px, -14px, 0);
+}
+.pcard.is-live:nth-child(3) {
+  transform: translate3d(-14px, 44px, 0);
+}
+
+/* A single scan pass across the card when it comes alive. */
+.pcard::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 42%;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 166, 43, 0.11),
+    transparent
+  );
+  transform: translateY(-120%);
+  transition: transform 760ms cubic-bezier(0.32, 0, 0.2, 1);
+}
+.pcard.is-live::after {
+  transform: translateY(280%);
+}
+
 .pcard header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
 }
 .pcard-k {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 9.5px;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--mute);
+  color: var(--paper);
 }
-.pcard-dot {
-  width: 5px;
-  height: 5px;
+.pcard-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 8.5px;
+  letter-spacing: 0.08em;
+  color: var(--mute);
+  white-space: nowrap;
+}
+.pcard-live i {
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
   background: var(--accent);
 }
-.pcard-fig {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-variant-numeric: tabular-nums;
-  font-size: 15px;
-  letter-spacing: -0.02em;
-  color: var(--paper);
-  font-weight: 400;
-}
-.pcard-bars {
-  display: grid;
+
+.pcard-stack {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
   gap: 5px;
 }
-.pcard-bars i {
-  display: block;
-  height: 3px;
-  border-radius: 2px;
-  background: var(--mute-dim);
-  transform-origin: left center;
-}
-.pcard-bars i:first-child {
-  background: var(--accent);
-}
-.pcard-art {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-.pcard-sub {
+.pcard-stack li {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 9.5px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
+  color: var(--mute);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 4px 7px;
+  background: rgba(242, 242, 245, 0.02);
+  transition: color 240ms ease, border-color 240ms ease, background 240ms ease;
+  transition-delay: 0ms;
+}
+/* Each chip lights a beat after the one before it, so the card reads
+   left-to-right rather than flashing all at once. */
+.pcard.is-live .pcard-stack li {
+  color: var(--paper);
+  border-color: rgba(255, 166, 43, 0.42);
+  background: rgba(255, 166, 43, 0.07);
+  transition-delay: calc(var(--i, 0) * 45ms);
+}
+
+.pcard footer {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.07em;
+  line-height: 1.5;
   color: var(--mute-dim);
+  padding-top: 11px;
+  border-top: 1px solid var(--line-soft);
+  transition: color 260ms ease;
+}
+.pcard.is-live footer {
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pcard,
+  .pcard::after,
+  .pcard-stack li,
+  .pcard footer {
+    transition: none;
+  }
+  .pcard.is-live,
+  .pcard.is-live:nth-child(2),
+  .pcard.is-live:nth-child(3) {
+    transform: translate3d(0, 0, 0);
+  }
+  .pcard.is-live:nth-child(1) {
+    transform: translate3d(0, -58px, 0);
+  }
+  .pcard.is-live:nth-child(3) {
+    transform: translate3d(0, 58px, 0);
+  }
+  .pcard::after {
+    display: none;
+  }
 }
 
 /* The plane is an accent, not a payload — it goes away before it can crowd. */
-@media (max-width: 1240px) {
-  .plane {
-    opacity: 0.5;
-    right: -26vw;
+@media (max-width: 1100px) {
+  .hero-mid {
+    grid-template-columns: 1fr;
+    margin-block: 34px 0;
   }
-}
-@media (max-width: 1024px) {
   .plane {
     display: none;
   }

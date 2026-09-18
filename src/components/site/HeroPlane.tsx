@@ -1,97 +1,101 @@
+'use client';
+
+import { useCallback, useEffect, useRef, useState } from 'react';
+
 import DashGrid from './DashGrid';
+import { stackLayers } from '@/data/resume';
+import { prefersReducedMotion } from '@/lib/spring';
 import type { WakaSnapshot } from '@/lib/wakatime';
 
 /**
  * An isometric plane bleeding off the right edge of the hero.
  *
- * The trick is borrowed — a rotateX/rotateZ plane over a graph-paper grid,
- * faded out with two intersecting mask gradients. What sits on it is not:
- * instead of floating tech-stack logos, these are the three systems this CV is
- * actually about, and the first card reads the live WakaTime figure, so the
- * plane shows real data rather than decoration.
+ * The plane itself is borrowed — a rotated surface over graph paper, dissolved
+ * with intersecting mask gradients. What sits on it is not: three layers of the
+ * stack, each carrying the work that proves it, and the frontend card reads the
+ * live WakaTime language share so one figure on the page is genuinely current.
+ *
+ * Activation is driven by pointer proximity rather than :hover. The hero copy
+ * sits above the plane and would otherwise swallow the pointer over most of the
+ * cards, and proximity gives continuous feedback instead of a binary flip.
  */
 export default function HeroPlane({ data }: { data: WakaSnapshot }) {
+  const planeRef = useRef<HTMLDivElement>(null);
+  const [live, setLive] = useState<number | null>(null);
   const top = data.languages[0];
 
+  const onMove = useCallback((e: PointerEvent) => {
+    const cards = planeRef.current?.querySelectorAll<HTMLElement>('.pcard');
+    if (!cards?.length) return;
+
+    let best: number | null = null;
+    let bestDistance = Infinity;
+    cards.forEach((card, i) => {
+      const r = card.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2);
+      const dy = e.clientY - (r.top + r.height / 2);
+      const d = Math.hypot(dx, dy);
+      if (d < bestDistance) {
+        bestDistance = d;
+        best = i;
+      }
+    });
+    setLive(bestDistance < 260 ? best : null);
+  }, []);
+
+  useEffect(() => {
+    const hero = planeRef.current?.closest('.hero') as HTMLElement | null;
+    if (!hero) return;
+    const clear = () => setLive(null);
+    hero.addEventListener('pointermove', onMove);
+    hero.addEventListener('pointerleave', clear);
+    return () => {
+      hero.removeEventListener('pointermove', onMove);
+      hero.removeEventListener('pointerleave', clear);
+    };
+  }, [onMove]);
+
+  const reduced = typeof window !== 'undefined' && prefersReducedMotion();
+
   return (
-    <div className="plane" aria-hidden="true">
+    <div className="plane" ref={planeRef} aria-hidden="true">
       <div className="plane-inner">
         <DashGrid className="plane-grid" width={1120} height={700} spacing={28} />
 
         <div className="plane-deck">
-          {/* 1 — telemetry, fed by the same WakaTime snapshot as the readout */}
-          <article className="pcard">
-            <header>
-              <span className="pcard-k">Tracked</span>
-              <span className="pcard-dot" />
-            </header>
-            <strong className="pcard-fig">{data.totals?.total ?? '—'}</strong>
-            <div className="pcard-bars">
-              {[0.72, 0.31, 0.18, 0.11].map((w, i) => (
-                <i key={i} style={{ transform: `scaleX(${w})` }} />
-              ))}
-            </div>
-            <span className="pcard-sub">
-              {top ? `${top.name} ${top.percent.toFixed(0)}%` : 'via WakaTime'}
-            </span>
-          </article>
+          {stackLayers.map((layer, i) => (
+            <article
+              className={`pcard${live === i ? ' is-live' : ''}`}
+              key={layer.id}
+            >
+              <header>
+                <span className="pcard-k">{layer.label}</span>
+                {layer.id === 'frontend' && top && (
+                  <span className="pcard-live">
+                    <i />
+                    {top.name} {top.percent.toFixed(0)}%
+                  </span>
+                )}
+              </header>
 
-          {/* 2 — logistics: the ERP route work */}
-          <article className="pcard">
-            <header>
-              <span className="pcard-k">Fleet</span>
-            </header>
-            <svg viewBox="0 0 120 64" fill="none" className="pcard-art">
-              <path
-                d="M6 52 C26 52 24 20 46 20 S72 46 92 46 110 30 114 26"
-                stroke="var(--accent)"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-              />
-              {[
-                [6, 52],
-                [46, 20],
-                [92, 46],
-                [114, 26],
-              ].map(([cx, cy], i) => (
-                <circle
-                  key={i}
-                  cx={cx}
-                  cy={cy}
-                  r={i === 0 ? 3.2 : 2.2}
-                  fill={i === 0 ? 'var(--accent)' : 'var(--ink-raised)'}
-                  stroke="var(--accent)"
-                  strokeWidth="1.2"
-                />
-              ))}
-            </svg>
-            <span className="pcard-sub">11 PLC · Ardova</span>
-          </article>
+              <ul className="pcard-stack">
+                {layer.items.map((item, k) => (
+                  <li
+                    key={item}
+                    style={
+                      reduced
+                        ? undefined
+                        : ({ ['--i' as string]: k } as React.CSSProperties)
+                    }
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
 
-          {/* 3 — retrieval: the RAG pipeline */}
-          <article className="pcard">
-            <header>
-              <span className="pcard-k">Retrieval</span>
-            </header>
-            <svg viewBox="0 0 120 64" fill="none" className="pcard-art">
-              <path d="M22 32H54M66 32H98" stroke="var(--mute-dim)" strokeWidth="1.2" strokeDasharray="3 3" />
-              {[22, 60, 98].map((cx, i) => (
-                <rect
-                  key={cx}
-                  x={cx - 11}
-                  y={21}
-                  width="22"
-                  height="22"
-                  rx="6"
-                  fill="var(--ink-raised)"
-                  stroke={i === 1 ? 'var(--accent)' : 'var(--line)'}
-                  strokeWidth="1.2"
-                />
-              ))}
-              <circle cx="60" cy="32" r="3.4" fill="var(--accent)" />
-            </svg>
-            <span className="pcard-sub">Vector → LLM → answer</span>
-          </article>
+              <footer>{layer.proof}</footer>
+            </article>
+          ))}
         </div>
       </div>
     </div>
