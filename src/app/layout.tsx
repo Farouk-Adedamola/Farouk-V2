@@ -3,7 +3,9 @@ import { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/react';
 
 import { display, mono } from './fonts';
+import Intro from '@/components/site/Intro';
 import { jsonLd, siteConfig } from '@/config/seo';
+import { INTRO_BOOT_SCRIPT } from '@/lib/intro';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
@@ -66,12 +68,16 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${display.variable} ${mono.variable}`}>
       <head>
+        {/* Must run before first paint, or a returning visitor sees a flash
+            of the intro before the skip is applied. */}
+        <script dangerouslySetInnerHTML={{ __html: INTRO_BOOT_SCRIPT }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body>
+        <Intro />
         {children}
         <Analytics />
       </body>

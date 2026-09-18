@@ -674,6 +674,7 @@ a {
   overflow: hidden;
 }
 .lang .bar-f {
+  display: block; /* an <i> is inline by default, and transforms skip inline boxes */
   height: 100%;
   border-radius: 2px;
   background: var(--mute-dim);
@@ -1176,5 +1177,138 @@ a {
   .btn,
   .pill {
     border-color: var(--line);
+  }
+}
+
+/* ── pixel intro ──────────────────────────────────────────────────────
+   The original FAROUK.DEV loader, re-cut for this theme. Driven entirely by
+   CSS keyframes: it runs before hydration and still clears itself if the
+   JavaScript never arrives. The boot script in <head> stamps
+   data-intro="run" | "skip" before first paint, so a returning visitor or
+   anyone asking for reduced motion never sees a frame of it.
+   ──────────────────────────────────────────────────────────────────── */
+:root[data-intro='skip'] .intro,
+.intro {
+  display: none;
+}
+
+:root[data-intro='run'] .intro {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--ink);
+  pointer-events: none;
+  animation: intro-lift 400ms cubic-bezier(0.4, 0, 0.2, 1) 1250ms both;
+}
+
+.intro-mark {
+  --px: clamp(4px, 1.35vw, 9px);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  animation: intro-mark-out 400ms cubic-bezier(0.22, 1, 0.36, 1) 1250ms both;
+}
+
+.intro .px {
+  position: absolute;
+  width: var(--px);
+  height: var(--px);
+  background: var(--paper);
+  transform: scale(0);
+  opacity: 0;
+  /* a critically damped settle, expressed as a curve */
+  animation: intro-px 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.intro .px-accent {
+  background: var(--accent);
+}
+
+.intro .edge {
+  position: absolute;
+  background: var(--accent);
+  display: block;
+}
+.intro .edge-t {
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  animation: intro-w 320ms cubic-bezier(0.22, 1, 0.36, 1) 480ms forwards;
+}
+.intro .edge-r {
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 0;
+  animation: intro-h 320ms cubic-bezier(0.22, 1, 0.36, 1) 560ms forwards;
+}
+.intro .edge-b {
+  bottom: 0;
+  right: 0;
+  height: 2px;
+  width: 0;
+  animation: intro-w 320ms cubic-bezier(0.22, 1, 0.36, 1) 640ms forwards;
+}
+.intro .edge-l {
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  height: 0;
+  animation: intro-h 320ms cubic-bezier(0.22, 1, 0.36, 1) 720ms forwards;
+}
+
+@keyframes intro-px {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes intro-w {
+  to {
+    width: 100%;
+  }
+}
+@keyframes intro-h {
+  to {
+    height: 100%;
+  }
+}
+@keyframes intro-mark-out {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.08);
+    opacity: 0;
+  }
+}
+@keyframes intro-lift {
+  from {
+    opacity: 1;
+  }
+  99% {
+    opacity: 0;
+    visibility: visible;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Reduced motion is already handled by the boot script stamping "skip", but
+   the global animation kill-switch would otherwise strand the overlay on
+   screen if that stamp ever failed. Belt and braces: hide it outright. */
+@media (prefers-reduced-motion: reduce) {
+  :root[data-intro='run'] .intro {
+    display: none;
   }
 }

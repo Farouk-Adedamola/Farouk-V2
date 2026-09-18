@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 
 import ActionButton from './ActionButton';
 import { createSpring, prefersReducedMotion } from '@/lib/spring';
+import { INTRO, INTRO_TOTAL } from '@/lib/intro';
 import { profile, proof } from '@/data/resume';
 
 /**
@@ -28,11 +29,25 @@ export default function Hero() {
       el.style.setProperty('--w', (76 + 24 * t).toFixed(2));
       el.style.setProperty('--g', (540 + 260 * t).toFixed(0));
     });
-    const id = requestAnimationFrame(() =>
-      spring.to(1, { damping: 1, response: 0.85 })
-    );
+
+    // If the pixel intro is running, hold until it starts lifting — otherwise
+    // the name finishes widening behind an opaque overlay and nobody sees it.
+    const introRunning =
+      document.documentElement.dataset.intro === 'run';
+    const delay = introRunning
+      ? Math.max(0, INTRO_TOTAL - INTRO.exitDuration - performance.now())
+      : 0;
+
+    let raf = 0;
+    const timer = window.setTimeout(() => {
+      raf = requestAnimationFrame(() =>
+        spring.to(1, { damping: 1, response: 0.85 })
+      );
+    }, delay);
+
     return () => {
-      cancelAnimationFrame(id);
+      window.clearTimeout(timer);
+      if (raf) cancelAnimationFrame(raf);
       spring.stop();
     };
   }, []);
