@@ -1186,7 +1186,23 @@ a {
    JavaScript never arrives. The boot script in <head> stamps
    data-intro="run" | "skip" before first paint, so a returning visitor or
    anyone asking for reduced motion never sees a frame of it.
+
+   The timeline below is mirrored in src/lib/intro.ts, which the hero reads so
+   its own entrance starts exactly as this overlay lifts. Change both together.
    ──────────────────────────────────────────────────────────────────── */
+:root {
+  --intro-letter-stagger: 75ms;
+  --intro-px-dur: 480ms;
+  --intro-frame-dur: 420ms;
+  --intro-frame-1: 900ms;
+  --intro-frame-2: 1040ms;
+  --intro-frame-3: 1180ms;
+  --intro-frame-4: 1320ms;
+  --intro-exit-at: 2100ms;
+  --intro-exit-dur: 520ms;
+  --intro-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 :root[data-intro='skip'] .intro,
 .intro {
   display: none;
@@ -1197,18 +1213,22 @@ a {
   position: fixed;
   inset: 0;
   z-index: 200;
+  overflow: hidden;
   background: var(--ink);
   pointer-events: none;
-  animation: intro-lift 400ms cubic-bezier(0.4, 0, 0.2, 1) 1250ms both;
+  animation: intro-lift var(--intro-exit-dur) cubic-bezier(0.4, 0, 0.2, 1)
+    var(--intro-exit-at) both;
 }
 
 .intro-mark {
-  --px: clamp(4px, 1.35vw, 9px);
+  /* Reads as a mark on a phone, and as a statement on a desktop. */
+  --px: clamp(5px, 1.5vw, 20px);
   position: absolute;
   left: 50%;
   top: 50%;
   translate: -50% -50%;
-  animation: intro-mark-out 400ms cubic-bezier(0.22, 1, 0.36, 1) 1250ms both;
+  animation: intro-mark-out var(--intro-exit-dur) var(--intro-ease)
+    var(--intro-exit-at) both;
 }
 
 .intro .px {
@@ -1219,7 +1239,7 @@ a {
   transform: scale(0);
   opacity: 0;
   /* a critically damped settle, expressed as a curve */
-  animation: intro-px 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: intro-px var(--intro-px-dur) var(--intro-ease) both;
 }
 
 .intro .px-accent {
@@ -1236,28 +1256,32 @@ a {
   left: 0;
   height: 2px;
   width: 0;
-  animation: intro-w 320ms cubic-bezier(0.22, 1, 0.36, 1) 480ms forwards;
+  animation: intro-w var(--intro-frame-dur) var(--intro-ease)
+    var(--intro-frame-1) forwards;
 }
 .intro .edge-r {
   top: 0;
   right: 0;
   width: 2px;
   height: 0;
-  animation: intro-h 320ms cubic-bezier(0.22, 1, 0.36, 1) 560ms forwards;
+  animation: intro-h var(--intro-frame-dur) var(--intro-ease)
+    var(--intro-frame-2) forwards;
 }
 .intro .edge-b {
   bottom: 0;
   right: 0;
   height: 2px;
   width: 0;
-  animation: intro-w 320ms cubic-bezier(0.22, 1, 0.36, 1) 640ms forwards;
+  animation: intro-w var(--intro-frame-dur) var(--intro-ease)
+    var(--intro-frame-3) forwards;
 }
 .intro .edge-l {
   bottom: 0;
   left: 0;
   width: 2px;
   height: 0;
-  animation: intro-h 320ms cubic-bezier(0.22, 1, 0.36, 1) 720ms forwards;
+  animation: intro-h var(--intro-frame-dur) var(--intro-ease)
+    var(--intro-frame-4) forwards;
 }
 
 @keyframes intro-px {
