@@ -4,8 +4,10 @@ import { Analytics } from '@vercel/analytics/react';
 
 import { display, mono } from './fonts';
 import Intro from '@/components/site/Intro';
+import ThemeDial from '@/components/site/ThemeDial';
 import { jsonLd, ogImageUrl, siteConfig } from '@/config/seo';
 import { INTRO_BOOT_SCRIPT } from '@/lib/intro';
+import { THEME_BOOT_SCRIPT } from '@/lib/theme';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
@@ -63,7 +65,7 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   themeColor: '#08080a',
-  colorScheme: 'dark',
+  colorScheme: 'dark light',
   // viewport-fit=cover is what makes env(safe-area-inset-*) resolve on iOS,
   // which the fixed command bar and the sheet both depend on.
   viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
@@ -75,8 +77,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${display.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      className={`${display.variable} ${mono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
+        {/* Theme first, so the intro overlay below is already the right colour. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
         {/* Must run before first paint, or a returning visitor sees a flash
             of the intro before the skip is applied. */}
         <script dangerouslySetInnerHTML={{ __html: INTRO_BOOT_SCRIPT }} />
@@ -87,6 +95,7 @@ export default function RootLayout({
       </head>
       <body>
         <Intro />
+        <ThemeDial />
         {children}
         <Analytics />
       </body>

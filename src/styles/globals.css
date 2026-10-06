@@ -9,6 +9,15 @@
 :root {
   color-scheme: dark;
 
+  /* Raw channels, so any translucent layer can be re-tinted per theme. */
+  --tint: 242 242 245; /* the colour of "lines and glass": light on dark, dark on light */
+  --bg-rgb: 8 8 10;
+  --deep-rgb: 5 5 7;
+  --raised-rgb: 16 16 20;
+  --amber-rgb: 255 166 43;
+  --shadow-rgb: 0 0 0;
+  --shadow-k: 1; /* shadows are heavy on dark and need to be far lighter on light */
+
   --ink: #08080a;
   --ink-raised: #101014;
   --ink-deep: #050507;
@@ -16,11 +25,12 @@
   --body: #c0c0c8;
   --mute: #8c8c96;
   --mute-dim: #56565f;
-  --line: rgba(242, 242, 245, 0.09);
-  --line-soft: rgba(242, 242, 245, 0.05);
-  --glass: rgba(242, 242, 245, 0.04);
-  --glass-hi: rgba(242, 242, 245, 0.075);
-  --accent: #ffa62b;
+  --line: rgb(var(--tint) / 0.09);
+  --line-soft: rgb(var(--tint) / 0.05);
+  --glass: rgb(var(--tint) / 0.04);
+  --glass-hi: rgb(var(--tint) / 0.075);
+  --accent: #ffa62b; /* fills, strokes, glows */
+  --accent-fg: #ffa62b; /* amber as text, which needs more contrast on light */
   --accent-ink: #14100a;
 
   /* Bricolage Grotesque's width axis runs 75–100. There is no wider instance. */
@@ -31,6 +41,31 @@
   --gut: 40px;
   --maxw: 1180px;
   --cond: 0; /* 0 → 1, driven by scroll, condenses the bar */
+}
+
+/* Light: a cool neutral, no colour cast, like the dark theme. Set by
+   lib/theme.ts before first paint, so it follows the browser unless pinned. */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --tint: 8 8 10;
+  --bg-rgb: 244 244 246;
+  --deep-rgb: 232 232 237;
+  --raised-rgb: 255 255 255;
+  --amber-rgb: 240 140 0;
+  --shadow-rgb: 28 28 44;
+  --shadow-k: 0.2;
+
+  --ink: #f4f4f6;
+  --ink-raised: #ffffff;
+  --ink-deep: #e8e8ed;
+  --paper: #0b0b0f;
+  --body: #3a3a43;
+  --mute: #5f5f6a;
+  --mute-dim: #8a8a95;
+  --accent: #f08c00;
+  --accent-fg: #b25800;
+  --accent-ink: #14100a;
 }
 
 @media (max-width: 900px) {
@@ -78,7 +113,7 @@ body::before {
   z-index: 0;
   background: radial-gradient(
     130% 85% at 10% -12%,
-    rgba(242, 242, 245, 0.04),
+    rgb(var(--tint) / 0.04),
     transparent 62%
   );
 }
@@ -89,7 +124,7 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--accent-fg);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -128,8 +163,8 @@ a {
   z-index: 60;
   padding-top: calc(env(safe-area-inset-top, 0px) + 17px - 6px * var(--cond));
   padding-bottom: calc(17px - 6px * var(--cond));
-  background: rgba(8, 8, 10, 0.45);
-  background: rgb(8 8 10 / calc(45% + 32% * var(--cond)));
+  background: rgb(var(--bg-rgb) / 0.45);
+  background: rgb(var(--bg-rgb) / calc(45% + 32% * var(--cond)));
   -webkit-backdrop-filter: blur(calc(14px + 12px * var(--cond))) saturate(170%);
   backdrop-filter: blur(calc(14px + 12px * var(--cond))) saturate(170%);
 }
@@ -142,7 +177,7 @@ a {
   right: 0;
   top: 100%;
   height: 24px;
-  background: linear-gradient(to bottom, rgba(8, 8, 10, 0.5), rgba(8, 8, 10, 0));
+  background: linear-gradient(to bottom, rgb(var(--bg-rgb) / 0.5), rgb(var(--bg-rgb) / 0));
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
@@ -251,13 +286,13 @@ a {
 }
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(255, 166, 43, 0.45);
+    box-shadow: 0 0 0 0 rgb(var(--amber-rgb) / 0.45);
   }
   70% {
-    box-shadow: 0 0 0 7px rgba(255, 166, 43, 0);
+    box-shadow: 0 0 0 7px rgb(var(--amber-rgb) / 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(255, 166, 43, 0);
+    box-shadow: 0 0 0 0 rgb(var(--amber-rgb) / 0);
   }
 }
 
@@ -318,7 +353,7 @@ a {
   position: fixed;
   inset: 0;
   z-index: 70;
-  background: rgba(5, 5, 7, 0.6);
+  background: rgb(var(--deep-rgb) / 0.6);
   opacity: 0;
   pointer-events: none;
 }
@@ -333,9 +368,9 @@ a {
   bottom: calc(10px + env(safe-area-inset-bottom, 0px));
   padding: 10px 10px 14px;
   border-radius: 26px;
-  background: rgba(16, 16, 20, 0.72);
-  border: 1px solid rgba(242, 242, 245, 0.14);
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+  background: rgb(var(--raised-rgb) / 0.72);
+  border: 1px solid rgb(var(--tint) / 0.14);
+  box-shadow: 0 30px 70px rgb(var(--shadow-rgb) / calc(0.6 * var(--shadow-k)));
   -webkit-backdrop-filter: blur(var(--sb, 0px)) saturate(170%);
   backdrop-filter: blur(var(--sb, 0px)) saturate(170%);
   transform: translate3d(0, 110%, 0);
@@ -348,7 +383,7 @@ a {
   width: 38px;
   height: 4px;
   border-radius: 3px;
-  background: rgba(242, 242, 245, 0.24);
+  background: rgb(var(--tint) / 0.24);
   margin: 4px auto 12px;
 }
 .sheet a {
@@ -428,7 +463,7 @@ a {
 }
 .btn.primary {
   border-color: var(--accent);
-  color: var(--accent);
+  color: var(--accent-fg);
 }
 .btn.primary::before {
   background: var(--accent);
@@ -516,7 +551,7 @@ a {
 }
 .lede em {
   font-style: normal;
-  color: var(--accent);
+  color: var(--accent-fg);
 }
 .proof {
   margin-top: 44px;
@@ -606,6 +641,15 @@ a {
 .emb.hush {
   opacity: 0.32; /* recedes behind the screenshots, never fully gone */
 }
+:root[data-theme='light'] .emb.hush {
+  opacity: 0.2; /* dark ghosts read louder on a light page */
+}
+:root[data-theme='light'] .emb.in .rb {
+  opacity: 0.55;
+}
+:root[data-theme='light'] .emb.in .rb.awake {
+  opacity: 1;
+}
 .rb {
   position: absolute;
   width: calc(var(--d) * var(--px));
@@ -659,7 +703,7 @@ a {
   transition: stroke 260ms ease, fill 260ms ease, color 260ms ease;
 }
 .rb-disc {
-  fill: rgba(16, 16, 20, 0.9);
+  fill: rgb(var(--raised-rgb) / 0.9);
   stroke: var(--line);
   stroke-width: 1;
 }
@@ -688,7 +732,7 @@ a {
 }
 .rb-track {
   fill: none;
-  stroke: rgba(242, 242, 245, 0.08);
+  stroke: rgb(var(--tint) / 0.08);
   stroke-width: 3;
 }
 .rb-arc {
@@ -749,8 +793,8 @@ a {
 
 /* Awake: the one place amber appears on these. */
 .rb.awake .rb-disc {
-  fill: rgba(255, 166, 43, 0.07);
-  stroke: rgba(255, 166, 43, 0.55);
+  fill: rgb(var(--amber-rgb) / 0.07);
+  stroke: rgb(var(--amber-rgb) / 0.55);
 }
 .rb.awake .rb-ticks line,
 .rb.awake .rb-orbit,
@@ -759,8 +803,8 @@ a {
 }
 .rb.awake .rb-arc-text,
 .rb.awake .rb-face b {
-  fill: var(--accent);
-  color: var(--accent);
+  fill: var(--accent-fg);
+  color: var(--accent-fg);
 }
 .rb.awake .rb-face i,
 .rb.awake .rb-face.coin-face small {
@@ -773,7 +817,7 @@ a {
   animation-duration: 18s;
 }
 .rb.awake .rb-in {
-  filter: drop-shadow(0 0 22px rgba(255, 166, 43, 0.28));
+  filter: drop-shadow(0 0 22px rgb(var(--amber-rgb) / 0.28));
 }
 
 /* Too small to scatter, and no cursor to wake anything. */
@@ -825,7 +869,7 @@ a {
   left: 44px;
   width: 5px;
   border-radius: 3px;
-  background: rgba(242, 242, 245, 0.13);
+  background: rgb(var(--tint) / 0.13);
 }
 .rl-ticks {
   position: absolute;
@@ -879,10 +923,10 @@ a {
 }
 @keyframes rl-pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(255, 166, 43, 0.5);
+    box-shadow: 0 0 0 0 rgb(var(--amber-rgb) / 0.5);
   }
   100% {
-    box-shadow: 0 0 0 10px rgba(255, 166, 43, 0);
+    box-shadow: 0 0 0 10px rgb(var(--amber-rgb) / 0);
   }
 }
 .rl-lit {
@@ -891,7 +935,7 @@ a {
   width: 7px;
   border-radius: 4px;
   background: var(--accent);
-  box-shadow: 0 0 18px rgba(255, 166, 43, 0.45), 0 0 2px rgba(255, 166, 43, 0.9);
+  box-shadow: 0 0 18px rgb(var(--amber-rgb) / 0.45), 0 0 2px rgb(var(--amber-rgb) / 0.9);
   will-change: top, height;
 }
 .rl-flags {
@@ -924,7 +968,7 @@ a {
 .rl-flags .mid {
   top: calc((var(--t, 0%) + var(--b, 0%)) / 2);
   transform: translateY(-50%);
-  color: var(--accent);
+  color: var(--accent-fg);
 }
 .rl-flags .top,
 .rl-flags .bot {
@@ -977,7 +1021,7 @@ a {
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-fg);
 }
 .job .meta .ttl {
   font-size: clamp(1.15rem, 2.4vw, 1.55rem);
@@ -1123,7 +1167,7 @@ a {
   transition: color 160ms ease;
 }
 .wk-names button:hover {
-  color: var(--accent);
+  color: var(--accent-fg);
 }
 .wk-rail {
   position: absolute;
@@ -1131,7 +1175,7 @@ a {
   top: 8px;
   bottom: 8px;
   width: 2px;
-  background: rgba(242, 242, 245, 0.08);
+  background: rgb(var(--tint) / 0.08);
   border-radius: 2px;
   overflow: hidden;
 }
@@ -1164,7 +1208,7 @@ a {
   border-radius: 14px;
   overflow: hidden;
   background: var(--ink-raised);
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 30px 70px rgb(var(--shadow-rgb) / calc(0.55 * var(--shadow-k)));
   transform-origin: 0% 50%;
   will-change: transform;
 }
@@ -1203,7 +1247,7 @@ a {
   text-align: center;
   background: repeating-linear-gradient(
       -45deg,
-      rgba(242, 242, 245, 0.025) 0 1px,
+      rgb(var(--tint) / 0.025) 0 1px,
       transparent 1px 11px
     ),
     var(--ink-deep);
@@ -1252,7 +1296,7 @@ a {
   font-variant-numeric: tabular-nums;
   font-size: 11.5px;
   letter-spacing: 0.04em;
-  color: var(--accent);
+  color: var(--accent-fg);
 }
 .wk-visit {
   justify-self: start;
@@ -1266,7 +1310,7 @@ a {
   transition: color 160ms ease, border-color 160ms ease;
 }
 .wk-visit:hover {
-  color: var(--accent);
+  color: var(--accent-fg);
   border-color: var(--accent);
 }
 
@@ -1340,7 +1384,7 @@ a {
   font-size: 10.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-fg);
   font-weight: 500;
 }
 @media (max-width: 700px) {
@@ -1392,7 +1436,7 @@ a {
   word-break: break-word;
 }
 .lk:hover .v {
-  color: var(--accent);
+  color: var(--accent-fg);
 }
 @media (max-width: 620px) {
   .links {
@@ -1430,7 +1474,7 @@ a {
 }
 @media (prefers-reduced-transparency: reduce) {
   .bar {
-    background: #08080a;
+    background: var(--ink);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
     border-bottom: 1px solid var(--line);
@@ -1439,7 +1483,7 @@ a {
     display: none;
   }
   .sheet {
-    background: #101014;
+    background: var(--ink-raised);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
@@ -1450,13 +1494,17 @@ a {
 }
 @media (prefers-contrast: more) {
   :root {
-    --line: rgba(242, 242, 245, 0.34);
-    --line-soft: rgba(242, 242, 245, 0.22);
+    --line: rgb(var(--tint) / 0.34);
+    --line-soft: rgb(var(--tint) / 0.22);
     --mute: #c0c0c8;
     --mute-dim: #9a9aa4;
   }
+  :root[data-theme='light'] {
+    --mute: #3a3a43;
+    --mute-dim: #55555f;
+  }
   .bar {
-    background: #08080a;
+    background: var(--ink);
   }
   .btn,
   .pill {
@@ -1696,8 +1744,8 @@ a {
   padding: 16px 15px 13px;
   border-radius: 15px;
   background: var(--ink-raised);
-  border: 1px solid rgba(242, 242, 245, 0.14);
-  box-shadow: 0 24px 44px rgba(0, 0, 0, 0.55);
+  border: 1px solid rgb(var(--tint) / 0.14);
+  box-shadow: 0 24px 44px rgb(var(--shadow-rgb) / calc(0.55 * var(--shadow-k)));
   transition: transform 340ms cubic-bezier(0.22, 1, 0.36, 1),
     border-color 260ms ease, box-shadow 340ms ease;
 }
@@ -1709,7 +1757,7 @@ a {
 .pcard.is-live {
   z-index: 3;
   border-color: var(--accent);
-  box-shadow: 0 40px 66px rgba(0, 0, 0, 0.62), 0 0 0 1px rgba(255, 166, 43, 0.28);
+  box-shadow: 0 40px 66px rgb(var(--shadow-rgb) / calc(0.62 * var(--shadow-k))), 0 0 0 1px rgb(var(--amber-rgb) / 0.28);
   transform: translate3d(-16px, -16px, 0);
 }
 
@@ -1725,7 +1773,7 @@ a {
   background: linear-gradient(
     to bottom,
     transparent,
-    rgba(255, 166, 43, 0.11),
+    rgb(var(--amber-rgb) / 0.11),
     transparent
   );
   transform: translateY(-120%);
@@ -1782,7 +1830,7 @@ a {
   border: 1px solid var(--line);
   border-radius: 4px;
   padding: 4px 7px;
-  background: rgba(242, 242, 245, 0.02);
+  background: rgb(var(--tint) / 0.02);
   transition: color 240ms ease, border-color 240ms ease, background 240ms ease;
   transition-delay: 0ms;
 }
@@ -1790,8 +1838,8 @@ a {
    left-to-right rather than flashing all at once. */
 .pcard.is-live .pcard-stack li {
   color: var(--paper);
-  border-color: rgba(255, 166, 43, 0.42);
-  background: rgba(255, 166, 43, 0.07);
+  border-color: rgb(var(--amber-rgb) / 0.42);
+  background: rgb(var(--amber-rgb) / 0.07);
   transition-delay: calc(var(--i, 0) * 45ms);
 }
 
@@ -1806,7 +1854,7 @@ a {
   transition: color 260ms ease;
 }
 .pcard.is-live footer {
-  color: var(--accent);
+  color: var(--accent-fg);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1935,7 +1983,7 @@ a {
   font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-fg);
   font-weight: 500;
 }
 .retro-col ul {
@@ -2027,5 +2075,155 @@ a {
 @media (prefers-reduced-motion: reduce) {
   .retro-panel {
     animation: none;
+  }
+}
+
+/* ── theme: the wipe and the dial ───────────────────────────────────────
+   Switching theme reveals the new one as a circle growing out of the dial
+   (ThemeDial.tsx drives the clip-path). Browsers without View Transitions
+   just swap. The dial is a tiny orrery: a sun and a moon on one arm that
+   turns past a fixed horizon, so only the current one is ever above it. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+.td {
+  position: fixed;
+  z-index: 80;
+  top: calc(env(safe-area-inset-top, 0px) + 14px);
+  right: 18px;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.td-face {
+  position: relative;
+  display: block;
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  background: rgb(var(--raised-rgb) / 0.92);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  backdrop-filter: blur(12px) saturate(160%);
+  box-shadow: inset 0 0 0 1.5px rgb(var(--tint) / 0.26),
+    0 8px 22px rgb(var(--shadow-rgb) / calc(0.45 * var(--shadow-k)));
+  transition: box-shadow 220ms ease, transform 220ms cubic-bezier(0.2, 0.9, 0.3, 1.3);
+}
+.td:hover .td-face {
+  box-shadow: inset 0 0 0 2px rgb(var(--amber-rgb) / 0.9),
+    0 0 28px rgb(var(--amber-rgb) / 0.4),
+    0 8px 22px rgb(var(--shadow-rgb) / calc(0.45 * var(--shadow-k)));
+  transform: scale(1.08);
+}
+.td:active .td-face {
+  transform: scale(0.96);
+}
+.td svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.td-tick {
+  stroke: var(--mute);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+}
+.td-sky {
+  fill: var(--ink-raised);
+  transition: fill 400ms ease;
+}
+.td-ground-base {
+  fill: var(--ink-deep); /* opaque, so whatever is below the horizon is hidden */
+}
+.td-ground {
+  fill: rgb(var(--tint) / 0.2);
+}
+.td-horizon {
+  stroke: var(--mute);
+  stroke-width: 1.4;
+}
+.td-arm {
+  transform-origin: 23px 23px;
+  transform: rotate(180deg); /* night: the moon is the one above the horizon */
+  transition: transform 800ms cubic-bezier(0.3, 1.35, 0.4, 1);
+}
+:root[data-theme='light'] .td-arm {
+  transform: rotate(0deg);
+}
+.td-sun {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 2.2px rgb(var(--amber-rgb) / 0.9));
+}
+.td-moon {
+  fill: var(--paper);
+}
+.td-bite {
+  fill: var(--ink-raised);
+  transition: fill 400ms ease;
+}
+.td-stars circle {
+  fill: var(--paper);
+  transition: opacity 500ms ease 200ms;
+}
+.td-stars circle {
+  opacity: 0.85;
+}
+:root[data-theme='light'] .td-stars circle {
+  opacity: 0;
+}
+.td-cap {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mute);
+  white-space: nowrap;
+  transition: color 200ms ease;
+}
+.td:hover .td-cap {
+  color: var(--accent-fg);
+}
+@media (max-width: 760px) {
+  .td {
+    right: 12px;
+  }
+  .td-face {
+    width: 52px;
+    height: 52px;
+  }
+  .td-cap {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .td-arm,
+  .td-face,
+  .td-sky,
+  .td-bite,
+  .td-stars circle {
+    transition: none;
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .td-face {
+    background: var(--ink-raised);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }
