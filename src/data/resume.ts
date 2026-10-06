@@ -308,7 +308,7 @@ export const capabilities: Capability[] = [
     ],
   },
   {
-    label: 'AI / ML',
+    label: 'AI',
     items: [
       'LLM integration',
       'RAG',
