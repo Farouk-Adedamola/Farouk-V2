@@ -3,10 +3,10 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
-import { clamp, createSpring, prefersReducedMotion } from '@/lib/spring';
 import { blurFor } from '@/data/blur';
 import { projects } from '@/data/resume';
 import type { Project } from '@/data/resume';
+import { clamp, createSpring, prefersReducedMotion } from '@/lib/spring';
 
 const N = projects.length;
 
@@ -18,7 +18,8 @@ function Screen({ p, priority }: { p: Project; priority?: boolean }) {
         src={p.image}
         alt=""
         fill
-        sizes="(max-width: 900px) 92vw, 640px"
+        sizes="(max-width: 900px) 92vw, 960px"
+        quality={92}
         priority={priority}
         placeholder={blurFor(p.image) ? 'blur' : 'empty'}
         blurDataURL={blurFor(p.image)}
@@ -37,7 +38,12 @@ function Screen({ p, priority }: { p: Project; priority?: boolean }) {
 
 function Link({ p }: { p: Project }) {
   return p.href ? (
-    <a href={p.href} target="_blank" rel="noopener noreferrer" className="wk-visit">
+    <a
+      href={p.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="wk-visit"
+    >
       Open {p.domain} <span aria-hidden="true">↗</span>
     </a>
   ) : null;
@@ -66,37 +72,30 @@ export default function Deck() {
         const d = i - p;
         const ad = Math.abs(d);
         let tx: number;
-        let ty: number;
-        let rx: number;
-        let rz: number;
         let s: number;
-        let o: number;
-        if (d <= 0) {
-          /* Peeled off the top: lifts, tips back, and fades. */
-          tx = d * 14;
-          ty = d * 64;
-          rx = ad * 14;
-          rz = d * 1.6;
-          s = 1 - ad * 0.05;
-          o = clamp(1 - ad * 1.7, 0, 1);
+        let veil: number;
+        let z: number;
+        if (d > 0) {
+          /* Slides in from the right edge, easing out as it lands. It is never
+             translucent, so nothing underneath shows through it. */
+          tx = Math.pow(Math.min(d, 1), 1.7) * 112;
+          s = 1;
+          veil = 0;
+          z = 200 - Math.round(d);
         } else {
-          /* Waiting underneath, stepped down and to the right. */
-          tx = d * 26;
-          ty = d * 22;
-          rx = 0;
-          rz = 0;
-          s = 1 - d * 0.06;
-          o = clamp(1 - Math.max(0, d - 1) * 0.5, 0, 1);
+          /* The card it covers eases left and dims, then is dropped once hidden. */
+          tx = d * 14;
+          s = 1 - Math.min(ad, 1) * 0.05;
+          veil = clamp(ad * 0.85, 0, 0.85);
+          z = 100 + i;
         }
-        el.style.transform = `translate3d(${tx.toFixed(2)}px,${ty.toFixed(
+        el.style.transform = `translate3d(${tx.toFixed(
           2
-        )}px,0) rotateX(${rx.toFixed(2)}deg) rotateZ(${rz.toFixed(
-          2
-        )}deg) scale(${s.toFixed(4)})`;
-        el.style.opacity = o.toFixed(3);
-        el.style.zIndex = String(d <= 0 ? 100 + i : 50 - Math.round(d));
-        el.style.setProperty('--veil', clamp(d * 0.5, 0, 0.8).toFixed(3));
-        el.style.setProperty('--pan', `${(d * -5).toFixed(2)}%`);
+        )}%,0,0) scale(${s.toFixed(4)})`;
+        el.style.visibility = d <= -1 || d >= 2 ? 'hidden' : 'visible';
+        el.style.zIndex = String(z);
+        el.style.setProperty('--veil', veil.toFixed(3));
+        el.style.setProperty('--pan', `${(clamp(d, -1, 1) * -4).toFixed(2)}%`);
       });
 
       nameRefs.current.forEach((el, i) => {
@@ -183,41 +182,53 @@ export default function Deck() {
   return (
     <section className="wk" id="projects" aria-labelledby="wk-title">
       {/* Desktop: pinned, scroll deals the stack. */}
-      <div
-        className="wk-track"
-        ref={trackRef}
-        style={{ ['--n' as string]: N }}
-      >
+      <div className="wk-track" ref={trackRef} style={{ ['--n' as string]: N }}>
         <div className="wk-pin">
           <div className="wrap">
             <div className="head">
               <h2 id="wk-title">Selected work</h2>
               <span className="idx">
-                {active + 1} of {N} · scroll to deal
+                {active + 1} of {N} · scroll to slide
               </span>
             </div>
 
             <div className="wk-grid">
               <div className="wk-names">
-                <span className="wk-rail" aria-hidden="true">
-                  <i ref={railRef} />
-                </span>
-                <ol>
-                  {projects.map((p, i) => (
-                    <li key={p.name}>
-                      <button
-                        type="button"
-                        ref={(el) => {
-                          nameRefs.current[i] = el;
-                        }}
-                        onClick={() => jumpTo(i)}
-                        aria-current={i === active ? 'true' : undefined}
-                      >
-                        {p.name}
-                      </button>
-                    </li>
-                  ))}
-                </ol>
+                <div className="wk-list">
+                  <span className="wk-rail" aria-hidden="true">
+                    <i ref={railRef} />
+                  </span>
+                  <ol>
+                    {projects.map((p, i) => (
+                      <li key={p.name}>
+                        <button
+                          type="button"
+                          ref={(el) => {
+                            nameRefs.current[i] = el;
+                          }}
+                          onClick={() => jumpTo(i)}
+                          aria-current={i === active ? 'true' : undefined}
+                        >
+                          {p.name}
+                        </button>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+                <div className="wk-detail" key={cur.name} aria-live="polite">
+                  <div className="kpi">{cur.kpi}</div>
+                  <p>{cur.blurb}</p>
+                  {cur.tools.length > 0 && (
+                    <div className="tools">
+                      {cur.tools.map((t) => (
+                        <span className="chip" key={t}>
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  <Link p={cur} />
+                </div>
               </div>
 
               <div className="wk-right">
@@ -239,19 +250,6 @@ export default function Deck() {
                       <i className="wk-veil" />
                     </div>
                   ))}
-                </div>
-
-                <div className="wk-detail" key={cur.name} aria-live="polite">
-                  <div className="kpi">{cur.kpi}</div>
-                  <p>{cur.blurb}</p>
-                  <div className="tools">
-                    {cur.tools.map((t) => (
-                      <span className="chip" key={t}>
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                  <Link p={cur} />
                 </div>
               </div>
             </div>

@@ -885,21 +885,23 @@ a {
   height: 100svh;
   display: flex;
   align-items: center;
+  overflow-x: clip; /* the right-hand edge of the screen is where cards enter */
 }
 .wk-pin > .wrap {
   min-width: 0;
+  max-width: 1480px;
 }
 .wk-pin .head {
   margin-bottom: 30px;
 }
 .wk-grid {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: 56px;
+  grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+  gap: 48px;
   align-items: start;
 }
 
-.wk-names {
+.wk-list {
   position: relative;
   padding-left: 24px;
 }
@@ -923,7 +925,7 @@ a {
   cursor: pointer;
   white-space: nowrap;
   font-family: inherit;
-  font-size: clamp(2rem, 4.1vw, 3.4rem);
+  font-size: clamp(1.9rem, 3.3vw, 2.9rem);
   line-height: 1.04;
   letter-spacing: -0.04em;
   font-variation-settings: 'wdth' 76, 'wght' 360;
@@ -953,15 +955,15 @@ a {
 
 .wk-right {
   min-width: 0;
+  /* Clip on the left only: cards enter from the far right but never slide under the text. */
+  clip-path: inset(-60px -100vw -60px 0);
 }
 .wk-stage {
   position: relative;
-  aspect-ratio: 16 / 10;
-  width: min(100%, calc((100vh - 340px) * 1.6));
-  width: min(100%, calc((100svh - 340px) * 1.6));
+  aspect-ratio: 1.65; /* a 16:9 screenshot plus the 30px title bar */
+  width: min(100%, calc((100vh - 170px) * 1.65));
+  width: min(100%, calc((100svh - 170px) * 1.65));
   min-width: 320px;
-  perspective: 1500px;
-  perspective-origin: 50% 100%;
 }
 .wk-plate {
   position: absolute;
@@ -973,8 +975,8 @@ a {
   overflow: hidden;
   background: var(--ink-raised);
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
-  transform-origin: 50% 0%;
-  will-change: transform, opacity;
+  transform-origin: 0% 50%;
+  will-change: transform;
 }
 .wk-chrome {
   flex: none;
@@ -999,7 +1001,7 @@ a {
 .wk-screen img {
   object-fit: cover;
   object-position: top center;
-  transform: translate3d(0, var(--pan, 0%), 0) scale(1.06);
+  transform: translate3d(0, var(--pan, 0%), 0) scale(1.02);
 }
 .wk-blank {
   position: absolute;
@@ -1033,11 +1035,12 @@ a {
 }
 
 .wk-detail {
-  margin-top: 26px;
+  margin-top: 30px;
+  padding-left: 24px;
   display: grid;
   gap: 12px;
-  max-width: 640px;
-  min-height: 214px; /* the tallest entry, so the stage never shifts between projects */
+  max-width: 380px;
+  min-height: 230px; /* the tallest entry, so the stage never shifts between projects */
   align-content: start;
   animation: wk-in 380ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
@@ -1106,7 +1109,7 @@ a {
   }
   .wk-flat .wk-screen {
     flex: none;
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 16 / 9;
   }
   .wk-flat .wk-screen img {
     transform: none;

@@ -152,7 +152,7 @@ export const projects: Project[] = [
     name: 'WAKASUB',
     domain: 'wakasub.com',
     href: 'https://wakasub.com',
-    image: '/images/wakasub.jpg',
+    image: '/images/wakasub.png',
     blurb:
       'Nigerian VTU and digital payments platform — airtime, data, cable TV, electricity and gift cards. Migrated off Laravel/React onto Next.js, PostgreSQL and Supabase, and built the transaction, wallet, auth and rewards engines.',
     kpi: '5,000+ verified users · ₦10M+ per quarter',
@@ -168,10 +168,20 @@ export const projects: Project[] = [
     ],
   },
   {
+    name: 'Hospitally',
+    domain: 'hospitally.health',
+    href: 'https://www.hospitally.health/',
+    image: '/images/hospitally.png',
+    blurb:
+      'Healthcare directory for Nigeria that helps patients find verified hospitals — AI-powered natural language search, browsing by state, and a three-tier trust system separating community-listed, claimed and independently verified facilities.',
+    kpi: '205+ treatment categories · 10+ states',
+    tools: [],
+  },
+  {
     name: 'Genemod',
     domain: 'genemod.net',
     href: 'https://genemod.net',
-    image: '/images/genemod.jpg',
+    image: '/images/genemod.png',
     blurb:
       'Laboratory management platform for tracking samples and research results with real-time collaboration. Rebuilt the GraphQL query layer on Gatsby.js.',
     kpi: '−27% server response time',
@@ -193,7 +203,7 @@ export const projects: Project[] = [
     name: 'The Allies',
     domain: 'theallies.co',
     href: 'https://theallies.co',
-    image: '/images/allies.jpg',
+    image: '/images/allies.png',
     blurb:
       'Pregnancy tracking and maternity care management with personalised health insights, built alongside a birth management system for clinical staff.',
     kpi: 'Healthcare · multi-role',
@@ -215,7 +225,7 @@ export const projects: Project[] = [
     name: 'Orisuun',
     domain: 'orisuun.com',
     href: 'https://orisuun.com',
-    image: '/images/orisuun.jpg',
+    image: '/images/orisuun.png',
     blurb:
       'Platform connecting Black-owned businesses with investors, mentors and professionals — multi-step KYC, Stripe payments and a matching layer.',
     kpi: 'Stripe · multi-step KYC',
