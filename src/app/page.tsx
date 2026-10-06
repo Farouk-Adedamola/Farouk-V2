@@ -5,7 +5,7 @@ import Emblems from '@/components/site/Emblems';
 import Hero from '@/components/site/Hero';
 import HeroPlane from '@/components/site/HeroPlane';
 import Nav from '@/components/site/Nav';
-import Retro from '@/components/site/Retro';
+// import Retro from '@/components/site/Retro';
 import Work from '@/components/site/Work';
 import { getWakatime } from '@/lib/wakatime';
 
@@ -24,7 +24,7 @@ export default async function Page() {
         <Hero plane={<HeroPlane data={wakatime} />} />
         <Work />
         <Deck />
-        <Retro />
+        {/* <Retro /> */}
         <Capabilities />
         <Contact />
       </main>
