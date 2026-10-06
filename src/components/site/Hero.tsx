@@ -3,9 +3,9 @@
 import { useEffect, useRef } from 'react';
 
 import ActionButton from './ActionButton';
-import { createSpring, prefersReducedMotion } from '@/lib/spring';
-import { INTRO, INTRO_TOTAL } from '@/lib/intro';
 import { profile, proof } from '@/data/resume';
+import { INTRO, INTRO_TOTAL } from '@/lib/intro';
+import { createSpring, prefersReducedMotion } from '@/lib/spring';
 
 /**
  * The name opens on the two axes Bricolage Grotesque actually has — width
@@ -32,8 +32,7 @@ export default function Hero({ plane }: { plane?: React.ReactNode }) {
 
     // If the pixel intro is running, hold until it starts lifting — otherwise
     // the name finishes widening behind an opaque overlay and nobody sees it.
-    const introRunning =
-      document.documentElement.dataset.intro === 'run';
+    const introRunning = document.documentElement.dataset.intro === 'run';
     const delay = introRunning
       ? Math.max(0, INTRO_TOTAL - INTRO.exitDuration - performance.now())
       : 0;
@@ -55,58 +54,58 @@ export default function Hero({ plane }: { plane?: React.ReactNode }) {
   return (
     <div className="hero">
       <div className="wrap hero-body">
-      <div className="hero-lead">
-      <div className="eyebrow">
-        <span className="m">{profile.locationLine}</span>
-        <span className="rule" />
-        <span className="m">{profile.since}</span>
-      </div>
-
-      <h1 className="display" ref={nameRef}>
-        <span className="ln">{profile.first}</span>
-        <span className="ln">{profile.last}</span>
-      </h1>
-
-      <div className="hero-rule" />
-
-      <div className="role">
-        <b>{profile.title}</b>
-        {profile.disciplines.map((d) => (
-          <i key={d}>{d}</i>
-        ))}
-      </div>
-
-      <p className="lede">
-        {profile.lede.before}
-        <em>{profile.lede.accent}</em>
-      </p>
-      </div>
-
-      {plane}
-
-      <dl className="proof">
-        {proof.map((p) => (
-          <div key={p.label}>
-            <dt>{p.label}</dt>
-            <dd>{p.body}</dd>
+        <div className="hero-lead">
+          <div className="eyebrow">
+            <span className="m">{profile.locationLine}</span>
+            <span className="rule" />
+            <span className="m">{profile.since}</span>
           </div>
-        ))}
-      </dl>
 
-      <div className="cta">
-        <ActionButton href={`mailto:${profile.email}`} variant="primary">
-          Start a conversation
-        </ActionButton>
-        <ActionButton href={profile.resumePath} external>
-          Résumé
-        </ActionButton>
-        <ActionButton href={profile.github} external>
-          GitHub
-        </ActionButton>
-        <ActionButton href={profile.linkedin} external>
-          LinkedIn
-        </ActionButton>
-      </div>
+          <h1 className="display" ref={nameRef}>
+            <span className="ln">{profile.first}</span>
+            <span className="ln">{profile.last}</span>
+          </h1>
+
+          <div className="hero-rule" />
+
+          <div className="role">
+            {profile.titles.map((t) => (
+              <b key={t}>{t}</b>
+            ))}
+            <i>{profile.experience}</i>
+          </div>
+
+          <p className="lede">
+            {profile.lede.before}
+            <em>{profile.lede.accent}</em>
+          </p>
+        </div>
+
+        {plane}
+
+        <dl className="proof">
+          {proof.map((p) => (
+            <div key={p.label}>
+              <dt>{p.label}</dt>
+              <dd>{p.body}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <div className="cta">
+          <ActionButton href={`mailto:${profile.email}`} variant="primary">
+            Start a conversation
+          </ActionButton>
+          <ActionButton href={profile.resumePath} external>
+            Résumé
+          </ActionButton>
+          <ActionButton href={profile.github} external>
+            GitHub
+          </ActionButton>
+          <ActionButton href={profile.linkedin} external>
+            LinkedIn
+          </ActionButton>
+        </div>
       </div>
     </div>
   );

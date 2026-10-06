@@ -1,17 +1,18 @@
 export const siteConfig = {
   name: 'Farouk Adedamola',
-  title: 'Farouk Adedamola — Product Engineer',
+  title: 'Farouk Adedamola — Senior Frontend, AI & Product Engineer',
   description:
-    'Product engineer in Lagos, Nigeria. Five years of frontend depth across multi-tenant ERP for 11 PLC and Ardova, RAG and LLM systems in production, and WAKASUB — a payments platform serving 5,000+ users.',
+    'Senior frontend, AI and product engineer in Lagos, Nigeria. Enterprise frontends for 11 PLC and Ardova, RAG systems in production, and WAKASUB — a payments platform serving 5,000+ users.',
   url: process.env.SITE_URL || 'https://farouk.dev',
   ogImage: '/og-image.png',
   ogImageAlt:
-    'Farouk Adedamola — Product Engineer. Frontend depth, AI systems, and the judgment to know which problem you actually have.',
+    'Farouk Adedamola — Senior Frontend Engineer, AI Engineer and Product Engineer. Enterprise frontends, production AI, and the judgment to know which problem you actually have.',
   keywords: [
     'Farouk Adedamola',
     'Product Engineer',
     'Senior Frontend Engineer',
     'AI Product Engineer',
+    'AI Engineer',
     'Frontend Engineer Lagos',
     'React Engineer',
     'Next.js Engineer',
@@ -50,7 +51,7 @@ export const jsonLd = {
   url: siteConfig.url,
   image: ogImageUrl,
   email: siteConfig.author.email,
-  jobTitle: 'Product Engineer',
+  jobTitle: ['Senior Frontend Engineer', 'AI Engineer', 'Product Engineer'],
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Lagos',

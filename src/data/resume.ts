@@ -7,10 +7,13 @@ export const profile = {
   name: 'Farouk Adedamola',
   first: 'Farouk',
   last: 'Adedamola',
-  title: 'Product Engineer',
-  disciplines: ['Frontend systems', 'AI product', '5 years'],
+  /* The three hats, in the order the hero claims them. */
+  titles: ['Senior Frontend Engineer', 'AI Engineer', 'Product Engineer'],
+  title: 'Senior Frontend, AI & Product Engineer',
+  experience: '5 years',
   lede: {
-    before: 'Frontend depth, AI systems, and the judgment to know ',
+    before:
+      'Enterprise frontends, production AI, and products owned end to end — with the judgment to know ',
     accent: 'which problem you actually have.',
   },
   location: 'Lagos, Nigeria',
@@ -31,16 +34,16 @@ export type Proof = { label: string; body: string };
 
 export const proof: Proof[] = [
   {
-    label: 'Enterprise',
-    body: 'Multi-tenant ERP for 11 PLC, Ardova and Nigerian Breweries',
+    label: 'Frontend at scale',
+    body: 'Led frontend for a multi-tenant ERP serving 11 PLC, Ardova and Nigerian Breweries — performance up 40%',
   },
   {
     label: 'AI in production',
-    body: 'RAG call-handling for NKIRU — −30% support load',
+    body: 'RAG call handling live for NKIRU — support-agent workload down 30%',
   },
   {
-    label: 'Shipped & scaled',
-    body: '5,000+ verified users on WAKASUB, ₦10M+ per quarter',
+    label: 'Product shipped',
+    body: 'Rebuilt WAKASUB’s platform and payment engines — 5,000+ verified users, ₦10M+ per quarter',
   },
 ];
 
@@ -249,7 +252,14 @@ export const stackLayers: StackLayer[] = [
   {
     id: 'frontend',
     label: 'Frontend',
-    items: ['React', 'Next.js', 'TypeScript', 'React Native', 'Gatsby', 'Tailwind'],
+    items: [
+      'React',
+      'Next.js',
+      'TypeScript',
+      'React Native',
+      'Gatsby',
+      'Tailwind',
+    ],
     proof: 'Multi-tenant ERP · 11 PLC, Ardova',
   },
   {
