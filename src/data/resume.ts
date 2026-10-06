@@ -323,7 +323,6 @@ export const capabilities: Capability[] = [
 ];
 
 export const sections = [
-  { id: 'readout', label: 'Readout', note: 'WakaTime' },
   { id: 'work', label: 'Work', note: `${roles.length} roles` },
   { id: 'projects', label: 'Projects', note: `${projects.length}` },
   { id: 'retro', label: 'Retro', note: 'Yearly' },
