@@ -848,8 +848,9 @@ a {
   filter: drop-shadow(0 0 22px rgb(var(--amber-rgb) / 0.28));
 }
 
-/* The attribution tag: one box shared by every badge. Emblems.tsx springs it
-   down from above the screen while any badge is awake. */
+/* The attribution plaque: one object shared by every badge. Emblems.tsx
+   springs it down from above the screen on two cords, swings it as it lands,
+   and stretches it slightly while it falls. */
 .emb-tag-wrap {
   position: fixed;
   z-index: 70;
@@ -861,37 +862,150 @@ a {
   pointer-events: none;
 }
 .emb-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 18px;
-  border-radius: 12px;
-  background: rgb(var(--raised-rgb) / 0.94);
-  -webkit-backdrop-filter: blur(12px) saturate(160%);
-  backdrop-filter: blur(12px) saturate(160%);
-  box-shadow: inset 0 0 0 1px rgb(var(--amber-rgb) / 0.5),
-    0 14px 34px rgb(var(--shadow-rgb) / calc(0.5 * var(--shadow-k))),
-    0 0 26px rgb(var(--amber-rgb) / 0.16);
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: var(--mute);
+  position: relative;
+  /* The pivot is where the cords hang from, far above the plaque. */
+  transform-origin: 50% -320px;
   will-change: transform;
   transition: opacity 220ms ease;
 }
-.emb-tag b {
-  font-weight: 600;
-  color: var(--paper);
+.emb-tag .cord {
+  position: absolute;
+  bottom: calc(100% - 4px);
+  width: 1px;
+  height: 900px; /* long enough to reach the top of any screen */
+  background: linear-gradient(to top, rgb(var(--tint) / 0.55), rgb(var(--tint) / 0.16));
 }
-.emb-tag .dot {
-  width: 6px;
-  height: 6px;
+.emb-tag .cord.l {
+  left: 30px;
+}
+.emb-tag .cord.r {
+  right: 30px;
+}
+/* The eyelet each cord ties off at. */
+.emb-tag .cord::after {
+  content: '';
+  position: absolute;
+  left: -3px;
+  bottom: -3px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 0 rgb(var(--amber-rgb) / 0.5);
-  animation: rl-pulse 2.4s ease-out infinite;
+  background: var(--ink);
+  box-shadow: inset 0 0 0 1.5px var(--mute);
+}
+.emb-plaque {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 24px 13px 14px;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  background: linear-gradient(rgb(var(--raised-rgb) / 0.96), rgb(var(--raised-rgb) / 0.96))
+      padding-box,
+    linear-gradient(
+        125deg,
+        rgb(var(--amber-rgb) / 0.85),
+        rgb(var(--tint) / 0.14) 42%,
+        rgb(var(--tint) / 0.1) 62%,
+        rgb(var(--amber-rgb) / 0.45)
+      )
+      border-box;
+  box-shadow: 0 18px 38px rgb(var(--shadow-rgb) / calc(0.55 * var(--shadow-k))),
+    0 0 34px rgb(var(--amber-rgb) / 0.14);
+  transform-origin: 50% 0; /* stretches from where it hangs */
+  overflow: hidden;
+  white-space: nowrap;
+}
+/* A band of light that crosses the plaque once, just after it lands. */
+.emb-plaque::after {
+  content: '';
+  position: absolute;
+  inset: -20% auto -20% 0;
+  width: 38%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgb(var(--amber-rgb) / 0.28),
+    transparent
+  );
+  transform: translateX(-140%) skewX(-18deg);
+  opacity: 0;
+  pointer-events: none;
+}
+.emb-tag.on .emb-plaque::after {
+  animation: tg-sheen 1100ms cubic-bezier(0.3, 0.6, 0.2, 1) 380ms 1 both;
+}
+@keyframes tg-sheen {
+  0% {
+    transform: translateX(-140%) skewX(-18deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(420%) skewX(-18deg);
+    opacity: 0;
+  }
+}
+
+.tg-dial {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  overflow: visible;
+}
+.tg-ring {
+  fill: rgb(var(--tint) / 0.05);
+  stroke: rgb(var(--tint) / 0.2);
+  stroke-width: 1;
+}
+.tg-tick {
+  stroke: var(--mute);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+}
+.tg-hand {
+  stroke: var(--accent);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  transform-origin: 18px 18px;
+  animation: tg-sweep 6s linear infinite;
+}
+.tg-hub {
+  fill: var(--accent);
+}
+@keyframes tg-sweep {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.tg-copy {
+  display: grid;
+  gap: 3px;
+  line-height: 1;
+}
+.tg-copy small {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.tg-copy b {
+  font-size: 22px;
+  letter-spacing: -0.03em;
+  color: var(--paper);
+  font-variation-settings: 'wdth' 100, 'wght' 720;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tg-hand {
+    animation: none;
+  }
+  .emb-tag.on .emb-plaque::after {
+    animation: none;
+  }
 }
 
 /* Too small to scatter, and no cursor to wake anything. */

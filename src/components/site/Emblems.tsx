@@ -27,9 +27,8 @@ const COINS = [
   { x: 38, y: 52, depth: 1.45 },
 ];
 
-/* The attribution tag rests this far below the top of the screen, and waits
-   this far above it, which is off-screen with room to spare. */
-const TAG_TOP = 70;
+/* Where the attribution plaque waits: far enough above the screen that it is
+   out of sight with room to spare. Its resting place (70px down) is in the CSS. */
 const TAG_OFF = -170;
 
 const pos = (x: number, y: number) => ({ left: `${x}%`, top: `${y}%` });
@@ -125,6 +124,7 @@ function Coin({ lang }: { lang: WakaLanguage }) {
 export default function Emblems({ data }: { data: WakaSnapshot }) {
   const layerRef = useRef<HTMLDivElement>(null);
   const tagRef = useRef<HTMLDivElement>(null);
+  const plaqueRef = useRef<HTMLDivElement>(null);
   const { totals, languages } = data;
   const coins = languages.slice(0, COINS.length);
 
@@ -137,14 +137,46 @@ export default function Emblems({ data }: { data: WakaSnapshot }) {
 
     const reveal = window.setTimeout(() => layer.classList.add('in'), 250);
 
-    /* One shared tag for every badge, so moving from one to the next never
-       makes it leave and re-enter. It drops in with a bounce when the first
-       badge wakes, and only retracts once none has been awake for a moment. */
+    /* One shared plaque for every badge, so moving from one to the next never
+       makes it leave and re-enter. It drops in on a spring when the first badge
+       wakes, swings on its cords as it lands, and only retracts once none has
+       been awake for a moment. */
     const tag = tagRef.current;
+    const plaque = plaqueRef.current;
     let tagOn = false;
     let hideTimer: number | undefined;
-    const tagSpring = createSpring(TAG_OFF, (y) => {
-      if (tag) tag.style.transform = `translate3d(0,${y.toFixed(2)}px,0)`;
+    let tagY = TAG_OFF;
+    let tagV = 0;
+    let tagRot = 0;
+    let swingDir = 1;
+
+    const paint = () => {
+      if (!tag || !plaque) return;
+      /* The plaque swings about the point its cords hang from, far above it. */
+      tag.style.transform = `translate3d(0,${tagY.toFixed(
+        2
+      )}px,0) rotate(${tagRot.toFixed(3)}deg)`;
+      /* Stretches a touch while falling fast, squashes as it lands. */
+      const sy = 1 + clamp(tagV / 14000, -0.045, 0.07);
+      plaque.style.transform = `scale(${(1 - (sy - 1) * 0.6).toFixed(
+        4
+      )},${sy.toFixed(4)})`;
+    };
+    const swing = createSpring(0, (r) => {
+      tagRot = r;
+      paint();
+    });
+    const tagSpring = createSpring(TAG_OFF, (y, v) => {
+      const landing = tagY < 0 && y >= 0 && v > 0;
+      tagY = y;
+      tagV = v;
+      if (landing && !reduced) {
+        /* First touch of the rest position: kick the pendulum. */
+        swing.set(2.8 * swingDir);
+        swingDir = -swingDir;
+        swing.to(0, { damping: 0.26, response: 0.75 });
+      }
+      paint();
     });
     if (tag && reduced) {
       /* No travel for anyone who asked for less motion: it just fades. */
@@ -158,12 +190,14 @@ export default function Emblems({ data }: { data: WakaSnapshot }) {
         hideTimer = undefined;
         if (tagOn) return;
         tagOn = true;
+        tag.classList.add('on');
         if (reduced) tag.style.opacity = '1';
         else tagSpring.to(0, { damping: 0.5, response: 0.55 });
       } else if (tagOn && hideTimer === undefined) {
         hideTimer = window.setTimeout(() => {
           hideTimer = undefined;
           tagOn = false;
+          tag.classList.remove('on');
           if (reduced) tag.style.opacity = '0';
           else tagSpring.to(TAG_OFF, { damping: 1, response: 0.3 });
         }, 340);
@@ -257,6 +291,7 @@ export default function Emblems({ data }: { data: WakaSnapshot }) {
       window.clearTimeout(reveal);
       window.clearTimeout(hideTimer);
       tagSpring.stop();
+      swing.stop();
       io?.disconnect();
       window.removeEventListener('scroll', kick);
       window.removeEventListener('pointermove', onMove);
@@ -335,9 +370,30 @@ export default function Emblems({ data }: { data: WakaSnapshot }) {
           ref={tagRef}
           style={{ transform: `translate3d(0,${TAG_OFF}px,0)` }}
         >
-          <i className="dot" />
-          <span>Powered by</span>
-          <b>WakaTime</b>
+          <i className="cord l" />
+          <i className="cord r" />
+          <div className="emb-plaque" ref={plaqueRef}>
+            <svg className="tg-dial" viewBox="0 0 36 36">
+              <circle className="tg-ring" cx="18" cy="18" r="16.5" />
+              {Array.from({ length: 24 }, (_, k) => (
+                <line
+                  key={k}
+                  className="tg-tick"
+                  x1="18"
+                  y1="2.6"
+                  x2="18"
+                  y2={k % 6 === 0 ? 6.6 : 5}
+                  transform={`rotate(${k * 15} 18 18)`}
+                />
+              ))}
+              <line className="tg-hand" x1="18" y1="18" x2="18" y2="8.4" />
+              <circle className="tg-hub" cx="18" cy="18" r="1.7" />
+            </svg>
+            <span className="tg-copy">
+              <small>Powered by</small>
+              <b>WakaTime</b>
+            </span>
+          </div>
         </div>
       </div>
     </>
