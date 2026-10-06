@@ -55,6 +55,7 @@ export default function Hero({ plane }: { plane?: React.ReactNode }) {
   return (
     <div className="hero">
       <div className="wrap hero-body">
+      <div className="hero-lead">
       <div className="eyebrow">
         <span className="m">{profile.locationLine}</span>
         <span className="rule" />
@@ -75,13 +76,13 @@ export default function Hero({ plane }: { plane?: React.ReactNode }) {
         ))}
       </div>
 
-      <div className="hero-mid">
-        <p className="lede">
-          {profile.lede.before}
-          <em>{profile.lede.accent}</em>
-        </p>
-        {plane}
+      <p className="lede">
+        {profile.lede.before}
+        <em>{profile.lede.accent}</em>
+      </p>
       </div>
+
+      {plane}
 
       <dl className="proof">
         {proof.map((p) => (

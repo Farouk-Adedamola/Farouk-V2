@@ -449,6 +449,10 @@ a {
   position: relative;
   z-index: 1;
 }
+.hero-lead {
+  position: relative;
+  z-index: 1;
+}
 .eyebrow {
   display: flex;
   align-items: center;
@@ -1352,26 +1356,18 @@ a {
 /* The plane occupies its own column beside the lede rather than floating over
    the hero. Overlapping text is not alignment — given it as a real grid cell,
    it lines up with the content column by construction and nothing collides. */
-.hero-mid {
-  display: grid;
-  grid-template-columns: minmax(280px, 34rem) minmax(0, 1fr);
-  align-items: start;
-  gap: 40px;
-  /* The rotated deck overflows its cell at the bottom, so the row reserves
-     room for it instead of letting it graze the proof strip. */
-  margin-block: 34px 104px;
-}
-
+/* Absolutely positioned so it can take the room it needs: inside a grid track
+   the deck was being squeezed and the cards clipped. It is anchored to the
+   content column's right edge and sits in the band below the name. */
 .plane {
-  position: relative;
-  justify-self: end;
-  width: 100%;
-  min-width: 0;
-  aspect-ratio: 1120 / 700;
-  max-width: 680px;
-  /* Percentage, not px: it scales with the cell so the deck stays flush with
-     the content column at every width. */
-  transform: translateX(5.5%);
+  position: absolute;
+  z-index: 0;
+  right: var(--gut);
+  /* Fixed, not a percentage: a % top grows with the hero, and reserving the
+     band below made the hero taller, which pushed the plane back down. */
+  top: 325px;
+  width: 660px;
+  aspect-ratio: 1 / 0.72;
   pointer-events: none;
   perspective: 1400px;
   color: var(--line);
@@ -1382,14 +1378,22 @@ a {
   inset: 0;
   transform: rotateX(46deg) rotateZ(42deg) scale(1);
   transform-style: preserve-3d;
-  /* Fades on the two edges that meet the type, solid where it runs off the
-     viewport — the plane should dissolve into the page, not into the bleed. */
-  -webkit-mask-image: linear-gradient(to top, #000 42%, transparent 106%),
-    linear-gradient(to left, #000 64%, transparent 100%);
-  mask-image: linear-gradient(to top, #000 42%, transparent 106%),
-    linear-gradient(to left, #000 64%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
+  /* A centre-out fade rather than two directional ones: the directional masks
+     erased the field exactly where the cards sit, so they looked unmoored.
+     This keeps the grid solid under the deck and only softens its outer edge. */
+  -webkit-mask-image: radial-gradient(
+    closest-side at 46% 46%,
+    #000 58%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    closest-side at 46% 46%,
+    #000 58%,
+    transparent 100%
+  );
+}
+.plane-inner {
+  transform: rotateX(52deg) rotateZ(44deg) scale(1);
 }
 
 .plane-grid {
@@ -1403,50 +1407,37 @@ a {
 .plane-deck {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
 }
 
 /* ── stack cards ──────────────────────────────────────────────────────
-   One card per layer of the stack. They step down the plane on a constant
-   offset so the arrangement reads as deliberate rather than scattered.
+   One card per layer of the stack, cascading down the isometric axis on a
+   constant step — a row would need far more width than this column has.
    ──────────────────────────────────────────────────────────────────── */
 .pcard {
-  position: relative;
+  position: absolute;
   overflow: hidden;
-  width: 244px;
-  flex: none;
+  width: 272px;
   display: grid;
-  gap: 13px;
+  gap: 12px;
   align-content: start;
-  padding: 18px 17px 15px;
-  border-radius: 16px;
+  padding: 16px 15px 13px;
+  border-radius: 15px;
   background: var(--ink-raised);
   border: 1px solid rgba(242, 242, 245, 0.14);
-  box-shadow: 0 26px 46px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 24px 44px rgba(0, 0, 0, 0.55);
   transition: transform 340ms cubic-bezier(0.22, 1, 0.36, 1),
     border-color 260ms ease, box-shadow 340ms ease;
 }
-.pcard:nth-child(1) {
-  transform: translate3d(0, -58px, 0);
-}
-.pcard:nth-child(3) {
-  transform: translate3d(0, 58px, 0);
-}
+.pcard:nth-child(1) { left: 1%; top: 2%; }
+.pcard:nth-child(2) { left: 13%; top: 24%; }
+.pcard:nth-child(3) { left: 25%; top: 46%; }
 
 /* Lifting off the surface: on an isometric plane, up-and-left reads as height. */
 .pcard.is-live {
+  z-index: 3;
   border-color: var(--accent);
   box-shadow: 0 40px 66px rgba(0, 0, 0, 0.62), 0 0 0 1px rgba(255, 166, 43, 0.28);
-  transform: translate3d(-14px, -72px, 0);
-}
-.pcard.is-live:nth-child(2) {
-  transform: translate3d(-14px, -14px, 0);
-}
-.pcard.is-live:nth-child(3) {
-  transform: translate3d(-14px, 44px, 0);
+  transform: translate3d(-16px, -16px, 0);
 }
 
 /* A single scan pass across the card when it comes alive. */
@@ -1552,16 +1543,8 @@ a {
   .pcard footer {
     transition: none;
   }
-  .pcard.is-live,
-  .pcard.is-live:nth-child(2),
-  .pcard.is-live:nth-child(3) {
-    transform: translate3d(0, 0, 0);
-  }
-  .pcard.is-live:nth-child(1) {
-    transform: translate3d(0, -58px, 0);
-  }
-  .pcard.is-live:nth-child(3) {
-    transform: translate3d(0, 58px, 0);
+  .pcard.is-live {
+    transform: none;
   }
   .pcard::after {
     display: none;
@@ -1569,6 +1552,14 @@ a {
 }
 
 /* The plane is an accent, not a payload — it goes away before it can crowd. */
+/* The deck needs a 444px band beside the hero and the plane is absolute, so
+   it cannot push anything itself — the proof strip reserves the room. */
+@media (min-width: 1101px) {
+  .hero-body > .proof {
+    margin-top: 200px;
+  }
+}
+
 @media (max-width: 1100px) {
   .hero-mid {
     grid-template-columns: 1fr;

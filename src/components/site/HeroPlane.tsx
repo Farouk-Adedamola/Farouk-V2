@@ -60,7 +60,7 @@ export default function HeroPlane({ data }: { data: WakaSnapshot }) {
   return (
     <div className="plane" ref={planeRef} aria-hidden="true">
       <div className="plane-inner">
-        <DashGrid className="plane-grid" width={1120} height={700} spacing={28} />
+        <DashGrid className="plane-grid" width={660} height={475} spacing={26} />
 
         <div className="plane-deck">
           {stackLayers.map((layer, i) => (
