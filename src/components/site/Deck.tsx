@@ -1,287 +1,284 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import {
-  clamp,
-  createSpring,
-  haptic,
-  prefersReducedMotion,
-  project,
-  rubberband,
-  velocityFrom,
-} from '@/lib/spring';
-import type { Sample } from '@/lib/spring';
+import { clamp, createSpring, prefersReducedMotion } from '@/lib/spring';
 import { blurFor } from '@/data/blur';
 import { projects } from '@/data/resume';
+import type { Project } from '@/data/resume';
+
+const N = projects.length;
+
+/** The screen of a project: its screenshot, or the hatched plate when it has none. */
+function Screen({ p, priority }: { p: Project; priority?: boolean }) {
+  if (p.image) {
+    return (
+      <Image
+        src={p.image}
+        alt=""
+        fill
+        sizes="(max-width: 900px) 92vw, 640px"
+        priority={priority}
+        placeholder={blurFor(p.image) ? 'blur' : 'empty'}
+        blurDataURL={blurFor(p.image)}
+        draggable={false}
+      />
+    );
+  }
+  return (
+    <div className="wk-blank">
+      <span className="m">{p.plate?.top}</span>
+      <span className="big">{p.plate?.big}</span>
+      <span className="m">{p.plate?.bottom}</span>
+    </div>
+  );
+}
+
+function Link({ p }: { p: Project }) {
+  return p.href ? (
+    <a href={p.href} target="_blank" rel="noopener noreferrer" className="wk-visit">
+      Open {p.domain} <span aria-hidden="true">↗</span>
+    </a>
+  ) : null;
+}
 
 export default function Deck() {
-  const vpRef = useRef<HTMLDivElement>(null);
-  const deckRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const plateRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const nameRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const railRef = useRef<HTMLElement>(null);
+  const [active, setActive] = useState(0);
 
   useEffect(() => {
-    const vp = vpRef.current;
-    const deck = deckRef.current;
-    const rail = railRef.current;
-    if (!vp || !deck) return;
+    const track = trackRef.current;
+    if (!track) return;
 
-    const cards = Array.from(deck.children) as HTMLElement[];
-    let minX = 0;
-    const maxX = 0;
-    let snaps: number[] = [0];
-    let aimIdx = -1;
+    const mq = window.matchMedia('(min-width: 901px)');
+    let shown = -1;
+    let teardown: (() => void) | undefined;
 
-    const apply = (x: number) => {
-      deck.style.transform = `translate3d(${x.toFixed(2)}px,0,0)`;
-      if (rail) {
-        const span = Math.abs(minX) || 1;
-        rail.style.transform = `scaleX(${(
-          0.22 +
-          clamp(-x / span, 0, 1) * 0.78
+    /* Everything on screen is a pure function of one number: how many cards
+       into the stack we are. Fractional, so the cards are always mid-flight. */
+    const render = (p: number) => {
+      plateRefs.current.forEach((el, i) => {
+        if (!el) return;
+        const d = i - p;
+        const ad = Math.abs(d);
+        let tx: number;
+        let ty: number;
+        let rx: number;
+        let rz: number;
+        let s: number;
+        let o: number;
+        if (d <= 0) {
+          /* Peeled off the top: lifts, tips back, and fades. */
+          tx = d * 14;
+          ty = d * 64;
+          rx = ad * 14;
+          rz = d * 1.6;
+          s = 1 - ad * 0.05;
+          o = clamp(1 - ad * 1.7, 0, 1);
+        } else {
+          /* Waiting underneath, stepped down and to the right. */
+          tx = d * 26;
+          ty = d * 22;
+          rx = 0;
+          rz = 0;
+          s = 1 - d * 0.06;
+          o = clamp(1 - Math.max(0, d - 1) * 0.5, 0, 1);
+        }
+        el.style.transform = `translate3d(${tx.toFixed(2)}px,${ty.toFixed(
+          2
+        )}px,0) rotateX(${rx.toFixed(2)}deg) rotateZ(${rz.toFixed(
+          2
+        )}deg) scale(${s.toFixed(4)})`;
+        el.style.opacity = o.toFixed(3);
+        el.style.zIndex = String(d <= 0 ? 100 + i : 50 - Math.round(d));
+        el.style.setProperty('--veil', clamp(d * 0.5, 0, 0.8).toFixed(3));
+        el.style.setProperty('--pan', `${(d * -5).toFixed(2)}%`);
+      });
+
+      nameRefs.current.forEach((el, i) => {
+        if (!el) return;
+        const k = clamp(1 - Math.abs(i - p), 0, 1);
+        el.style.fontVariationSettings = `'wdth' ${(76 + 24 * k).toFixed(
+          1
+        )}, 'wght' ${(360 + 440 * k).toFixed(0)}`;
+        el.style.opacity = (0.3 + 0.7 * k).toFixed(3);
+        el.style.setProperty('--k', k.toFixed(3));
+      });
+
+      if (railRef.current) {
+        railRef.current.style.transform = `scaleY(${(
+          (p + 0.0001) /
+          (N - 1)
         ).toFixed(4)})`;
       }
+
+      const idx = clamp(Math.round(p), 0, N - 1);
+      if (idx !== shown) {
+        shown = idx;
+        setActive(idx);
+      }
     };
 
-    /* Fast motion reads better with a little stretch than a hard sharp streak. */
-    const stretch = (v: number) => {
-      const st = prefersReducedMotion() ? 0 : clamp(Math.abs(v) / 26000, 0, 0.03);
-      deck.style.setProperty('--stretch', (1 + st).toFixed(4));
-    };
+    const setup = () => {
+      teardown?.();
+      teardown = undefined;
+      if (!mq.matches) return;
 
-    const spring = createSpring(0, (x, v) => {
-      apply(x);
-      stretch(v);
-    });
+      const reduced = prefersReducedMotion();
+      const spring = createSpring(0, (x) => render(x));
 
-    const measure = () => {
-      minX = Math.min(0, vp.clientWidth - deck.scrollWidth);
-      snaps = cards.map((c) => clamp(-c.offsetLeft, minX, maxX));
-      apply(clamp(spring.value, minX, maxX));
-    };
+      const travel = () => Math.max(1, track.offsetHeight - window.innerHeight);
+      const target = () => {
+        const top = track.getBoundingClientRect().top;
+        return clamp(-top / travel(), 0, 1) * (N - 1);
+      };
 
-    const nearestIdx = (x: number) => {
-      let best = 0;
-      let dist = Infinity;
-      snaps.forEach((p, i) => {
-        const d = Math.abs(p - x);
-        if (d < dist) {
-          dist = d;
-          best = i;
+      const onScroll = () => {
+        const t = target();
+        if (reduced) {
+          spring.set(t);
+          render(t);
+        } else {
+          spring.to(t, { damping: 1, response: 0.34 });
         }
-      });
-      return best;
+      };
+
+      spring.set(target());
+      render(target());
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+
+      teardown = () => {
+        window.removeEventListener('scroll', onScroll);
+        window.removeEventListener('resize', onScroll);
+        spring.stop();
+      };
     };
 
-    /* Telegraph the landing card while the gesture is still happening. */
-    const aim = (i: number) => {
-      if (i === aimIdx) return;
-      aimIdx = i;
-      cards.forEach((c, k) => c.classList.toggle('aim', k === i));
-    };
-
-    let pending = false;
-    let dragging = false;
-    let pid: number | null = null;
-    let grab = 0;
-    let history: Sample[] = [];
-    let moved = 0;
-
-    const onDown = (e: PointerEvent) => {
-      if (e.button !== 0 && e.pointerType === 'mouse') return;
-      spring.stop(); /* grab it mid-flight; value and velocity survive */
-      pending = true;
-      dragging = false;
-      pid = e.pointerId;
-      moved = 0;
-      grab = e.clientX - spring.value;
-      history = [{ t: performance.now(), p: e.clientX }];
-    };
-
-    const onMove = (e: PointerEvent) => {
-      if (!pending || e.pointerId !== pid) return;
-      const dx = e.clientX - history[0].p;
-      moved = Math.max(moved, Math.abs(dx));
-
-      if (!dragging) {
-        if (Math.abs(dx) < 10) return; /* hysteresis before committing */
-        dragging = true;
-        vp.classList.add('dragging');
-        vp.setPointerCapture(pid);
-        grab = e.clientX - spring.value; /* re-anchor, so there is no jump */
-      }
-
-      const raw = e.clientX - grab;
-      let x = raw;
-      if (raw > maxX) x = maxX + rubberband(raw - maxX, vp.clientWidth);
-      else if (raw < minX) x = minX - rubberband(minX - raw, vp.clientWidth);
-
-      spring.set(x);
-      apply(x);
-
-      history.push({ t: performance.now(), p: e.clientX });
-      if (history.length > 8) history.shift();
-
-      const v = velocityFrom(history);
-      stretch(v);
-      aim(nearestIdx(clamp(x + project(v), minX, maxX)));
-      e.preventDefault();
-    };
-
-    const onUp = (e: PointerEvent) => {
-      if (!pending || (pid !== null && e.pointerId !== pid)) return;
-      pending = false;
-      if (!dragging) {
-        pid = null;
-        return;
-      }
-      dragging = false;
-      vp.classList.remove('dragging');
-      try {
-        if (pid !== null) vp.releasePointerCapture(pid);
-      } catch {
-        /* capture may already be gone */
-      }
-      pid = null;
-
-      const v = velocityFrom(history);
-      const i = nearestIdx(clamp(spring.value + project(v), minX, maxX));
-      aim(i);
-      spring.to(snaps[i], {
-        velocity: v,
-        damping: Math.abs(v) > 60 ? 0.8 : 1, /* bounce only after a flick */
-        response: 0.4,
-        onRest: () => {
-          stretch(0);
-          aim(-1);
-          haptic(6);
-        },
-      });
-    };
-
-    const onClick = (e: MouseEvent) => {
-      if (moved > 10) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-    };
-
-    const onKey = (e: KeyboardEvent) => {
-      const i = nearestIdx(spring.value);
-      if (e.key === 'ArrowRight') {
-        spring.to(snaps[Math.min(snaps.length - 1, i + 1)], {
-          damping: 1,
-          response: 0.4,
-          onRest: () => haptic(6),
-        });
-        e.preventDefault();
-      }
-      if (e.key === 'ArrowLeft') {
-        spring.to(snaps[Math.max(0, i - 1)], {
-          damping: 1,
-          response: 0.4,
-          onRest: () => haptic(6),
-        });
-        e.preventDefault();
-      }
-    };
-
-    let idle: number | undefined;
-    const onWheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
-      e.preventDefault();
-      spring.stop();
-      spring.set(clamp(spring.value - e.deltaX, minX - 60, maxX + 60));
-      apply(spring.value);
-      window.clearTimeout(idle);
-      idle = window.setTimeout(() => {
-        spring.to(snaps[nearestIdx(clamp(spring.value, minX, maxX))], {
-          damping: 1,
-          response: 0.4,
-        });
-      }, 110);
-    };
-
-    vp.addEventListener('pointerdown', onDown);
-    vp.addEventListener('pointermove', onMove, { passive: false });
-    vp.addEventListener('pointerup', onUp);
-    vp.addEventListener('pointercancel', onUp);
-    vp.addEventListener('click', onClick, true);
-    vp.addEventListener('keydown', onKey);
-    vp.addEventListener('wheel', onWheel, { passive: false });
-    window.addEventListener('resize', measure);
-
-    measure();
-    document.fonts?.ready.then(measure).catch(() => {});
-
+    setup();
+    mq.addEventListener('change', setup);
     return () => {
-      vp.removeEventListener('pointerdown', onDown);
-      vp.removeEventListener('pointermove', onMove);
-      vp.removeEventListener('pointerup', onUp);
-      vp.removeEventListener('pointercancel', onUp);
-      vp.removeEventListener('click', onClick, true);
-      vp.removeEventListener('keydown', onKey);
-      vp.removeEventListener('wheel', onWheel);
-      window.removeEventListener('resize', measure);
-      window.clearTimeout(idle);
-      spring.stop();
+      mq.removeEventListener('change', setup);
+      teardown?.();
     };
   }, []);
 
+  const jumpTo = (i: number) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const travel = Math.max(1, track.offsetHeight - window.innerHeight);
+    const top = track.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({
+      top: top + (i / (N - 1)) * travel,
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+    });
+  };
+
+  const cur = projects[active];
+
   return (
-    <section className="section" id="projects">
-      <div className="wrap">
-        <div className="head">
-          <h2>Selected work</h2>
-          <span className="idx">drag · flick · or use ← →</span>
+    <section className="wk" id="projects" aria-labelledby="wk-title">
+      {/* Desktop: pinned, scroll deals the stack. */}
+      <div
+        className="wk-track"
+        ref={trackRef}
+        style={{ ['--n' as string]: N }}
+      >
+        <div className="wk-pin">
+          <div className="wrap">
+            <div className="head">
+              <h2 id="wk-title">Selected work</h2>
+              <span className="idx">
+                {active + 1} of {N} · scroll to deal
+              </span>
+            </div>
+
+            <div className="wk-grid">
+              <div className="wk-names">
+                <span className="wk-rail" aria-hidden="true">
+                  <i ref={railRef} />
+                </span>
+                <ol>
+                  {projects.map((p, i) => (
+                    <li key={p.name}>
+                      <button
+                        type="button"
+                        ref={(el) => {
+                          nameRefs.current[i] = el;
+                        }}
+                        onClick={() => jumpTo(i)}
+                        aria-current={i === active ? 'true' : undefined}
+                      >
+                        {p.name}
+                      </button>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+
+              <div className="wk-right">
+                <div className="wk-stage" aria-hidden="true">
+                  {projects.map((p, i) => (
+                    <div
+                      className="wk-plate"
+                      key={p.name}
+                      ref={(el) => {
+                        plateRefs.current[i] = el;
+                      }}
+                    >
+                      <div className="wk-chrome">
+                        <span className="m">{p.domain ?? p.plate?.top}</span>
+                      </div>
+                      <div className="wk-screen">
+                        <Screen p={p} priority={i < 2} />
+                      </div>
+                      <i className="wk-veil" />
+                    </div>
+                  ))}
+                </div>
+
+                <div className="wk-detail" key={cur.name} aria-live="polite">
+                  <div className="kpi">{cur.kpi}</div>
+                  <p>{cur.blurb}</p>
+                  <div className="tools">
+                    {cur.tools.map((t) => (
+                      <span className="chip" key={t}>
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <Link p={cur} />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="wrap">
-        <div
-          className="deck-vp"
-          ref={vpRef}
-          tabIndex={0}
-          role="region"
-          aria-label="Selected work, draggable"
-        >
-          <div className="deck" ref={deckRef}>
-            {projects.map((p, i) => (
-              <article className="card" key={p.name}>
-                {p.image ? (
-                  <div className="shot">
-                    <Image
-                      src={p.image}
-                      alt={`${p.name} interface`}
-                      fill
-                      sizes="(max-width: 560px) 82vw, 380px"
-                      priority={i < 2}
-                      placeholder={blurFor(p.image) ? 'blur' : 'empty'}
-                      blurDataURL={blurFor(p.image)}
-                      draggable={false}
-                    />
-                  </div>
-                ) : (
-                  <div className="plate">
-                    <span className="m">{p.plate?.top}</span>
-                    <span className="big">{p.plate?.big}</span>
-                    <span className="m">{p.plate?.bottom}</span>
-                  </div>
-                )}
+      {/* Mobile and tablet: a plain, scannable stack. */}
+      <div className="wrap wk-flat">
+        <div className="head">
+          <h2>Selected work</h2>
+          <span className="idx">{N} projects</span>
+        </div>
+        <ol>
+          {projects.map((p) => (
+            <li key={p.name}>
+              <article>
+                <div className="wk-chrome">
+                  <span className="m">{p.domain ?? p.plate?.top}</span>
+                </div>
+                <div className="wk-screen">
+                  <Screen p={p} />
+                </div>
                 <div className="bd">
-                  <h3>
-                    {p.href ? (
-                      <a href={p.href} target="_blank" rel="noopener noreferrer">
-                        {p.name}
-                      </a>
-                    ) : (
-                      p.name
-                    )}
-                    {p.domain && <span className="ext">{p.domain}</span>}
-                  </h3>
-                  <p>{p.blurb}</p>
+                  <h3>{p.name}</h3>
                   <div className="kpi">{p.kpi}</div>
+                  <p>{p.blurb}</p>
                   <div className="tools">
                     {p.tools.map((t) => (
                       <span className="chip" key={t}>
@@ -289,20 +286,12 @@ export default function Deck() {
                       </span>
                     ))}
                   </div>
+                  <Link p={p} />
                 </div>
               </article>
-            ))}
-          </div>
-        </div>
-
-        <div className="deck-ft">
-          <div className="rail">
-            <i ref={railRef} style={{ transform: 'scaleX(0.25)' }} />
-          </div>
-          <span className="hint">
-            1:1 tracking · momentum projected · aim highlighted
-          </span>
-        </div>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
