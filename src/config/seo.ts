@@ -4,7 +4,9 @@ export const siteConfig = {
   description:
     'Product engineer in Lagos, Nigeria. Five years of frontend depth across multi-tenant ERP for 11 PLC and Ardova, RAG and LLM systems in production, and WAKASUB — a payments platform serving 5,000+ users.',
   url: process.env.SITE_URL || 'https://farouk.dev',
-  ogImage: '/og-image.jpg',
+  ogImage: '/og-image.png',
+  ogImageAlt:
+    'Farouk Adedamola — Product Engineer. Frontend depth, AI systems, and the judgment to know which problem you actually have.',
   keywords: [
     'Farouk Adedamola',
     'Product Engineer',
@@ -37,12 +39,16 @@ export const siteConfig = {
   },
 };
 
+/* Crawlers need an absolute URL. Next resolves relative share images against
+   whatever host served the request, so this is spelled out. */
+export const ogImageUrl = `${siteConfig.url}${siteConfig.ogImage}`;
+
 export const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: siteConfig.name,
   url: siteConfig.url,
-  image: `${siteConfig.url}${siteConfig.ogImage}`,
+  image: ogImageUrl,
   email: siteConfig.author.email,
   jobTitle: 'Product Engineer',
   address: {
