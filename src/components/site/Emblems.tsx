@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef } from 'react';
 
-import { clamp, prefersReducedMotion } from '@/lib/spring';
+import { clamp, createSpring, prefersReducedMotion } from '@/lib/spring';
 import type { WakaLanguage, WakaSnapshot } from '@/lib/wakatime';
 
 /* Home positions as a percentage of the viewport, hand-placed so the scatter is
@@ -26,6 +26,11 @@ const COINS = [
   { x: 76, y: 92, depth: 0.75 },
   { x: 38, y: 52, depth: 1.45 },
 ];
+
+/* The attribution tag rests this far below the top of the screen, and waits
+   this far above it, which is off-screen with room to spare. */
+const TAG_TOP = 70;
+const TAG_OFF = -170;
 
 const pos = (x: number, y: number) => ({ left: `${x}%`, top: `${y}%` });
 
@@ -119,6 +124,7 @@ function Coin({ lang }: { lang: WakaLanguage }) {
 
 export default function Emblems({ data }: { data: WakaSnapshot }) {
   const layerRef = useRef<HTMLDivElement>(null);
+  const tagRef = useRef<HTMLDivElement>(null);
   const { totals, languages } = data;
   const coins = languages.slice(0, COINS.length);
 
@@ -130,6 +136,39 @@ export default function Emblems({ data }: { data: WakaSnapshot }) {
     const movers = badges.map((el) => el.querySelector<HTMLElement>('.rb-in')!);
 
     const reveal = window.setTimeout(() => layer.classList.add('in'), 250);
+
+    /* One shared tag for every badge, so moving from one to the next never
+       makes it leave and re-enter. It drops in with a bounce when the first
+       badge wakes, and only retracts once none has been awake for a moment. */
+    const tag = tagRef.current;
+    let tagOn = false;
+    let hideTimer: number | undefined;
+    const tagSpring = createSpring(TAG_OFF, (y) => {
+      if (tag) tag.style.transform = `translate3d(0,${y.toFixed(2)}px,0)`;
+    });
+    if (tag && reduced) {
+      /* No travel for anyone who asked for less motion: it just fades. */
+      tag.style.transform = 'translate3d(0,0,0)';
+      tag.style.opacity = '0';
+    }
+    const setTag = (on: boolean) => {
+      if (!tag) return;
+      if (on) {
+        window.clearTimeout(hideTimer);
+        hideTimer = undefined;
+        if (tagOn) return;
+        tagOn = true;
+        if (reduced) tag.style.opacity = '1';
+        else tagSpring.to(0, { damping: 0.5, response: 0.55 });
+      } else if (tagOn && hideTimer === undefined) {
+        hideTimer = window.setTimeout(() => {
+          hideTimer = undefined;
+          tagOn = false;
+          if (reduced) tag.style.opacity = '0';
+          else tagSpring.to(TAG_OFF, { damping: 1, response: 0.3 });
+        }, 340);
+      }
+    };
 
     /* Selected work is a pinned stage of screenshots. The badges recede for it. */
     const stage = document.getElementById('projects');
@@ -173,12 +212,16 @@ export default function Emblems({ data }: { data: WakaSnapshot }) {
 
       /* Waking is decided by distance to the badge, not by what is under the
          cursor, so it still works where page content sits in front of it. */
+      let anyAwake = false;
       badges.forEach((el) => {
         const r = el.getBoundingClientRect();
         const dx = px - (r.left + r.width / 2);
         const dy = py - (r.top + r.height / 2);
-        el.classList.toggle('awake', Math.hypot(dx, dy) < r.width / 2 + 6);
+        const awake = Math.hypot(dx, dy) < r.width / 2 + 6;
+        if (awake) anyAwake = true;
+        el.classList.toggle('awake', awake);
       });
+      setTag(anyAwake);
 
       const moving =
         Math.abs(tx - cx) > 0.002 ||
@@ -212,6 +255,8 @@ export default function Emblems({ data }: { data: WakaSnapshot }) {
 
     return () => {
       window.clearTimeout(reveal);
+      window.clearTimeout(hideTimer);
+      tagSpring.stop();
       io?.disconnect();
       window.removeEventListener('scroll', kick);
       window.removeEventListener('pointermove', onMove);
@@ -243,45 +288,58 @@ export default function Emblems({ data }: { data: WakaSnapshot }) {
   if (!totals && coins.length === 0) return null;
 
   return (
-    <div
-      className="emb"
-      ref={layerRef}
-      role="group"
-      aria-label="Coding activity, via WakaTime"
-    >
-      {seals.map((s, i) => (
-        <div
-          className="rb rb-seal"
-          key={s.label}
-          style={{
-            ...pos(SEALS[i].x, SEALS[i].y),
-            ['--d' as string]: SEALS[i].d,
-            ['--i' as string]: i,
-            ['--f' as string]: `${7 + i * 1.3}s`,
-          }}
-        >
-          <div className="rb-in" data-depth={SEALS[i].depth}>
-            <Seal {...s} />
+    <>
+      <div
+        className="emb"
+        ref={layerRef}
+        role="group"
+        aria-label="Coding activity, via WakaTime"
+      >
+        {seals.map((s, i) => (
+          <div
+            className="rb rb-seal"
+            key={s.label}
+            style={{
+              ...pos(SEALS[i].x, SEALS[i].y),
+              ['--d' as string]: SEALS[i].d,
+              ['--i' as string]: i,
+              ['--f' as string]: `${7 + i * 1.3}s`,
+            }}
+          >
+            <div className="rb-in" data-depth={SEALS[i].depth}>
+              <Seal {...s} />
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
 
-      {coins.map((lang, i) => (
-        <div
-          className="rb rb-coin"
-          key={lang.name}
-          style={{
-            ...pos(COINS[i].x, COINS[i].y),
-            ['--d' as string]: coinSize(lang.percent),
-            ['--i' as string]: i + 3,
-            ['--f' as string]: `${6 + ((i * 7) % 5) * 0.9}s`,
-          }}
-        >
-          <div className="rb-in" data-depth={COINS[i].depth}>
-            <Coin lang={lang} />
+        {coins.map((lang, i) => (
+          <div
+            className="rb rb-coin"
+            key={lang.name}
+            style={{
+              ...pos(COINS[i].x, COINS[i].y),
+              ['--d' as string]: coinSize(lang.percent),
+              ['--i' as string]: i + 3,
+              ['--f' as string]: `${6 + ((i * 7) % 5) * 0.9}s`,
+            }}
+          >
+            <div className="rb-in" data-depth={COINS[i].depth}>
+              <Coin lang={lang} />
+            </div>
           </div>
+        ))}
+      </div>
+      <div className="emb-tag-wrap" aria-hidden="true">
+        <div
+          className="emb-tag"
+          ref={tagRef}
+          style={{ transform: `translate3d(0,${TAG_OFF}px,0)` }}
+        >
+          <i className="dot" />
+          <span>Powered by</span>
+          <b>WakaTime</b>
         </div>
-      ))}
-    </div>
+      </div>
+    </>
   );
 }

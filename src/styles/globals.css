@@ -848,9 +848,56 @@ a {
   filter: drop-shadow(0 0 22px rgb(var(--amber-rgb) / 0.28));
 }
 
+/* The attribution tag: one box shared by every badge. Emblems.tsx springs it
+   down from above the screen while any badge is awake. */
+.emb-tag-wrap {
+  position: fixed;
+  z-index: 70;
+  top: calc(env(safe-area-inset-top, 0px) + 70px);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+.emb-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: rgb(var(--raised-rgb) / 0.94);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  backdrop-filter: blur(12px) saturate(160%);
+  box-shadow: inset 0 0 0 1px rgb(var(--amber-rgb) / 0.5),
+    0 14px 34px rgb(var(--shadow-rgb) / calc(0.5 * var(--shadow-k))),
+    0 0 26px rgb(var(--amber-rgb) / 0.16);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--mute);
+  will-change: transform;
+  transition: opacity 220ms ease;
+}
+.emb-tag b {
+  font-weight: 600;
+  color: var(--paper);
+}
+.emb-tag .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 rgb(var(--amber-rgb) / 0.5);
+  animation: rl-pulse 2.4s ease-out infinite;
+}
+
 /* Too small to scatter, and no cursor to wake anything. */
 @media (max-width: 999px) {
-  .emb {
+  .emb,
+  .emb-tag-wrap {
     display: none;
   }
 }
