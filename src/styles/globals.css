@@ -590,27 +590,14 @@ a {
   white-space: nowrap;
 }
 
-/* ── readout ────────────────────────────────────────────────────────── */
-.readout {
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  overflow: hidden;
-  background: linear-gradient(
-    to bottom,
-    rgba(242, 242, 245, 0.035),
-    rgba(242, 242, 245, 0.012)
-  );
-}
-.readout-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  flex-wrap: wrap;
-  padding: 16px 22px;
-  border-bottom: 1px solid var(--line-soft);
-}
+/* ── readout: drifting badges ───────────────────────────────────────────
+   The field is a 1100 × 620 board scaled by container width (cqw), so the
+   composition holds at any desktop size. Seals carry the three headline
+   figures; coins are the languages, sized by share, with a ring that fills to
+   the same share. Below 1000px the board gives way to a plain wrapped flow. */
 .tag {
+  display: inline-block;
+  margin-bottom: 18px;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 10px;
   letter-spacing: 0.1em;
@@ -620,99 +607,239 @@ a {
   padding: 4px 9px;
   border-radius: 6px;
 }
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.rb-field {
+  --px: calc(100cqw / 1100);
+  container-type: inline-size;
+  position: relative;
+  aspect-ratio: 1100 / 620;
 }
-.stat {
-  padding: 26px 22px;
-  border-right: 1px solid var(--line-soft);
+/* One faint warm pool behind the headline seal; amber stays rare. */
+.rb-field::before {
+  content: '';
+  position: absolute;
+  left: 4%;
+  top: 22%;
+  width: 40%;
+  height: 56%;
+  background: radial-gradient(closest-side, rgba(255, 166, 43, 0.07), transparent);
+  pointer-events: none;
 }
-.stat:last-child {
-  border-right: 0;
+.rb {
+  position: absolute;
+  width: calc(var(--d) * var(--px));
+  height: calc(var(--d) * var(--px));
+  margin: calc(var(--d) * var(--px) / -2) 0 0 calc(var(--d) * var(--px) / -2);
+  opacity: 0;
+  scale: 0.55;
+  transition: opacity 600ms ease, scale 800ms cubic-bezier(0.2, 0.9, 0.25, 1.15);
+  transition-delay: calc(var(--i) * 70ms);
 }
-.stat dt {
+.rb-field.in .rb {
+  opacity: 1;
+  scale: 1;
+}
+.rb-in {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+  animation: rb-float var(--f, 8s) ease-in-out infinite alternate;
+}
+@keyframes rb-float {
+  from {
+    translate: 0 -5px;
+  }
+  to {
+    translate: 0 6px;
+  }
+}
+.rb-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.rb-disc {
+  fill: rgba(16, 16, 20, 0.82);
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.rb-ticks line {
+  stroke: var(--mute-dim);
+  stroke-width: 1;
+}
+.rb-orbit {
+  fill: none;
+  stroke: var(--mute-dim);
+  stroke-width: 0.8;
+  stroke-dasharray: 2 5;
+  transform-origin: 100px 100px;
+  animation: rb-turn 90s linear infinite;
+}
+.rb-orbit.live {
+  stroke: var(--accent);
+  stroke-width: 1.2;
+}
+@keyframes rb-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.rb-arc-text {
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 10.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--mute);
-  margin-bottom: 12px;
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  fill: var(--mute);
 }
-.stat dd {
-  margin: 0;
+.rb-track {
+  fill: none;
+  stroke: rgba(242, 242, 245, 0.08);
+  stroke-width: 3;
+}
+.rb-arc {
+  fill: none;
+  stroke: var(--mute);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 0 100;
+  transition: stroke-dasharray 1300ms cubic-bezier(0.2, 0.7, 0.2, 1) 350ms;
+}
+.rb-arc.live {
+  stroke: var(--accent);
+}
+.rb-field.in .rb-arc {
+  stroke-dasharray: var(--arc) 100;
+}
+
+.rb-face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  text-align: center;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-variant-numeric: tabular-nums;
-  font-size: clamp(1.15rem, 2.6vw, 1.6rem);
+  line-height: 1.15;
+}
+.rb-face b {
+  font-weight: 500;
+  font-size: calc(var(--d) * var(--px) * 0.17);
+  letter-spacing: -0.04em;
+  color: var(--paper);
+}
+.rb-face i {
+  font-style: normal;
+  font-size: max(9.5px, calc(var(--d) * var(--px) * 0.056));
+  letter-spacing: 0.06em;
+  color: var(--body);
+  margin-top: 4px;
+}
+.rb-face small {
+  font-size: max(8.5px, calc(var(--d) * var(--px) * 0.045));
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mute-dim);
+  margin-top: 10px;
+}
+.rb-face.coin-face b {
+  font-size: max(9.5px, calc(var(--d) * var(--px) * 0.118));
   letter-spacing: -0.02em;
 }
-.stat .sub {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 10.5px;
-  color: var(--mute-dim);
-  letter-spacing: 0.06em;
-  margin-top: 7px;
-}
-@media (max-width: 700px) {
-  .stats {
-    grid-template-columns: 1fr;
-  }
-  .stat {
-    border-right: 0;
-    border-bottom: 1px solid var(--line-soft);
-    padding-block: 20px;
-  }
-}
-.langs {
-  padding: 24px 22px 28px;
-  border-top: 1px solid var(--line-soft);
-}
-.lang {
-  display: grid;
-  grid-template-columns: 116px 1fr 58px;
-  align-items: center;
-  gap: 16px;
-  padding-block: 9px;
-}
-.lang .nm {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 12px;
-}
-.lang .bar-t {
-  height: 3px;
-  border-radius: 2px;
-  background: rgba(242, 242, 245, 0.07);
-  overflow: hidden;
-}
-.lang .bar-f {
-  display: block; /* an <i> is inline by default, and transforms skip inline boxes */
-  height: 100%;
-  border-radius: 2px;
-  background: var(--mute-dim);
-  transform-origin: left center;
-  transform: scaleX(var(--p, 0));
-  transition: transform 900ms cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.lang:first-child .bar-f {
-  background: var(--accent);
-}
-.lang .pc {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-variant-numeric: tabular-nums;
-  font-size: 11.5px;
+.rb-face.coin-face small {
+  font-size: max(9px, calc(var(--d) * var(--px) * 0.1));
+  letter-spacing: 0.04em;
+  text-transform: none;
   color: var(--mute);
-  text-align: right;
+  margin-top: 3px;
 }
-.langs .empty {
+.rb-coin:first-of-type .rb-face small,
+.rb-seal ~ .rb-coin:nth-of-type(4) .rb-face small {
+  color: var(--accent);
+}
+.rb-empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  margin: 0;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 11.5px;
   color: var(--mute-dim);
   letter-spacing: 0.04em;
 }
+
+@media (max-width: 999px) {
+  .rb-field {
+    --px: 1px;
+    aspect-ratio: auto;
+    container-type: normal;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 18px 14px;
+    padding-block: 8px;
+  }
+  .rb-field::before {
+    display: none;
+  }
+  .rb {
+    position: relative;
+    left: auto !important;
+    top: auto !important;
+    margin: 0;
+    --d-fixed: 1;
+  }
+  .rb-seal {
+    width: min(100%, 230px);
+    height: auto;
+    aspect-ratio: 1;
+  }
+  .rb-seal .rb-face b {
+    font-size: 40px;
+  }
+  .rb-seal .rb-face i {
+    font-size: 11px;
+  }
+  .rb-seal .rb-face small {
+    font-size: 9.5px;
+  }
+  .rb-coin {
+    width: calc(var(--d) * 1px * 0.95);
+    height: calc(var(--d) * 1px * 0.95);
+  }
+}
 @media (max-width: 560px) {
-  .lang {
-    grid-template-columns: 88px 1fr 46px;
-    gap: 10px;
+  .rb-field {
+    gap: 14px 10px;
+  }
+  .rb-seal {
+    width: calc(50% - 6px);
+  }
+  .rb-seal .rb-face b {
+    font-size: 25px;
+  }
+  .rb-seal .rb-face i {
+    font-size: 9.5px;
+  }
+  .rb-seal .rb-face small {
+    font-size: 8px;
+    margin-top: 6px;
+  }
+  .rb-seal:nth-of-type(3) {
+    width: min(58%, 220px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rb,
+  .rb-arc {
+    transition: none;
+  }
+  .rb-in,
+  .rb-orbit {
+    animation: none;
   }
 }
 
@@ -1245,7 +1372,6 @@ a {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
-  .lang .bar-f,
   .btn::before,
   .btn .ix,
   .card,
@@ -1280,7 +1406,6 @@ a {
     backdrop-filter: none;
   }
   .pill,
-  .readout,
   .loz {
     background: var(--ink-raised);
   }
@@ -1295,8 +1420,6 @@ a {
   .bar {
     background: #08080a;
   }
-  .card,
-  .readout,
   .btn,
   .pill {
     border-color: var(--line);
