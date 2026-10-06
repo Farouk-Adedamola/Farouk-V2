@@ -6,7 +6,6 @@ import Hero from '@/components/site/Hero';
 import HeroPlane from '@/components/site/HeroPlane';
 import Nav from '@/components/site/Nav';
 import Retro from '@/components/site/Retro';
-import SiteFooter from '@/components/site/SiteFooter';
 import Work from '@/components/site/Work';
 import { getWakatime } from '@/lib/wakatime';
 
@@ -28,7 +27,6 @@ export default async function Page() {
         <Retro />
         <Capabilities />
         <Contact />
-        <SiteFooter />
       </main>
     </div>
   );
