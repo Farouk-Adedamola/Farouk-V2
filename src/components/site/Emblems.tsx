@@ -131,7 +131,7 @@ export default function Emblems({ data }: { data: WakaSnapshot }) {
 
     const reveal = window.setTimeout(() => layer.classList.add('in'), 250);
 
-    /* Selected work is a pinned stage of screenshots. The badges step aside for it. */
+    /* Selected work is a pinned stage of screenshots. The badges recede for it. */
     const stage = document.getElementById('projects');
     let io: IntersectionObserver | undefined;
     if (stage && 'IntersectionObserver' in window) {

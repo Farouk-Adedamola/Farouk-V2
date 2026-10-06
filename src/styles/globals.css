@@ -604,7 +604,7 @@ a {
   transition: opacity 500ms ease;
 }
 .emb.hush {
-  opacity: 0;
+  opacity: 0.32; /* recedes behind the screenshots, never fully gone */
 }
 .rb {
   position: absolute;
